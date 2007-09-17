@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mv trunk DateTime-Format-Strptime-$1
+tar --exclude .svn -czf DateTime-Format-Strptime-$1.tgz DateTime-Format-Strptime-$1
+mv DateTime-Format-Strptime-$1 trunk

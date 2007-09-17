@@ -1,0 +1,15 @@
+Changes
+lib/DateTime/Format/Strptime.pm
+LICENSE
+Makefile.PL
+MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
+README
+t/001_load.t
+t/002_dates.t
+t/003_every.t
+t/004_locale_defaults.t
+t/005_croak.t
+t/006_locales.t
+t/007_edge.t
+t/more/001_all_locales.t
