@@ -176,6 +176,15 @@ Note on version conventions:
 	- The revised locale tests releasese
 		- Many people pointed out that while this module hadn't broken
 		  the tests for the French locale had. This is due to a new
-		  source for the data in DateTime::Locale. This version ONLY
-		  changes the tests and so it not a required update.
+		  source for the data in DateTime::Locale.
+		- This version ONLY changes the tests and so it not a required
+		  update.
 
+1.0702 2007-09-19
+	- YAML and POD
+		- Updated the META.yml file to have the correct 'resources'
+		  and match the latest spec
+		- Updated the docus with a 'resources' section that has the
+		  same information in it for readers of POD.
+		- This version ONLY changes the documentation and so it not a
+		  required update.

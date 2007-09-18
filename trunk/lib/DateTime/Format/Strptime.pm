@@ -11,7 +11,7 @@ use Exporter;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK %ZONEMAP %FORMATS $CROAK $errmsg);
 
 @ISA = 'Exporter';
-$VERSION = '1.0701';
+$VERSION = '1.0702';
 @EXPORT_OK = qw( &strftime &strptime );
 @EXPORT = ();
 
@@ -1146,31 +1146,39 @@ C<strftime()> method, but can be passed to C<format_datetime()>.
 
 =back
 
-=head1 NOTES
+=head1 RESOURCES
 
 =over 4
 
-=item * on_error
+=item * Mailing List
 
-Default behavior of this module is now to return undef on erroring.
+Support for this module is primarily provided via the DateTime
+Mailing List: C<datetime@perl.org>
+
+http://lists.cpan.org/showlist.cgi?name=datetime
+
+=item * Bugtracker
+
+For bug tracking and reporting, please use the google-code tracker
+rather than the RT interface linked at search.cpan.org
+
+http://code.google.com/p/datetime-format-strptime/issues/list
+
+=item * Homepage
+
+http://datetime-format-strptime.googlecode.com/
+
+=item * Subversion Repository
+
+The latest version is always available via subversion:
+
+http://datetime-format-strptime.googlecode.com/svn/trunk/
 
 =back
 
-=head1 SUPPORT
-
-Support for this module is provided via the datetime@perl.org email
-list. See http://lists.perl.org/ for more details.
-
-Alternatively, log them via the CPAN RT system via the web or email:
-
-	bug-datetime-format-strptime@rt.cpan.org
-
-This makes it much easier for me to track things and thus means your
-problem is less likely to be neglected.
-
 =head1 LICENSE AND COPYRIGHT
 
-Copyright E<169> Rick Measham, 2003-2005. All rights reserved.
+Copyright E<169> Rick Measham, 2003-2007. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
