@@ -2,7 +2,7 @@
 
 # t/007_edge.t - these tests are for edge case bug report errors
 
-use Test::More tests => 10;
+use Test::More tests => 12;
 use DateTime;
 use DateTime::Format::Strptime;
 
@@ -42,6 +42,19 @@ test(
 	is($parsed->time_zone->name,'Australia/Melbourne', 'Time zone determined from string');
 	is($parsed->epoch,'1131143580', 'Time zone applied to string');
 }
+
+#diag("1.08 - Good pattern, illegal datetime");
+my $bad_input_test = DateTime::Format::Strptime->new(
+	pattern => '%Y-%m-%d',
+	time_zone => 'Australia/Melbourne',
+	locale => 'en_AU',
+	on_error => 'croak',
+	diagnostic => 0,
+);
+
+eval { $bad_input_test->parse_datetime('0000-00-00') };
+isnt($@ , '', "Illegal input should carp");
+is(substr($@,0,39), 'Datetime 0000-00-00 is not a valid date', "Croak message should reflect illegal pattern");
 
 
 

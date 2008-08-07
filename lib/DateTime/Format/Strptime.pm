@@ -11,7 +11,7 @@ use Exporter;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK %ZONEMAP %FORMATS $CROAK $errmsg);
 
 @ISA = 'Exporter';
-$VERSION = '1.0702';
+$VERSION = '1.0800';
 @EXPORT_OK = qw( &strftime &strptime );
 @EXPORT = ();
 
@@ -391,6 +391,7 @@ iso_week_year_100 = $iso_week_year_100
 		my $month_number = 0;
 		foreach my $month (@{$self->{_locale}->month_names}) {
 			$month_count++;
+# 			use bytes;
 			if (lc $month eq lc $month_name) {
 				$month_number = $month_count;
 				last;
@@ -400,6 +401,9 @@ iso_week_year_100 = $iso_week_year_100
 			my $month_count = 0;
 			foreach my $month (@{$self->{_locale}->month_abbreviations}) {
 				$month_count++;
+# 				use bytes;
+				# When abbreviating, sometimes there's a period, sometimes not.
+				$month =~ s/\.$//; $month_name =~ s/\.$//;
 				if (lc $month eq lc $month_name) {
 					$month_number = $month_count;
 					last;
@@ -420,9 +424,10 @@ iso_week_year_100 = $iso_week_year_100
 	$self->local_croak("Your month value does not match your epoch.") and return undef if $epoch_dt and $Month and $Month != $epoch_dt->month;
 	if ($doy) {
 		$self->local_croak("There is no use providing a day of the year without providing a year.") and return undef unless $Year;
-		$doy_dt = ($DateTime::VERSION > 0.12)
-			? DateTime->from_day_of_year(year=>$Year, day_of_year=>$doy, time_zone => $use_timezone)
-			: DateTime->new(year=>$Year, day=>$doy, time_zone => $use_timezone);
+		$doy_dt = eval {
+			DateTime->from_day_of_year(year=>$Year, day_of_year=>$doy, time_zone => $use_timezone);
+		};
+		$self->local_croak("Day of year $Year-$doy is not valid") and return undef if $@;
 
 		my $month = $doy_dt->month;
 		$self->local_croak("Your day of the year ($doy - in ".$doy_dt->month_name.") is not in your month ($Month)") and return undef if $Month and $month != $Month;
@@ -441,7 +446,10 @@ iso_week_year_100 = $iso_week_year_100
 			: '';
 	if ($Day) {
 		$self->local_croak("There is no use providing a day without providing a month and year.") and return undef unless $Year and $Month;
-		my $dt = DateTime->new(year=>$Year, month=>$Month, day=>$Day, hour=>12, time_zone => $use_timezone);
+		my $dt = eval {
+			DateTime->new(year=>$Year, month=>$Month, day=>$Day, hour=>12, time_zone => $use_timezone);
+		};
+		$self->local_croak("Datetime $Year-$Month-$Day is not a valid date") and return undef if $@;
 		$self->local_croak("There is no day $Day in $dt->month_name, $Year") and return undef
 			unless $dt->month == $Month;
 	}
@@ -497,19 +505,22 @@ iso_week_year_100 = $iso_week_year_100
 #	croak "Your nanosecond does not match your epoch." if $epoch_dt and $Nanosecond and $Nanosecond != $epoch_dt->nanosecond;
 	print "Set nanosecond to $Nanosecond.\n" if $self->{diagnostic};
 
-    my $potential_return = DateTime->new(
-    	year		=> ($Year		|| 1),
-    	month		=> ($Month		|| 1),
-    	day			=> ($Day		|| 1),
+    my $potential_return = eval {
+		DateTime->new(
+			year		=> ($Year		|| 1),
+			month		=> ($Month		|| 1),
+			day			=> ($Day		|| 1),
 
-    	hour		=> ($Hour		|| 0),
-    	minute		=> ($Minute     || 0),
-    	second		=> ($Second     || 0),
-    	nanosecond	=> ($Nanosecond || 0),
+			hour		=> ($Hour		|| 0),
+			minute		=> ($Minute     || 0),
+			second		=> ($Second     || 0),
+			nanosecond	=> ($Nanosecond || 0),
 
-    	locale      =>	$self->{_locale},
-    	time_zone	=>	$use_timezone,
-	);
+			locale      =>	$self->{_locale},
+			time_zone	=>	$use_timezone,
+		);
+	};
+	$self->local_croak("Datetime is not a valid date") and return undef if $@;
 
 	$self->local_croak("Your day of the week ($dow_mon_1) does not match the date supplied: ".$potential_return->ymd) and return undef if $dow_mon_1 and $potential_return->dow != $dow_mon_1;
 
@@ -520,6 +531,7 @@ iso_week_year_100 = $iso_week_year_100
 		my $dow_number = 0;
 		foreach my $dow (@{$self->{_locale}->day_names}) {
 			$dow_count++;
+			use bytes;
 			if (lc $dow eq lc $dow_name) {
 				$dow_number = $dow_count;
 				last;
@@ -529,6 +541,7 @@ iso_week_year_100 = $iso_week_year_100
 			my $dow_count = 0;
 			foreach my $dow (@{$self->{_locale}->day_abbreviations}) {
 				$dow_count++;
+				use bytes;
 				if (lc $dow eq lc $dow_name) {
 					$dow_number = $dow_count;
 					last;
@@ -618,7 +631,10 @@ sub _build_parser {
 	# %x id the locale's default time format.
 
 	# I'm absolutely certain there's a better way to do this:
-	$regex=~s|([\/\.\-])|\\$1|g;
+	#$regex=~s|([\/\.\-])|\\$1|g;
+	$regex = quotemeta( $regex );
+	$regex =~ s/(?<!\\)\\%/%/g;
+	$regex =~ s/%\\\{([^\}]+)\\\}/%{$1}/g;
 
 	$regex =~ s/%T/%H:%M:%S/g;
 	$field_list =~ s/%T/%H%M%S/g;

@@ -36,7 +36,6 @@ my @tests = (
 
 foreach (@tests) {
 	my ($locale, $pattern, $data) = @$_;
-
 	$object->locale($locale);
 	$object->pattern($pattern);
 	my $datetime = $object->parse_datetime( $data );

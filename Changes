@@ -188,3 +188,9 @@ Note on version conventions:
 		  same information in it for readers of POD.
 		- This version ONLY changes the documentation and so it not a
 		  required update.
+
+1.0800 2008-08-07
+	- Pile-o-bugs
+		- It seems that I wasn't getting notifications from Google
+		  when people had reported bugs, so there's a pile of fixes
+		  in this release. Hopefully that fixes everyone's issues.

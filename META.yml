@@ -3,7 +3,7 @@ meta-spec:
         version: 1.3
         url: http://module-build.sourceforge.net/META-spec-v1.3.html
 name:           DateTime-Format-Strptime
-version:        1.0702
+version:        1.0800
 abstract:       Parse and format strp and strf time patterns
 author:
         - Rick Measham <rickm@cpan.org>
@@ -11,9 +11,9 @@ licence:        perl
 distribution_type:      module
 requires:
         Params::Validate:              0.64
-        DateTime:                      0.1402
-        DateTime::Locale:              0.35
-        DateTime::TimeZone:            0.25
+        DateTime:                      0.4304
+        DateTime::Locale:              0.41
+        DateTime::TimeZone:            0.79
 resources:
         licence:        http://dev.perl.org/licenses/
         homepage:       http://datetime-format-strptime.googlecode.com/
