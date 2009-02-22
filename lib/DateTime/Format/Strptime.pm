@@ -1,6 +1,7 @@
 package DateTime::Format::Strptime;
 
 use strict;
+
 use DateTime;
 use DateTime::Locale;
 use DateTime::TimeZone;
@@ -11,7 +12,7 @@ use Exporter;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK %ZONEMAP %FORMATS $CROAK $errmsg);
 
 @ISA = 'Exporter';
-$VERSION = '1.0800';
+$VERSION = '1.0900';
 @EXPORT_OK = qw( &strftime &strptime );
 @EXPORT = ();
 
@@ -329,9 +330,14 @@ iso_week_year_100 = $iso_week_year_100
 	}
 
 	if ($tz_olson) {
-		$tz_olson = ucfirst lc $tz_olson;
-		$tz_olson =~ s|([/_])(\w)|$1\U$2|;
-		my $tz = DateTime::TimeZone->new( name => $tz_olson );
+		my $tz = eval { DateTime::TimeZone->new( name => $tz_olson ) };
+		if( not $tz ){
+			print "Provided olson TZ didn't work ($tz_olson). Attempting to normalize it.\n" if $self->{diagnostic};
+			$tz_olson = ucfirst lc $tz_olson;
+			$tz_olson =~ s|([/_])(\w)|$1\U$2|g;
+			print "   Trying $tz_olson.\n" if $self->{diagnostic};
+			$tz = eval { DateTime::TimeZone->new( name => $tz_olson ) };
+		}
 		$self->local_croak("I don't recognise the time zone '$tz_olson'.") and return undef unless $tz;
 		$use_timezone = $set_time_zone = $tz;
 
@@ -439,7 +445,7 @@ iso_week_year_100 = $iso_week_year_100
 	# Day of the month
 	$self->local_croak("$day is too large to be a day of the month.") and return undef unless $day <= 31;
 	$self->local_croak("Your day of the month ($day) does not match your day of the year.") and return undef if $doy_dt and $day and $day != $doy_dt->day;
-	$Day = ($day)
+	$Day ||= ($day)
 		? $day
 		: ($doy_dt)
 			? $doy_dt->day
@@ -485,21 +491,21 @@ iso_week_year_100 = $iso_week_year_100
 
 	# Minutes
 	$self->local_croak("$minute is too large to be a minute.") and return undef unless $minute <= 59;
-	$Minute = $minute;
+	$Minute ||= $minute;
 	$self->local_croak("Your minute does not match your epoch.") and return undef if $epoch_dt and $Minute and $Minute != $epoch_dt->minute;
 	print "Set minute to $Minute.\n" if $self->{diagnostic};
 
 
 	# Seconds
 	$self->local_croak("$second is too large to be a second.") and return undef unless $second <= 59; #OK so leap seconds will break!
-	$Second = $second;
+	$Second ||= $second;
 	$self->local_croak("Your second does not match your epoch.") and return undef if $epoch_dt and $Second and $Second != $epoch_dt->second;
 	print "Set second to $Second.\n" if $self->{diagnostic};
 
 
 	# Nanoeconds
 	$self->local_croak("$nanosecond is too large to be a nanosecond.") and return undef unless length($nanosecond) <= 9;
-	$Nanosecond = $nanosecond;
+	$Nanosecond ||= $nanosecond;
 	$Nanosecond .= '0' while length($Nanosecond) < 9;
 #	Epoch doesn't return nanoseconds
 #	croak "Your nanosecond does not match your epoch." if $epoch_dt and $Nanosecond and $Nanosecond != $epoch_dt->nanosecond;
@@ -580,7 +586,7 @@ sub format_datetime {
     my ( $self, $dt ) = @_;
     my $pattern = $self->pattern;
     $pattern =~ s/%O/$dt->time_zone->name/eg;
-	return $dt->strftime($pattern);
+	return $dt->clone->set_locale($self->locale)->strftime($pattern);
 }
 
 sub format_duration {

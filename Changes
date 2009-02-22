@@ -194,3 +194,21 @@ Note on version conventions:
 		- It seems that I wasn't getting notifications from Google
 		  when people had reported bugs, so there's a pile of fixes
 		  in this release. Hopefully that fixes everyone's issues.
+
+1.0900 2009-02-22
+	- Another pile-o-bugs
+		- It seems that I also wasn't seeing notifications from RT
+		  (please don't use it, use the Gooogle project) so all the
+		  following are fixed:
+			36672	Started failing mid May
+			23313	Bug handling time zones like America/New_York
+			25555	Module dies even when on_error is 'undef'
+			23768	Olson timezone handling incorrect
+			22450	locale test failing with bleadperl
+			20487	nmake test_more fail (with patch); incorrect
+					META.yml
+			12071	format_datetime uses datetime locale rather than
+					format locale
+			11863	bug in DateTime::Format::Strptime 1.0601 when using %s
+
+

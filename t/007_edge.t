@@ -2,7 +2,7 @@
 
 # t/007_edge.t - these tests are for edge case bug report errors
 
-use Test::More tests => 12;
+use Test::More tests => 15;
 use DateTime;
 use DateTime::Format::Strptime;
 
@@ -56,6 +56,24 @@ eval { $bad_input_test->parse_datetime('0000-00-00') };
 isnt($@ , '', "Illegal input should carp");
 is(substr($@,0,39), 'Datetime 0000-00-00 is not a valid date', "Croak message should reflect illegal pattern");
 
+
+#diag("1.09 - Time zones with an underscore");
+{
+	my $parser = new DateTime::Format::Strptime( pattern => '%O' );
+	is($parser->parse_datetime('America/New_York')->time_zone->name, 'America/New_York');
+}
+
+#diag("1.09 - TZs in the wrong case should work (unless they have a cap in the middle of a word)");
+{
+	my $parser = new DateTime::Format::Strptime( pattern => '%O', diagnostic => 1 );
+	is($parser->parse_datetime('AMERICA/NEW_YORK')->time_zone->name, 'America/New_York');
+}
+
+#diag("1.09 - Bogus TZs shouldn't barf, they should follow the on_error setting");
+{
+	my $parser = new DateTime::Format::Strptime( pattern => '%O', on_error => 'undef' );
+	is($parser->parse_datetime('Oz/Munchkinville'), undef);
+}
 
 
 sub test {

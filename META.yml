@@ -3,7 +3,7 @@ meta-spec:
         version: 1.3
         url: http://module-build.sourceforge.net/META-spec-v1.3.html
 name:           DateTime-Format-Strptime
-version:        1.0800
+version:        1.0900
 abstract:       Parse and format strp and strf time patterns
 author:
         - Rick Measham <rickm@cpan.org>

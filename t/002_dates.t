@@ -10,7 +10,8 @@ use DateTime::TimeZone;
 my $object = DateTime::Format::Strptime->new(
 	pattern => '%D',
 #	time_zone => 'Australia/Melbourne',
-	diagnostic => 0,
+	diagnostic => 1,
+	on_error => 'croak',
 );
 
 my @tests = (
@@ -24,7 +25,7 @@ my @tests = (
 	# Simple times
 	['%H:%M:%S', '23:45:56'],
 	['%l:%M:%S %p', '11:34:56 PM'],
-	
+
 	# With Nanoseconds
 	['%H:%M:%S.%N', '23:45:56.123456789'],
 	['%H:%M:%S.%6N', '23:45:56.123456'],
@@ -43,30 +44,30 @@ foreach (@tests) {
 }
 
 SKIP: {
-	skip "You don't have the latest DateTime. Older version have a bug whereby 12am and 12pm are shown as 0am and 0pm. You should upgrade.", 1 
+	skip "You don't have the latest DateTime. Older version have a bug whereby 12am and 12pm are shown as 0am and 0pm. You should upgrade.", 1
 		unless $DateTime::VERSION >= 0.11;
 
 	$object->pattern('%l:%M:%S %p');
-	is($object->format_datetime( $object->parse_datetime( '12:34:56 AM' ) ), 
+	is($object->format_datetime( $object->parse_datetime( '12:34:56 AM' ) ),
 		'12:34:56 AM', '%l:%M:%S %p');
 }
 
 
 # Timezones
 SKIP: {
-	skip "You don't have the latest DateTime::TimeZone. Older versions don't display all time zone information. You should upgrade.", 3 
+	skip "You don't have the latest DateTime::TimeZone. Older versions don't display all time zone information. You should upgrade.", 3
 		unless $DateTime::TimeZone::VERSION >= 0.13;
 
 	$object->pattern('%H:%M:%S %z');
-	is($object->format_datetime( $object->parse_datetime( '23:45:56 +1000' ) ), 
+	is($object->format_datetime( $object->parse_datetime( '23:45:56 +1000' ) ),
 		'23:45:56 +1000', '%H:%M:%S %z');
 
 	$object->pattern('%H:%M:%S %Z');
-	is($object->format_datetime( $object->parse_datetime( '23:45:56 AEST' ) ), 
+	is($object->format_datetime( $object->parse_datetime( '23:45:56 AEST' ) ),
 		'23:45:56 +1000', '%H:%M:%S %Z');
 
 	$object->pattern('%H:%M:%S %z %Z');
-	is($object->format_datetime( $object->parse_datetime( '23:45:56 +1000 AEST' ) ), 
+	is($object->format_datetime( $object->parse_datetime( '23:45:56 +1000 AEST' ) ),
 		'23:45:56 +1000 +1000', '%H:%M:%S %z %Z');
 }
 

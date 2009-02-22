@@ -35,9 +35,16 @@ WriteMakefile(
 );
 
 sub MY::postamble {
-	return <<'MAKE_FRAG';
+return $^O eq 'MSWin32'?
+<<'MAKE_FRAG'
+test_more :: pure_all
+SET PERL_DL_NONLAZY=1
+$(FULLPERLRUN) "-MExtUtils::Command::MM" "-e"
+"test_harness($(TEST_VERBOSE), '$(INST_LIB)', '$(INST_ARCHLIB)')" t/more/*.t
+MAKE_FRAG
+:
+<<'MAKE_FRAG';
 test_more :: pure_all
 	PERL_DL_NONLAZY=1 $(FULLPERLRUN) "-MExtUtils::Command::MM" "-e" "test_harness($(TEST_VERBOSE), '$(INST_LIB)', '$(INST_ARCHLIB)')" t/more/*.t
 MAKE_FRAG
-
 }
