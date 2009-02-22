@@ -676,10 +676,11 @@ sub _build_parser {
 	my $month_re = join('|',
 		map { quotemeta $_ }
 			sort { length $b <=> length $a }
-				grep(/\s/, @{$self->{_locale}->month_names}, @{$self->{_locale}->month_abbreviations})
+				grep(/\s|\d/, @{$self->{_locale}->month_names}, @{$self->{_locale}->month_abbreviations})
 	);
 	$month_re .= '|' if $month_re;
-	$regex =~ s/%[bBh]/($month_re\\S+)/g;
+	$month_re .= '[^\\s\\d]+';
+	$regex =~ s/%[bBh]/($month_re)/g;
 	$field_list =~ s/%[bBh]/#month_name#/g;
 	#is the month, using the locale's month names; either the abbreviated or full name may be specified.
 	# %B is the same as %b.
@@ -956,9 +957,10 @@ strftime method.
 
 =item * locale($locale)
 
-When given a locale, this method sets its locale appropriately. If
-the locale is not understood, the method will croak or return undef
-(depending on the setting of on_error in the constructor)
+When given a locale or C<DateTime::Locale> object, this method sets
+its locale appropriately. If the locale is not understood, the method
+will croak or return undef (depending on the setting of on_error in
+the constructor)
 
 If successful this method returns the current locale. (After
 processing as above).
@@ -1218,6 +1220,6 @@ C<datetime@perl.org> mailing list.
 
 http://datetime.perl.org/
 
-L<perl>, L<DateTime>, L<DateTime::TimeZone>
+L<perl>, L<DateTime>, L<DateTime::TimeZone>, L<DateTime::Locale>
 
 =cut

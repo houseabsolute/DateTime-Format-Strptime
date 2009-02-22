@@ -211,4 +211,5 @@ Note on version conventions:
 					format locale
 			11863	bug in DateTime::Format::Strptime 1.0601 when using %s
 
-
+		- And a couple from Google:
+		    #8		Add DateTime::Locale to documentation
