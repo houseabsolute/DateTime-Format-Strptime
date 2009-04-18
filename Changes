@@ -213,3 +213,7 @@ Note on version conventions:
 
 		- And a couple from Google:
 		    #8		Add DateTime::Locale to documentation
+		    #10		Parsing bug -- can't detect word boundry after month abbr
+
+1.0900_01 2009-04-18 -- DEVELOPER RELEASE ONLY
+	- Makefile.PL changes for Windows users as per issue #16

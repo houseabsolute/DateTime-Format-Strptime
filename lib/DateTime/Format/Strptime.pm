@@ -12,7 +12,7 @@ use Exporter;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK %ZONEMAP %FORMATS $CROAK $errmsg);
 
 @ISA = 'Exporter';
-$VERSION = '1.0900';
+$VERSION = '1.0900_01';
 @EXPORT_OK = qw( &strftime &strptime );
 @EXPORT = ();
 
