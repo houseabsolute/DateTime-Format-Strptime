@@ -217,3 +217,5 @@ Note on version conventions:
 
 1.0900_01 2009-04-18 -- DEVELOPER RELEASE ONLY
 	- Makefile.PL changes for Windows users as per issue #16
+
+1.0901 2009-05-16 -- Official release of above
