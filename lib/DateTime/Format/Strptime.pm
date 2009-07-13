@@ -5,7 +5,7 @@ use strict;
 use DateTime;
 use DateTime::Locale;
 use DateTime::TimeZone;
-use Params::Validate qw( validate SCALAR BOOLEAN OBJECT CODEREF );
+use Params::Validate qw( validate SCALAR SCALARREF BOOLEAN OBJECT CODEREF );
 use Carp;
 
 use Exporter;
@@ -124,7 +124,7 @@ $VERSION = '1.0901';
 
 sub new {
     my $class = shift;
-	my %args = validate( @_, {	pattern		=> { type => SCALAR },
+	my %args = validate( @_, {	pattern		=> { type => SCALAR | SCALARREF },
 								time_zone	=> { type => SCALAR | OBJECT, optional => 1 },
                                 locale      => { type => SCALAR | OBJECT, default => 'English' },
 								on_error	=> { type => SCALAR | CODEREF, default => 'undef' },
@@ -598,6 +598,9 @@ sub format_duration {
 sub _build_parser {
 	my $self = shift;
 	my $regex = my $field_list = shift;
+	if( ref $regex eq 'Regexp' ){
+		$field_list =~ s/^\(\?-xism:(.+)\)$/$1/;
+	}
 	my @fields = $field_list =~ m/(%\{\w+\}|%\d*.)/g;
 	$field_list = join('',@fields);
 
@@ -636,11 +639,11 @@ sub _build_parser {
 	$field_list =~ s/%X/$default_time_format/eg;
 	# %x id the locale's default time format.
 
-	# I'm absolutely certain there's a better way to do this:
-	#$regex=~s|([\/\.\-])|\\$1|g;
-	$regex = quotemeta( $regex );
-	$regex =~ s/(?<!\\)\\%/%/g;
-	$regex =~ s/%\\\{([^\}]+)\\\}/%{$1}/g;
+	if( ref $regex ne 'Regexp' ){
+		$regex = quotemeta( $regex );
+		$regex =~ s/(?<!\\)\\%/%/g;
+		$regex =~ s/%\\\{([^\}]+)\\\}/%{$1}/g;
+	}
 
 	$regex =~ s/%T/%H:%M:%S/g;
 	$field_list =~ s/%T/%H%M%S/g;
