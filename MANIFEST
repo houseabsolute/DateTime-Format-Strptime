@@ -13,4 +13,5 @@ t/005_croak.t
 t/006_locales.t
 t/007_edge.t
 t/008_epoch.t
+t/009_regexp.t
 t/more/001_all_locales.t

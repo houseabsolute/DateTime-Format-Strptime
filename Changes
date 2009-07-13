@@ -219,3 +219,9 @@ Note on version conventions:
 	- Makefile.PL changes for Windows users as per issue #16
 
 1.0901 2009-05-16 -- Official release of above
+
+1.1000 2009-07-13 -- Regex Pattern
+	- If the pattern you pass in is a regular expression, that will be honored.
+	- Changed the locale tests to use strftime from DateTime to get the test data.
+		- Requires DateTime::Locale > 0.43
+		

@@ -12,7 +12,7 @@ use Exporter;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK %ZONEMAP %FORMATS $CROAK $errmsg);
 
 @ISA = 'Exporter';
-$VERSION = '1.0901';
+$VERSION = '1.1000';
 @EXPORT_OK = qw( &strftime &strptime );
 @EXPORT = ();
 
@@ -633,11 +633,11 @@ sub _build_parser {
 
 	$regex =~ s/%x/$self->{_locale}->default_date_format/eg;
 	$field_list =~ s/%x/$default_date_format/eg;
-	# %x id the locale's default date format.
+	# %x is the locale's default date format.
 
 	$regex =~ s/%X/$self->{_locale}->default_time_format/eg;
 	$field_list =~ s/%X/$default_time_format/eg;
-	# %x id the locale's default time format.
+	# %x is the locale's default time format.
 
 	if( ref $regex ne 'Regexp' ){
 		$regex = quotemeta( $regex );

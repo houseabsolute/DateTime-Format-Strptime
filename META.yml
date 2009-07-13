@@ -12,7 +12,7 @@ distribution_type:      module
 requires:
         Params::Validate:              0.64
         DateTime:                      0.4304
-        DateTime::Locale:              0.41
+        DateTime::Locale:              0.44
         DateTime::TimeZone:            0.79
 resources:
         licence:        http://dev.perl.org/licenses/
