@@ -773,8 +773,6 @@ sub _build_parser {
     my @fields = $field_list =~ m/(%\{\w+\}|%\d*.)/g;
     $field_list = join( '', @fields );
 
-    my $tempdt = DateTime->now(); # Created just so we can do $tempdt->can(..)
-
     # Locale-ize the parser
     my $ampm_list = join( '|', @{ $self->{_locale}->am_pms } );
     $ampm_list .= '|' . lc $ampm_list;
@@ -996,8 +994,8 @@ sub _build_parser {
 
     # The Olson timezone name.
 
-    $regex      =~ s|%{(\w+)}|($tempdt->can($1)) ? "(.+)" : ".+"|eg;
-    $field_list =~ s|(%{(\w+)})|($tempdt->can($2)) ? "#$2#" : $1 |eg;
+    $regex      =~ s|%{(\w+)}|(DateTime->can($1)) ? "(.+)" : ".+"|eg;
+    $field_list =~ s|(%{(\w+)})|(DateTime->can($2)) ? "#$2#" : $1 |eg;
 
     # Any function in DateTime.
 
