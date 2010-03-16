@@ -793,8 +793,8 @@ sub _build_parser {
         "Date format: $default_date_format\nTime format: $default_time_format\nDatetime format: $default_datetime_format\n"
         if $self->{diagnostic};
 
-    $regex      =~ s/%%/ovnksdjhvniurnvkjsdhfbngkjsdbnhuyw678rhiuwf/g;
-    $field_list =~ s/%%/ovnksdjhvniurnvkjsdhfbngkjsdbnhuyw678rhiuwf/g;
+    $regex      =~ s/%%/__ESCAPED_PERCENT_SIGN_MARKER__/g;
+    $field_list =~ s/%%/__ESCAPED_PERCENT_SIGN_MARKER__/g;
 
     $regex      =~ s/%c/$self->{_locale}->default_datetime_format/eg;
     $field_list =~ s/%c/$default_datetime_format/eg;
@@ -999,8 +999,8 @@ sub _build_parser {
 
     # Any function in DateTime.
 
-    $regex      =~ s/ovnksdjhvniurnvkjsdhfbngkjsdbnhuyw678rhiuwf/\\%/g;
-    $field_list =~ s/ovnksdjhvniurnvkjsdhfbngkjsdbnhuyw678rhiuwf//g;
+    $regex      =~ s/__ESCAPED_PERCENT_SIGN_MARKER__/\\%/g;
+    $field_list =~ s/__ESCAPED_PERCENT_SIGN_MARKER__//g;
 
     # is replaced by %.
     #print $regex;
