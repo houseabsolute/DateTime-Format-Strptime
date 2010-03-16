@@ -32,7 +32,6 @@ foreach my $locale (@locales) {
 
         is( $parsed->strftime($pattern), $input, "Matched with Day Name" );
     }
-    diag($locale);
 }
 
 diag("\nChecking Month Names");
@@ -58,7 +57,6 @@ foreach my $locale (@locales) {
 
         is( $parsed->strftime($pattern), $input, "Matched with Month Name" );
     }
-    diag($locale);
 }
 
 diag("\nChecking AM/PM tokens");
@@ -83,6 +81,5 @@ foreach my $locale (@locales) {
 
         is( $parsed->strftime($pattern), $input, "Matched with Meridian" );
     }
-    diag($locale);
 }
 
