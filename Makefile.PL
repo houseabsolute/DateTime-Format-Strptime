@@ -1,26 +1,5 @@
 use ExtUtils::MakeMaker;
 
-print <<'EOF';
------------------------------------------
- __ _              _   _
-/ _\ |_ _ __ _ __ | |_(_)_ __ ___   ___
-\ \| __| '__| '_ \| __| | '_ ` _ \ / _ \
-_\ \ |_| |  | |_) | |_| | | | | | |  __/
-\__/\__|_|  | .__/ \__|_|_| |_| |_|\___|
-            |_|
------------------------------------------
-
-To run thousands of other tests (mainly
-for developers) then after running 'make'
-and 'make test' run 'make test_more':
-
-perl MakeFile.PL
-make
-make test
-make test_more
-
-EOF
-
 WriteMakefile(
     NAME         => 'DateTime::Format::Strptime',
     VERSION_FROM => 'lib/DateTime/Format/Strptime.pm',    # finds $VERSION
