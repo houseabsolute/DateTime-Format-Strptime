@@ -1382,49 +1382,29 @@ C<strftime()> method, but can be passed to C<format_datetime()>.
 
 =back
 
-=head1 RESOURCES
+=head1 BUGS
 
-=over 4
+Please report any bugs or feature requests to
+C<bug-datetime-format-strptime@rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org>. I will be notified, and then you'll automatically be
+notified of progress on your bug as I make changes.
 
-=item * Mailing List
+=head1 COPYRIGHT & LICENSE
 
-Support for this module is primarily provided via the DateTime
-Mailing List: C<datetime@perl.org>
+Copyright E<169> Rick Measham, 2003-2009, Dave Rolsky 2010. All rights
+reserved.
 
-http://lists.cpan.org/showlist.cgi?name=datetime
+This library is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
 
-=item * Bugtracker
-
-For bug tracking and reporting, please use the google-code tracker
-rather than the RT interface linked at search.cpan.org
-
-http://code.google.com/p/datetime-format-strptime/issues/list
-
-=item * Homepage
-
-http://datetime-format-strptime.googlecode.com/
-
-=item * Subversion Repository
-
-The latest version is always available via subversion:
-
-http://datetime-format-strptime.googlecode.com/svn/trunk/
-
-=back
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright E<169> Rick Measham, 2003-2007. All rights reserved.
-
-This library is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
-The full text of the licenses can be found in the F<LICENCE> file
-included with this module.
+The full text of the licenses can be found in the F<LICENCE> file included
+with this module.
 
 =head1 AUTHOR
 
-Rick Measham <rickm@cpan.org>
+Dave Rolsky <autarch@urth.org>
+
+Originally created by Rick Measham.
 
 =head1 SEE ALSO
 
