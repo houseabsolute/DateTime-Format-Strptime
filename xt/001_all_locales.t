@@ -10,7 +10,7 @@ use DateTime;
 my @locales = DateTime::Locale->ids;
 @locales = sort(@locales);
 
-diag("\nChecking Day Names");
+diag("Checking Day Names");
 my $pattern = "%Y-%m-%d %A";
 foreach my $locale (@locales) {
     foreach my $day ( 1 .. 7 ) {
@@ -34,7 +34,7 @@ foreach my $locale (@locales) {
     }
 }
 
-diag("\nChecking Month Names");
+diag("Checking Month Names");
 $pattern = "%Y-%m-%d %B";
 foreach my $locale (@locales) {
     foreach my $month ( 1 .. 12 ) {
@@ -59,7 +59,7 @@ foreach my $locale (@locales) {
     }
 }
 
-diag("\nChecking AM/PM tokens");
+diag("Checking AM/PM tokens");
 $pattern = "%Y-%m-%d %H:%M %p";
 foreach my $locale (@locales) {
     foreach my $hour ( 11, 12 ) {
