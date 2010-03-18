@@ -1397,7 +1397,7 @@ reserved.
 This library is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.
 
-The full text of the licenses can be found in the F<LICENCE> file included
+The full text of the licenses can be found in the F<LICENSE> file included
 with this module.
 
 =head1 AUTHOR
