@@ -1356,7 +1356,7 @@ Monday of January is the first day of week 1.
 =item * %y
 
 The year within century (0-99). When a century is not otherwise
-specified, values in the range 69-99 refer to years in the twen- tieth
+specified, values in the range 69-99 refer to years in the twentieth
 century (1969-1999); values in the range 00-68 refer to years in the
 twenty-first century (2000-2068).
 
