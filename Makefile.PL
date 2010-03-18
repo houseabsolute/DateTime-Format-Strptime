@@ -28,7 +28,7 @@ WriteMakefile(
     ABSTRACT  => 'Parse and format strp and strf time patterns',
     PREREQ_PM => {
         'DateTime'           => '0.4304',
-        'DateTime::Locale'   => '0.43',
+        'DateTime::Locale'   => '0.45',
         'DateTime::TimeZone' => '0.79',
         'Params::Validate'   => '0.64',
     },
