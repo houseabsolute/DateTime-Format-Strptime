@@ -443,7 +443,7 @@ iso_week_year_100 = $iso_week_year_100
             unless $Year;
         my $month_count  = 0;
         my $month_number = 0;
-        foreach my $month ( @{ $self->{_locale}->month_names } ) {
+        foreach my $month ( @{ $self->{_locale}->month_format_wide } ) {
             $month_count++;
 
             # 			use bytes;
@@ -454,7 +454,7 @@ iso_week_year_100 = $iso_week_year_100
         }
         unless ($month_number) {
             my $month_count = 0;
-            foreach my $month ( @{ $self->{_locale}->month_abbreviations } ) {
+            foreach my $month ( @{ $self->{_locale}->month_format_abbreviated } ) {
                 $month_count++;
 
                 # 				use bytes;
@@ -569,7 +569,7 @@ iso_week_year_100 = $iso_week_year_100
         "You must specify am or pm for 12 hour clocks ($hour_12|$ampm).")
         and return undef
         if ( $hour_12 && ( !$ampm ) );
-    ( $Am, $Pm ) = @{ $self->{_locale}->am_pms };
+    ( $Am, $Pm ) = @{ $self->{_locale}->am_pm_abbreviated };
     if ( lc $ampm eq lc $Pm ) {
         if ($hour_12) {
             $hour_12 += 12 if $hour_12 and $hour_12 != 12;
@@ -676,7 +676,7 @@ iso_week_year_100 = $iso_week_year_100
     if ($dow_name) {
         my $dow_count  = 0;
         my $dow_number = 0;
-        foreach my $dow ( @{ $self->{_locale}->day_names } ) {
+        foreach my $dow ( @{ $self->{_locale}->day_format_wide } ) {
             $dow_count++;
             use bytes;
             if ( lc $dow eq lc $dow_name ) {
@@ -686,7 +686,7 @@ iso_week_year_100 = $iso_week_year_100
         }
         unless ($dow_number) {
             my $dow_count = 0;
-            foreach my $dow ( @{ $self->{_locale}->day_abbreviations } ) {
+            foreach my $dow ( @{ $self->{_locale}->day_format_abbreviated } ) {
                 $dow_count++;
                 use bytes;
                 if ( lc $dow eq lc $dow_name ) {
@@ -774,18 +774,18 @@ sub _build_parser {
     $field_list = join( '', @fields );
 
     # Locale-ize the parser
-    my $ampm_list = join( '|', @{ $self->{_locale}->am_pms } );
+    my $ampm_list = join( '|', @{ $self->{_locale}->am_pm_abbreviated } );
     $ampm_list .= '|' . lc $ampm_list;
 
-    my $default_date_format = $self->{_locale}->default_date_format;
+    my $default_date_format = $self->{_locale}->glibc_date_format;
     my @locale_format = $default_date_format =~ m/(%\{\w+\}|%\d*.)/g;
     $default_date_format = join( '', @locale_format );
 
-    my $default_time_format = $self->{_locale}->default_time_format;
+    my $default_time_format = $self->{_locale}->glibc_time_format;
     @locale_format = $default_time_format =~ m/(%\{\w+\}|%\d*.)/g;
     $default_time_format = join( '', @locale_format );
 
-    my $default_datetime_format = $self->{_locale}->default_datetime_format;
+    my $default_datetime_format = $self->{_locale}->glibc_datetime_format;
     @locale_format = $default_datetime_format =~ m/(%\{\w+\}|%\d*.)/g;
     $default_datetime_format = join( '', @locale_format );
 
@@ -796,17 +796,17 @@ sub _build_parser {
     $regex      =~ s/%%/__ESCAPED_PERCENT_SIGN_MARKER__/g;
     $field_list =~ s/%%/__ESCAPED_PERCENT_SIGN_MARKER__/g;
 
-    $regex      =~ s/%c/$self->{_locale}->default_datetime_format/eg;
+    $regex      =~ s/%c/$self->{_locale}->glibc_datetime_format/eg;
     $field_list =~ s/%c/$default_datetime_format/eg;
 
     # %c is the locale's default datetime format.
 
-    $regex      =~ s/%x/$self->{_locale}->default_date_format/eg;
+    $regex      =~ s/%x/$self->{_locale}->glibc_date_format/eg;
     $field_list =~ s/%x/$default_date_format/eg;
 
     # %x is the locale's default date format.
 
-    $regex      =~ s/%X/$self->{_locale}->default_time_format/eg;
+    $regex      =~ s/%X/$self->{_locale}->glibc_time_format/eg;
     $field_list =~ s/%X/$default_time_format/eg;
 
     # %x is the locale's default time format.
@@ -846,8 +846,8 @@ sub _build_parser {
         '|',
         map      { quotemeta $_ }
             sort { length $b <=> length $a }
-            grep( /\W/, @{ $self->{_locale}->day_names },
-            @{ $self->{_locale}->day_abbreviations } )
+            grep( /\W/, @{ $self->{_locale}->day_format_wide },
+            @{ $self->{_locale}->day_format_abbreviated } )
     );
     $day_re .= '|' if $day_re;
     $regex      =~ s/%a/($day_re\\w+)/gi;
@@ -860,8 +860,8 @@ sub _build_parser {
         '|',
         map      { quotemeta $_ }
             sort { length $b <=> length $a }
-            grep( /\s|\d/, @{ $self->{_locale}->month_names },
-            @{ $self->{_locale}->month_abbreviations } )
+            grep( /\s|\d/, @{ $self->{_locale}->month_format_wide },
+            @{ $self->{_locale}->month_format_abbreviated } )
     );
     $month_re .= '|' if $month_re;
     $month_re .= '[^\\s\\d]+';
