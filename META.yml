@@ -1,24 +1,29 @@
---- #YAML:1.0
-meta-spec:
-        version: 1.3
-        url: http://module-build.sourceforge.net/META-spec-v1.3.html
-name:           DateTime-Format-Strptime
-version:        1.1000
-abstract:       Parse and format strp and strf time patterns
+---
+abstract: 'Parse and format strp and strf time patterns'
 author:
-        - Rick Measham <rickm@cpan.org>
-licence:        perl
-distribution_type:      module
+  - 'Dave Rolsky <autarch@urth.org>'
+build_requires:
+  Module::Build: 0
+configure_requires:
+  Module::Build: 0.36
+generated_by: 'Module::Build version 0.3603'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: DateTime-Format-Strptime
+provides:
+  DateTime::Format::Strptime:
+    file: lib/DateTime/Format/Strptime.pm
+    version: 1.2000
 requires:
-        Params::Validate:              0.64
-        DateTime:                      0.4304
-        DateTime::Locale:              0.43
-        DateTime::TimeZone:            0.79
+  DateTime: 0.4304
+  DateTime::Locale: 0.45
+  DateTime::TimeZone: 0.79
+  Params::Validate: 0.64
 resources:
-        licence:        http://dev.perl.org/licenses/
-        homepage:       http://datetime-format-strptime.googlecode.com/
-        bugtracker:     http://code.google.com/p/datetime-format-strptime/issues/list
-        repository:     http://datetime-format-strptime.googlecode.com/svn/trunk/
-        MailingList:    http://lists.cpan.org/showlist.cgi?name=datetime
-generated_by:   Rick Measham <rickm@cpan.org>
-
+  bugtracker: http://rt.cpan.org/NoAuth/Bugs.html?Dist=DateTime-Format-Strptime
+  homepage: http://datetime.perl.org/
+  license: http://dev.perl.org/licenses/
+  repository: http://hg.urth.org/hg/DateTime-Format-Strptime
+version: 1.2000
