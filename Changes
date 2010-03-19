@@ -1,6 +1,5 @@
-1.2000
+1.2000 2010-03-19
     - Updated to use non-deprecated DateTime::Locale API
-
 
 1.1000 2009-07-13 -- Regex Pattern
     - If the pattern you pass in is a regular expression, that will be honored.
