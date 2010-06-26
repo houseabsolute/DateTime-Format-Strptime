@@ -1067,11 +1067,9 @@ sub strptime {
 }
 
 1;
+# ABSTRACT: Parse and format strp and strf time patterns
+
 __END__
-
-=head1 NAME
-
-DateTime::Format::Strptime - Parse and format strp and strf time patterns
 
 =head1 SYNOPSIS
 
@@ -1402,29 +1400,16 @@ C<strftime()> method, but can be passed to C<format_datetime()>.
 
 =back
 
+=head1 AUTHOR EMERITUS
+
+This module was created by Rick Measham.
+
 =head1 BUGS
 
 Please report any bugs or feature requests to
 C<bug-datetime-format-strptime@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org>. I will be notified, and then you'll automatically be
 notified of progress on your bug as I make changes.
-
-=head1 COPYRIGHT & LICENSE
-
-Copyright E<169> Rick Measham, 2003-2009, Dave Rolsky 2010. All rights
-reserved.
-
-This library is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
-
-The full text of the licenses can be found in the F<LICENSE> file included
-with this module.
-
-=head1 AUTHOR
-
-Dave Rolsky <autarch@urth.org>
-
-Originally created by Rick Measham.
 
 =head1 SEE ALSO
 
