@@ -46,8 +46,10 @@ foreach (@tests) {
     my ( $pattern, $data, $expect ) = @$_;
     $expect ||= $data;
     $object->pattern($pattern);
-    is( $object->format_datetime( $object->parse_datetime($data) ), $expect,
-        $pattern );
+    is(
+        $object->format_datetime( $object->parse_datetime($data) ), $expect,
+        $pattern
+    );
 }
 
 SKIP: {
@@ -94,6 +96,8 @@ SKIP: {
 
 $object->time_zone('Australia/Perth');
 $object->pattern('%Y %H:%M:%S %Z');
-is( $object->format_datetime( $object->parse_datetime('2003 23:45:56 MDT') ),
-    '2003 13:45:56 WST', $object->pattern );
+is(
+    $object->format_datetime( $object->parse_datetime('2003 23:45:56 MDT') ),
+    '2003 13:45:56 WST', $object->pattern
+);
 

@@ -381,8 +381,10 @@ iso_week_year_100 = $iso_week_year_100
 
     # If there's an epoch, we're done. Just need to check all the others
     if ($epoch) {
-        $epoch_dt = DateTime->from_epoch( epoch => $epoch,
-            time_zone => $use_timezone );
+        $epoch_dt = DateTime->from_epoch(
+            epoch     => $epoch,
+            time_zone => $use_timezone
+        );
 
         $Year  = $epoch_dt->year;
         $Month = $epoch_dt->month;
@@ -454,7 +456,9 @@ iso_week_year_100 = $iso_week_year_100
         }
         unless ($month_number) {
             my $month_count = 0;
-            foreach my $month ( @{ $self->{_locale}->month_format_abbreviated } ) {
+            foreach
+                my $month ( @{ $self->{_locale}->month_format_abbreviated } )
+            {
                 $month_count++;
 
                 # 				use bytes;
@@ -485,7 +489,8 @@ iso_week_year_100 = $iso_week_year_100
         $self->local_croak(
             "Your two month values ($month_name and $month) do not match.")
             and return undef
-            if $Month and $month != $Month;
+            if $Month
+                and $month != $Month;
         $Month = $month;
     }
     $self->local_croak("Your month value does not match your epoch.")
@@ -500,8 +505,10 @@ iso_week_year_100 = $iso_week_year_100
             and return undef
             unless $Year;
         $doy_dt = eval {
-            DateTime->from_day_of_year( year => $Year, day_of_year => $doy,
-                time_zone => $use_timezone );
+            DateTime->from_day_of_year(
+                year      => $Year, day_of_year => $doy,
+                time_zone => $use_timezone
+            );
         };
         $self->local_croak("Day of year $Year-$doy is not valid")
             and return undef
@@ -512,7 +519,8 @@ iso_week_year_100 = $iso_week_year_100
                 . $doy_dt->month_name
                 . ") is not in your month ($Month)" )
             and return undef
-            if $Month and $month != $Month;
+            if $Month
+                and $month != $Month;
         $Month = $month;
     }
     $self->local_croak("Your day of the year does not match your epoch.")
@@ -540,10 +548,13 @@ iso_week_year_100 = $iso_week_year_100
             "There is no use providing a day without providing a month and year."
             )
             and return undef
-            unless $Year and $Month;
+            unless $Year
+                and $Month;
         my $dt = eval {
-            DateTime->new( year => $Year+0, month => $Month+0, day => $Day+0,
-                hour => 12, time_zone => $use_timezone );
+            DateTime->new(
+                year => $Year + 0, month     => $Month + 0, day => $Day + 0,
+                hour => 12,        time_zone => $use_timezone
+            );
         };
         $self->local_croak("Datetime $Year-$Month-$Day is not a valid date")
             and return undef
@@ -577,7 +588,8 @@ iso_week_year_100 = $iso_week_year_100
         $self->local_croak(
             "Your am/pm value ($ampm) does not match your hour ($hour_24)")
             and return undef
-            if $hour_24 and $hour_24 < 12;
+            if $hour_24
+                and $hour_24 < 12;
     }
     elsif ( lc $ampm eq lc $Am ) {
         if ($hour_12) {
@@ -646,14 +658,14 @@ iso_week_year_100 = $iso_week_year_100
 
     my $potential_return = eval {
         DateTime->new(
-            year  => ( $Year  || 1 )+0,
-            month => ( $Month || 1 )+0,
-            day   => ( $Day   || 1 )+0,
+            year  => ( $Year  || 1 ) + 0,
+            month => ( $Month || 1 ) + 0,
+            day   => ( $Day   || 1 ) + 0,
 
-            hour       => ( $Hour       || 0 )+0,
-            minute     => ( $Minute     || 0 )+0,
-            second     => ( $Second     || 0 )+0,
-            nanosecond => ( $Nanosecond || 0 )+0,
+            hour       => ( $Hour       || 0 ) + 0,
+            minute     => ( $Minute     || 0 ) + 0,
+            second     => ( $Second     || 0 ) + 0,
+            nanosecond => ( $Nanosecond || 0 ) + 0,
 
             locale    => $self->{_locale},
             time_zone => $use_timezone,
@@ -665,13 +677,15 @@ iso_week_year_100 = $iso_week_year_100
         "Your day of the week ($dow_mon_1) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
-        if $dow_mon_1 and $potential_return->dow != $dow_mon_1;
+        if $dow_mon_1
+            and $potential_return->dow != $dow_mon_1;
 
     $self->local_croak(
         "Your day of the week ($dow_sun_0) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
-        if $dow_sun_0 and ( $potential_return->dow % 7 ) != $dow_sun_0;
+        if $dow_sun_0
+            and ( $potential_return->dow % 7 ) != $dow_sun_0;
 
     if ($dow_name) {
         my $dow_count  = 0;
@@ -686,7 +700,8 @@ iso_week_year_100 = $iso_week_year_100
         }
         unless ($dow_number) {
             my $dow_count = 0;
-            foreach my $dow ( @{ $self->{_locale}->day_format_abbreviated } ) {
+            foreach my $dow ( @{ $self->{_locale}->day_format_abbreviated } )
+            {
                 $dow_count++;
                 use bytes;
                 if ( lc $dow eq lc $dow_name ) {
@@ -704,19 +719,22 @@ iso_week_year_100 = $iso_week_year_100
             "Your day of the week ($dow_name) does not match the date supplied: "
                 . $potential_return->ymd )
             and return undef
-            if $dow_number and $potential_return->dow != $dow_number;
+            if $dow_number
+                and $potential_return->dow != $dow_number;
     }
 
     $self->local_croak(
         "Your week number ($week_sun_0) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
-        if $week_sun_0 and $potential_return->strftime('%U') != $week_sun_0;
+        if $week_sun_0
+            and $potential_return->strftime('%U') != $week_sun_0;
     $self->local_croak(
         "Your week number ($week_mon_1) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
-        if $week_mon_1 and $potential_return->strftime('%W') != $week_mon_1;
+        if $week_mon_1
+            and $potential_return->strftime('%W') != $week_mon_1;
     $self->local_croak(
         "Your ISO week year ($iso_week_year) does not match the date supplied: "
             . $potential_return->ymd )
@@ -1042,8 +1060,10 @@ sub strftime {
 
 sub strptime {
     my ( $pattern, $time_string ) = @_;
-    return DateTime::Format::Strptime->new( pattern => $pattern,
-        on_error => 'croak' )->parse_datetime($time_string);
+    return DateTime::Format::Strptime->new(
+        pattern  => $pattern,
+        on_error => 'croak'
+    )->parse_datetime($time_string);
 }
 
 1;
