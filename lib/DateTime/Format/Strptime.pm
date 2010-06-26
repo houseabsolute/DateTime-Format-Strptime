@@ -542,7 +542,7 @@ iso_week_year_100 = $iso_week_year_100
             and return undef
             unless $Year and $Month;
         my $dt = eval {
-            DateTime->new( year => $Year, month => $Month, day => $Day,
+            DateTime->new( year => $Year+0, month => $Month+0, day => $Day+0,
                 hour => 12, time_zone => $use_timezone );
         };
         $self->local_croak("Datetime $Year-$Month-$Day is not a valid date")
@@ -646,14 +646,14 @@ iso_week_year_100 = $iso_week_year_100
 
     my $potential_return = eval {
         DateTime->new(
-            year  => ( $Year  || 1 ),
-            month => ( $Month || 1 ),
-            day   => ( $Day   || 1 ),
+            year  => ( $Year  || 1 )+0,
+            month => ( $Month || 1 )+0,
+            day   => ( $Day   || 1 )+0,
 
-            hour       => ( $Hour       || 0 ),
-            minute     => ( $Minute     || 0 ),
-            second     => ( $Second     || 0 ),
-            nanosecond => ( $Nanosecond || 0 ),
+            hour       => ( $Hour       || 0 )+0,
+            minute     => ( $Minute     || 0 )+0,
+            second     => ( $Second     || 0 )+0,
+            nanosecond => ( $Nanosecond || 0 )+0,
 
             locale    => $self->{_locale},
             time_zone => $use_timezone,
