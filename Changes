@@ -1,3 +1,8 @@
+1.3000 2010-06-26
+    - Specifiers which allowed for leading space before a number (like %e)
+      would cause DateTime.pm to throw an error if the date being parsed
+      actually contained leading space. Patch by Alex Vandiver. RT #58459.
+
 1.2000 2010-03-19
     - Updated to use non-deprecated DateTime::Locale API
 
