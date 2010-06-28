@@ -1,3 +1,6 @@
+1.4000 2010-06-28
+    - Actually update $VERSION in module file. Reported by David Wheeler.
+
 1.3000 2010-06-26
     - Specifiers which allowed for leading space before a number (like %e)
       would cause DateTime.pm to throw an error if the date being parsed
