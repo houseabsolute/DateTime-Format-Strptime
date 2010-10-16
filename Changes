@@ -1,3 +1,8 @@
+1.5000 2010-10-16
+
+    - This module did not recognize UTC as a valid time zone. Patch by Danijel
+      Tašov. RT #59209.
+
 1.4000 2010-06-28
     - Actually update $VERSION in module file. Reported by David Wheeler.
 
@@ -6,7 +11,7 @@
       would cause DateTime.pm to throw an error if the date being parsed
       actually contained leading space. Patch by Alex Vandiver. RT #58459.
 
-    - Licnse is now Artistic 2.0
+    - License is now Artistic 2.0
 
 1.2000 2010-03-19
     - Updated to use non-deprecated DateTime::Locale API
