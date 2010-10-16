@@ -2,7 +2,7 @@
 
 # t/008_epoch.t - Epoch (%s) tests
 
-use Test::More tests => 23;
+use Test::More tests => 26;
 use DateTime;
 use DateTime::Format::Strptime;
 
@@ -15,6 +15,15 @@ test(
     locale    => 'en_PH',
     input     => $time,
     epoch     => $time,
+);
+
+# is UTC recognized?
+test(
+    pattern   => "%a %d %b %Y %H:%M:%S %p %Z",
+    time_zone => 'UTC',
+    locale    => 'en_US',
+    input     => "Thu 08 Jul 2010 09:49:02 AM UTC",
+    epoch     => 1278582542,
 );
 
 # diag("Epoch with a no given time_zone assumes 'floating'. (Though when given an epoch, really should assume UTC ..)");
