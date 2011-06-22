@@ -9,8 +9,7 @@ use Params::Validate qw( validate SCALAR SCALARREF BOOLEAN OBJECT CODEREF );
 use Carp;
 
 use Exporter;
-use vars
-    qw( @ISA @EXPORT @EXPORT_OK %ZONEMAP %FORMATS $CROAK $errmsg);
+use vars qw( @ISA @EXPORT @EXPORT_OK %ZONEMAP %FORMATS $CROAK $errmsg);
 
 @ISA       = 'Exporter';
 @EXPORT_OK = qw( &strftime &strptime );
@@ -1067,6 +1066,7 @@ sub strptime {
 }
 
 1;
+
 # ABSTRACT: Parse and format strp and strf time patterns
 
 __END__
