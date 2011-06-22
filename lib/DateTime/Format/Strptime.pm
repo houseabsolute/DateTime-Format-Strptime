@@ -1073,41 +1073,39 @@ __END__
 
 =head1 SYNOPSIS
 
-  use DateTime::Format::Strptime;
+    use DateTime::Format::Strptime;
 
-  my $Strp = new DateTime::Format::Strptime(
-  				pattern     => '%T',
-  				locale      => 'en_AU',
-  				time_zone   => 'Australia/Melbourne',
-  			);
+    my $strp = DateTime::Format::Strptime->new(
+        pattern   => '%T',
+        locale    => 'en_AU',
+        time_zone => 'Australia/Melbourne',
+    );
 
-  my $dt = $Strp->parse_datetime('23:16:42');
+    my $dt = $strp->parse_datetime('23:16:42');
 
-  $Strp->format_datetime($dt);
-	# 23:16:42
+    $strp->format_datetime($dt);
 
+    # 23:16:42
 
+    # Croak when things go wrong:
+    my $strp = DateTime::Format::Strptime->new(
+        pattern   => '%T',
+        locale    => 'en_AU',
+        time_zone => 'Australia/Melbourne',
+        on_error  => 'croak',
+    );
 
-  # Croak when things go wrong:
-  my $Strp = new DateTime::Format::Strptime(
-  				pattern 	=> '%T',
-  				locale	    => 'en_AU',
-  				time_zone	=> 'Australia/Melbourne',
-  				on_error	=> 'croak',
-  			);
+    $newpattern = $strp->pattern('%Q');
 
-  $newpattern = $Strp->pattern('%Q');
-  # Unidentified token in pattern: %Q in %Q at line 34 of script.pl
+    # Unidentified token in pattern: %Q in %Q at line 34 of script.pl
 
-  # Do something else when things go wrong:
-  my $Strp = new DateTime::Format::Strptime(
-  				pattern 	=> '%T',
-  				locale	    => 'en_AU',
-  				time_zone	=> 'Australia/Melbourne',
-  				on_error	=> \&phone_police,
-  			);
-
-
+    # Do something else when things go wrong:
+    my $strp = DateTime::Format::Strptime->new(
+        pattern   => '%T',
+        locale    => 'en_AU',
+        time_zone => 'Australia/Melbourne',
+        on_error  => \&phone_police,
+    );
 
 =head1 DESCRIPTION
 
@@ -1121,7 +1119,7 @@ associated.
 
 =over 4
 
-=item * new( pattern=>$strptime_pattern )
+=item * new( pattern => $strptime_pattern )
 
 Creates the format object. You must specify a pattern, you can also
 specify a C<time_zone> and a C<locale>. If you specify a time zone
@@ -1159,7 +1157,7 @@ these two it is possible to emulate the 'undef' behavior. (Returning a
 true value causes the method to return undef. Returning a false value
 causes the method to bravely continue):
 
-sub{$_[0]->{errmsg} = $_[1]; 1},
+    sub { $_[0]->{errmsg} = $_[1]; 1 },
 
 =back
 
@@ -1224,7 +1222,7 @@ this method so you can work out why things went wrong.
 This code emulates a C<$DateTime::Format::Strptime> with
 the C<on_error> parameter equal to C<'croak'>:
 
-C<$Strp->pattern($pattern) or die $DateTime::Format::Strptime::errmsg>
+C<< $strp->pattern($pattern) or die $DateTime::Format::Strptime::errmsg >>
 
 =back
 
@@ -1235,12 +1233,12 @@ available:
 
 =over 4
 
-=item * strptime($strptime_pattern, $string)
+=item * strptime( $strptime_pattern, $string )
 
 Given a pattern and a string this function will return a new C<DateTime>
 object.
 
-=item * strftime($strftime_pattern, $datetime)
+=item * strftime( $strftime_pattern, $datetime )
 
 Given a pattern and a C<DateTime> object this function will return a
 formatted string.
