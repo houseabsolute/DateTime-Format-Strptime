@@ -1137,10 +1137,10 @@ valid options:
 
 (not undef, 'undef', it's a string not an undefined value)
 
-This is the default behavior. The module will return undef whenever it
-gets upset. The error can be accessed using the $object->errstr method.
-This is the ideal behaviour for interactive use where a user might
-provide an illegal pattern or a date that doesn't match the pattern.
+This is the default behavior. The module will return undef whenever it gets
+upset. The error can be accessed using the C<< $object->errmsg >> method.
+This is the ideal behaviour for interactive use where a user might provide an
+illegal pattern or a date that doesn't match the pattern.
 
 =item * 'croak'
 
