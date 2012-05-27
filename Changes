@@ -180,17 +180,17 @@
         - Clarified parameter discrepancy between synopsis and docs
           (Thanks Chris Winters)
 
-1.0102 Fri, 16 May 2003 07:28:18 + 1000
+1.0102 Fri, 16 May 2003 07:28:18 +1000
     - the 'wonky test' release
         - Fixed the same test as above. Think I actually succeeded
           this time!
 
-1.0101 Tue, 13 May 2003 07:58:23 + 1000
+1.0101 Tue, 13 May 2003 07:58:23 +1000
     - the 'oldtimers' release
         - Fixed a test that was broken if DateTime::TimeZone was not
           version 0.13 or above.
 
-1.0100 Sun, 11 May 2003 13:54:36 + 1000
+1.0100 Sun, 11 May 2003 13:54:36 +1000
     - the 'nanozone' release
         - If we have the latest DateTime we run the test mentioned above
         - Fixed my version format as advised by Iain Truskett
@@ -200,7 +200,7 @@
         - Got Time Zones working, including mapping non-ambiguous TLAs
           offsets and Olsen names (the latter uses the %q token)
 
-1.00.02 Tue, 29 Apr 2003 07:03:19 + 1000
+1.00.02 Tue, 29 Apr 2003 07:03:19 +1000
     - the 'please the testers' release
         - Fixed a test that only worked in DateTime was from CVS
         - Fixed two issues noted by Iain Truskett:
