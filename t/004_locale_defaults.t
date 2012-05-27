@@ -2,7 +2,7 @@
 
 # t/004_locale_defaults.t - check module dates in various formats
 
-use Test::More tests => 60;
+use Test::More;
 use DateTime::Format::Strptime;
 use DateTime;
 use DateTime::TimeZone;
@@ -65,3 +65,4 @@ foreach (@tests) {
     }
 }
 
+done_testing();

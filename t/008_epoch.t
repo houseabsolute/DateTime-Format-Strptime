@@ -2,7 +2,7 @@
 
 # t/008_epoch.t - Epoch (%s) tests
 
-use Test::More tests => 26;
+use Test::More;
 use DateTime;
 use DateTime::Format::Strptime;
 
@@ -84,3 +84,5 @@ sub test {
 
     is( $parsed->epoch, $arg{epoch} );
 }
+
+done_testing();

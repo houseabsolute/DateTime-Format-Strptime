@@ -2,7 +2,7 @@
 
 # t/002_basic.t - check module dates in various formats
 
-use Test::More tests => 257;
+use Test::More;
 
 #use Test::More qw/no_plan/;
 use DateTime::Format::Strptime;
@@ -118,3 +118,5 @@ foreach my $locale (@locales) {
     # Make sure the datetime, however, retained its own locale
     is( $dt->locale->id, 'fr' )
 }
+
+done_testing();

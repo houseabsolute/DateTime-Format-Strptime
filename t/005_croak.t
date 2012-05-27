@@ -1,6 +1,6 @@
 # t/004_croak.t - make sure we croak when we should
 
-use Test::More tests => 30;
+use Test::More;
 use DateTime::Format::Strptime;
 
 # 1..2
@@ -140,3 +140,5 @@ is( $object->parse_datetime("2002 11/30/03"), undef,
 is( $object->{errmsg},
     'Oops! Teehee! Your two year values (03 and 2002) do not match.',
     "Error message should reflect Ambiguous date time string" );
+
+done_testing();

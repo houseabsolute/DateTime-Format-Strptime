@@ -2,7 +2,7 @@
 
 # t/007_edge.t - these tests are for edge case bug report errors
 
-use Test::More tests => 16;
+use Test::More;
 use DateTime;
 use DateTime::Format::Strptime;
 
@@ -103,3 +103,5 @@ sub test {
 
     is( $parsed->epoch, $arg{epoch} );
 }
+
+done_testing();

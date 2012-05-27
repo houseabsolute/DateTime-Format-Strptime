@@ -2,7 +2,7 @@
 
 # t/002_basic.t - check module dates in various formats
 
-use Test::More tests => 19;
+use Test::More;
 use DateTime::Format::Strptime;
 use DateTime;
 use DateTime::TimeZone;
@@ -101,3 +101,4 @@ is(
     '2003 13:45:56 WST', $object->pattern
 );
 
+done_testing();

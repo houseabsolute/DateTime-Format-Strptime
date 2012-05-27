@@ -1,6 +1,6 @@
 # t/002_basic.t - check module dates in various formats
 
-use Test::More tests => 14;
+use Test::More;
 use DateTime::Format::Strptime;
 
 {
@@ -92,3 +92,5 @@ use DateTime::Format::Strptime;
             $name );
     }
 }
+
+done_testing();

@@ -2,7 +2,7 @@
 
 # t/009_regexp.t - Patterns as regular expressions
 
-use Test::More tests => 21;
+use Test::More;
 use DateTime;
 use DateTime::Format::Strptime;
 
@@ -59,3 +59,5 @@ sub test {
         is( $parsed->$k, $arg{output}{$k} );
     }
 }
+
+done_testing();
