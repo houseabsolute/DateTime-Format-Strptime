@@ -4,34 +4,34 @@
   runtime prereq. RT #76128.
 
 
-1.5000 2010-10-16
+1.5000   2010-10-16
 
     - This module did not recognize UTC as a valid time zone. Patch by Danijel
       Tašov. RT #59209.
 
-1.4000 2010-06-28
+1.4000   2010-06-28
     - Actually update $VERSION in module file. Reported by David Wheeler.
 
-1.3000 2010-06-26
+1.3000   2010-06-26
     - Specifiers which allowed for leading space before a number (like %e)
       would cause DateTime.pm to throw an error if the date being parsed
       actually contained leading space. Patch by Alex Vandiver. RT #58459.
 
     - License is now Artistic 2.0
 
-1.2000 2010-03-19
+1.2000   2010-03-19
     - Updated to use non-deprecated DateTime::Locale API
 
-1.1000 2009-07-13 -- Regex Pattern
+1.1000   2009-07-13 -- Regex Pattern
     - If the pattern you pass in is a regular expression, that will be honored.
     - Changed the locale tests to use require the latest version of Locale until the target stops moving.
 
-1.0901 2009-05-16 -- Official release of 1.0900_01
+1.0901   2009-05-16 -- Official release of 1.0900_01
 
 1.0900_01 2009-04-18 -- DEVELOPER RELEASE ONLY
     - Makefile.PL changes for Windows users as per issue #16
 
-1.0900 2009-02-22
+1.0900   2009-02-22
     - Another pile-o-bugs
         - It seems that I also wasn't seeing notifications from RT
           (please don't use it, use the Gooogle project) so all the
@@ -51,13 +51,13 @@
             #8      Add DateTime::Locale to documentation
             #10     Parsing bug -- can't detect word boundry after month abbr
 
-1.0800 2008-08-07
+1.0800   2008-08-07
     - Pile-o-bugs
         - It seems that I wasn't getting notifications from Google
           when people had reported bugs, so there's a pile of fixes
           in this release. Hopefully that fixes everyone's issues.
 
-1.0702 2007-09-19
+1.0702   2007-09-19
     - YAML and POD
         - Updated the META.yml file to have the correct 'resources'
           and match the latest spec
@@ -66,7 +66,7 @@
         - This version ONLY changes the documentation and so it not a
           required update.
 
-1.0701 2007-09-18
+1.0701   2007-09-18
     - The revised locale tests releasese
         - Many people pointed out that while this module hadn't broken
           the tests for the French locale had. This is due to a new
