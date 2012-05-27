@@ -1,6 +1,6 @@
 # t/004_croak.t - make sure we croak when we should
 
-use Test::More;
+use Test::More 0.88;
 use DateTime::Format::Strptime;
 
 # 1..2

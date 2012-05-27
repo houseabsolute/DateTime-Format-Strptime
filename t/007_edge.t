@@ -2,7 +2,7 @@
 
 # t/007_edge.t - these tests are for edge case bug report errors
 
-use Test::More;
+use Test::More 0.88;
 use DateTime;
 use DateTime::Format::Strptime;
 

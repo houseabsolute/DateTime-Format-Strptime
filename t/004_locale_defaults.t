@@ -2,7 +2,7 @@
 
 # t/004_locale_defaults.t - check module dates in various formats
 
-use Test::More;
+use Test::More 0.88;
 use DateTime::Format::Strptime;
 use DateTime;
 use DateTime::TimeZone;

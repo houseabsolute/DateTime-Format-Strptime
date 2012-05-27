@@ -2,7 +2,7 @@
 
 # t/008_epoch.t - Epoch (%s) tests
 
-use Test::More;
+use Test::More 0.88;
 use DateTime;
 use DateTime::Format::Strptime;
 

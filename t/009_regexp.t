@@ -2,7 +2,7 @@
 
 # t/009_regexp.t - Patterns as regular expressions
 
-use Test::More;
+use Test::More 0.88;
 use DateTime;
 use DateTime::Format::Strptime;
 

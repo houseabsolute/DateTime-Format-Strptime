@@ -2,7 +2,7 @@
 
 # t/002_basic.t - check module dates in various formats
 
-use Test::More;
+use Test::More 0.88;
 
 #use Test::More qw/no_plan/;
 use DateTime::Format::Strptime;
