@@ -2,10 +2,10 @@ package DateTime::Format::Strptime;
 
 use strict;
 
-use DateTime;
-use DateTime::Locale;
-use DateTime::TimeZone;
-use Params::Validate qw( validate SCALAR SCALARREF BOOLEAN OBJECT CODEREF );
+use DateTime 0.430;
+use DateTime::Locale 0.45;
+use DateTime::TimeZone 0.79;
+use Params::Validate 0.64 qw( validate SCALAR SCALARREF BOOLEAN OBJECT CODEREF );
 use Carp;
 
 use Exporter;
