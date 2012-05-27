@@ -1,7 +1,7 @@
 {{$NEXT}}
 
 - Packaging cleanup, including listing Test::More as a test prereq, not a
-  runtime prereq. Reported by Joakim Tormoen. RT #77130.
+  runtime prereq. RT #76128.
 
 
 1.5000 2010-10-16
