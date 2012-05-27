@@ -447,7 +447,6 @@ iso_week_year_100 = $iso_week_year_100
         foreach my $month ( @{ $self->{_locale}->month_format_wide } ) {
             $month_count++;
 
-            # 			use bytes;
             if ( lc $month eq lc $month_name ) {
                 $month_number = $month_count;
                 last;
@@ -460,7 +459,6 @@ iso_week_year_100 = $iso_week_year_100
             {
                 $month_count++;
 
-                # 				use bytes;
                 # When abbreviating, sometimes there's a period, sometimes not.
                 $month      =~ s/\.$//;
                 $month_name =~ s/\.$//;
@@ -691,7 +689,6 @@ iso_week_year_100 = $iso_week_year_100
         my $dow_number = 0;
         foreach my $dow ( @{ $self->{_locale}->day_format_wide } ) {
             $dow_count++;
-            use bytes;
             if ( lc $dow eq lc $dow_name ) {
                 $dow_number = $dow_count;
                 last;
@@ -702,7 +699,6 @@ iso_week_year_100 = $iso_week_year_100
             foreach my $dow ( @{ $self->{_locale}->day_format_abbreviated } )
             {
                 $dow_count++;
-                use bytes;
                 if ( lc $dow eq lc $dow_name ) {
                     $dow_number = $dow_count;
                     last;
