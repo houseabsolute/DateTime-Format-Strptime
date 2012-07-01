@@ -1268,7 +1268,7 @@ The century number (0-99).
 
 =item * %d or %e
 
-The day of month (1-31).
+The day of month (01-31). This will parse single digit numbers as well.
 
 =item * %D
 
@@ -1291,7 +1291,7 @@ The year corresponding to the ISO week number.
 
 =item * %H
 
-The hour (0-23).
+The hour (00-23). This will parse single digit numbers as well.
 
 =item * %I
 
@@ -1303,11 +1303,11 @@ The day number in the year (1-366).
 
 =item * %m
 
-The month number (1-12).
+The month number (01-12). This will parse single digit numbers as well.
 
 =item * %M
 
-The minute (0-59).
+The minute (00-59). This will parse single digit numbers as well.
 
 =item * %n
 
