@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.52     2012-07-01
+
 - Shut up "unescaped braces in regex" warning from 5.17.0. RT #77514. Patch by
   Zefram.
 
