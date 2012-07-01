@@ -1007,8 +1007,8 @@ sub _build_parser {
 
     # The Olson timezone name.
 
-    $regex      =~ s|%{(\w+)}|(DateTime->can($1)) ? "(.+)" : ".+"|eg;
-    $field_list =~ s|(%{(\w+)})|(DateTime->can($2)) ? "#$2#" : $1 |eg;
+    $regex      =~ s|%\{(\w+)\}|(DateTime->can($1)) ? "(.+)" : ".+"|eg;
+    $field_list =~ s|(%\{(\w+)\})|(DateTime->can($2)) ? "#$2#" : $1 |eg;
 
     # Any function in DateTime.
 
