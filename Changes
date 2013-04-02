@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.53     2013-04-02
+
 - A fix in DateTime.pm 1.00 broke a test in this distro. Reported by Anthony J
   Lucas. RT #84371.
 
