@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.54     2013-04-02
+
 - Require DateTime.pm 1.00 because without it tests will break.
 
 
