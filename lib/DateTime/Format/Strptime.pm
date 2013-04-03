@@ -2,7 +2,7 @@ package DateTime::Format::Strptime;
 
 use strict;
 
-use DateTime 0.44;
+use DateTime 1.00;
 use DateTime::Locale 0.45;
 use DateTime::TimeZone 0.79;
 use Params::Validate 0.64 qw( validate SCALAR SCALARREF BOOLEAN OBJECT CODEREF );
