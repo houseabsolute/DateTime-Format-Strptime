@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+- Require DateTime.pm 1.00 because without it tests will break.
+
+
 1.53     2013-04-02
 
 - A fix in DateTime.pm 1.00 broke a test in this distro. Reported by Anthony J
