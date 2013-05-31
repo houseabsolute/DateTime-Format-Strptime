@@ -1315,7 +1315,8 @@ Arbitrary whitespace.
 
 =item * %N
 
-Nanoseconds. For other sub-second values use C<%[number]N>.
+Nanoseconds. For other sub-second values use C<%[number]N>, where
+C<[number]> is the number of digits (without the brackets).
 
 =item * %p
 
