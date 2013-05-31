@@ -272,10 +272,10 @@ sub parse_datetime {
     die $@ if $@;
 
     if ( $self->{diagnostic} ) {
-        print qq|
+        print <<EOF;
 
 Entered     = $time_string
-Parser		= $parser
+Parser      = $parser
 
 dow_name    = $dow_name
 month_name  = $month_name
@@ -303,7 +303,7 @@ epoch       = $epoch
 iso_week_year     = $iso_week_year
 iso_week_year_100 = $iso_week_year_100
 
-		|;
+EOF
 
     }
 
