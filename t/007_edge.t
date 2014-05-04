@@ -67,7 +67,7 @@ is( substr( $@, 0, 39 ), 'Datetime 0000-00-00 is not a valid date',
 #diag("1.09 - TZs in the wrong case should work (unless they have a cap in the middle of a word)");
 {
     my $parser
-        = new DateTime::Format::Strptime( pattern => '%O', diagnostic => 1 );
+        = new DateTime::Format::Strptime( pattern => '%O', diagnostic => 0 );
     is( $parser->parse_datetime('AMERICA/NEW_YORK')->time_zone->name,
         'America/New_York' );
 }
