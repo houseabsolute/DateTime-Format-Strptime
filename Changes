@@ -3,6 +3,9 @@
 - If diagnostic is true for an object, it will now use Test::More::diag()
   under the test harness rather than printing to STDOUT.
 
+- The %z specifier will now parse UTC offsets with a colon like
+  "+01:00". Requested by David Pyke Le Brun. RT #91458.
+
 
 1.54     2013-04-02
 

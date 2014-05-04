@@ -996,7 +996,7 @@ sub _build_parser {
 
     # is the year including the century (for example, 1998).
 
-    $regex      =~ s|%z|([+-]\\d{4})|g;
+    $regex      =~ s|%z|([+-]\\d\\d:?\\d\\d)|g;
     $field_list =~ s/%z/#tz_offset#/g;
 
     # Timezone Offset.
@@ -1383,8 +1383,7 @@ The year, including century (for example, 1991).
 
 =item * %z
 
-An RFC-822/ISO 8601 standard time zone specification. (For example
-+1100) [See note below]
+A time zone offset in the format "[+-]HHmm" or "[+-]HH:mm".
 
 =item * %Z
 

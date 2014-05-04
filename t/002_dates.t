@@ -76,6 +76,12 @@ SKIP: {
         '23:45:56 +1000', '%H:%M:%S %z'
     );
 
+    $object->pattern('%H:%M:%S %z');
+    is(
+        $object->format_datetime( $object->parse_datetime('23:45:56 +10:00') ),
+        '23:45:56 +1000', '%H:%M:%S %z'
+    );
+
     $object->pattern('%H:%M:%S %Z');
     is(
         $object->format_datetime( $object->parse_datetime('23:45:56 AEST') ),
