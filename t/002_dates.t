@@ -22,6 +22,11 @@ my @tests = (
     [ '%b %d, %Y',         'Jan 24, 2003' ],
     [ '%B %d, %Y',         'January 24, 2003' ],
 
+    # Simple dates with weekday
+    [ '%a%Y-%m-%d', 'Sun2014-05-04' ],
+    [ '%A%Y-%m-%d', 'Sunday2014-05-04' ],
+    [ '%a%m%d_%Y' => 'Sun0504_2014' ],
+
     # Simple times
     [ '%H:%M:%S',    '23:45:56' ],
     [ '%l:%M:%S %p', '11:34:56 PM' ],

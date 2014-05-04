@@ -863,11 +863,11 @@ sub _build_parser {
         '|',
         map      { quotemeta $_ }
             sort { length $b <=> length $a }
-            grep( /\W/, @{ $self->{_locale}->day_format_wide },
-            @{ $self->{_locale}->day_format_abbreviated } )
+            @{ $self->{_locale}->day_format_wide },
+        @{ $self->{_locale}->day_format_abbreviated }
     );
     $day_re .= '|' if $day_re;
-    $regex      =~ s/%a/($day_re\\w+)/gi;
+    $regex =~ s/%a/($day_re\\w+)/gi;
     $field_list =~ s/%a/#dow_name#/gi;
 
     # %a is the day of the week, using the locale's weekday names; either the abbreviated or full name may be specified.
@@ -877,8 +877,8 @@ sub _build_parser {
         '|',
         map      { quotemeta $_ }
             sort { length $b <=> length $a }
-            grep( /\s|\d/, @{ $self->{_locale}->month_format_wide },
-            @{ $self->{_locale}->month_format_abbreviated } )
+            @{ $self->{_locale}->month_format_wide },
+        @{ $self->{_locale}->month_format_abbreviated }
     );
     $month_re .= '|' if $month_re;
     $month_re .= '[^\\s\\d]+';
