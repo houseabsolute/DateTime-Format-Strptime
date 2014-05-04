@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- If diagnostic is true for an object, it will now use Test::More::diag()
+  under the test harness rather than printing to STDOUT.
+
+
 1.54     2013-04-02
 
 - Require DateTime.pm 1.00 because without it tests will break.

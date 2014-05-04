@@ -272,8 +272,7 @@ sub parse_datetime {
     die $@ if $@;
 
     if ( $self->{diagnostic} ) {
-        print <<EOF;
-
+        my $diag = <<"EOF";
 Entered     = $time_string
 Parser      = $parser
 
@@ -302,9 +301,14 @@ timezone    = $timezone
 epoch       = $epoch
 iso_week_year     = $iso_week_year
 iso_week_year_100 = $iso_week_year_100
-
 EOF
 
+        if ( $ENV{HARNESS_ACTIVE} ) {
+            Test::More::diag($diag);
+        }
+        else {
+            print $diag;
+        }
     }
 
     $self->local_croak("Your datetime does not match your pattern.")
