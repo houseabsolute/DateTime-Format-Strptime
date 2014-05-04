@@ -9,9 +9,7 @@ use DateTime::TimeZone;
 
 my $object = DateTime::Format::Strptime->new(
     pattern => '%D',
-
-    #	time_zone => 'Australia/Melbourne',
-    diagnostic => 1,
+    diagnostic => 0,
     on_error   => 'croak',
 );
 
