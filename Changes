@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.55     2014-05-04
+
 - If diagnostic is true for an object, it will now use Test::More::diag()
   under the test harness rather than printing to STDOUT.
 
