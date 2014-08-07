@@ -2,6 +2,13 @@
 
 - Recent DateTime::TimeZone changes broke the tests.
 
+- Fixed Latin-1 content in test code. It's now UTF-8.
+
+
+1.55
+
+- Broken release
+
 
 1.54     2013-04-02
 
