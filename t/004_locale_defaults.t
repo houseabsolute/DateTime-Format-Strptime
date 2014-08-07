@@ -2,6 +2,8 @@
 
 # t/004_locale_defaults.t - check module dates in various formats
 
+use utf8;
+
 use Test::More 0.88;
 use DateTime::Format::Strptime;
 use DateTime;
@@ -34,12 +36,12 @@ my @tests = (
     # French French
     [ 'fr_FR', '%x', '31/12/1998' ],
     [ 'fr_FR', '%X', '13:34:56' ],
-    [ 'fr_FR', '%c', 'jeu. 31 Déc 1998 13:34:56 CEST' ],
+    [ 'fr_FR', '%c', 'jeu. 31 DÃ©c 1998 13:34:56 CEST' ],
 
     # French Generic - inherits from root locale for glibc formats
     [ 'fr', '%x', '12/31/98' ],
     [ 'fr', '%X', '13:34:56' ],
-    [ 'fr', '%c', 'jeu. Déc 31 13:34:56 1998' ],
+    [ 'fr', '%c', 'jeu. DÃ©c 31 13:34:56 1998' ],
 );
 
 foreach (@tests) {
