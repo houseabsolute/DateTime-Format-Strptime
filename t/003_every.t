@@ -6,15 +6,15 @@ use DateTime::Format::Strptime;
 {
     my $object = DateTime::Format::Strptime->new(
         pattern    => '%D',
-        time_zone  => 'Australia/Melbourne',
-        locale     => 'en_AU',
+        time_zone  => 'America/New_York',
+        locale     => 'en_US',
         diagnostic => 0,
     );
 
     my $epoch = DateTime->new(
         year      => 2003, month  => 11, day    => 5,
         hour      => 23,   minute => 34, second => 45,
-        time_zone => 'Australia/Melbourne'
+        time_zone => 'America/New_York'
     )->epoch;
 
     my @tests = (
@@ -28,7 +28,7 @@ use DateTime::Format::Strptime;
 
         [
             '%a %b %B %C %d %e %h %H %I %j %k %l %m %M %n %N %O %p %P %S %U %u %w %W %y %Y %s %G %g %z %Z %%Y %%',
-            "Wed Nov November 20 05  5 Nov 23 11 309 23 11 11 34 \n 123456789 Australia/Melbourne PM pm 45 44 3 3 44 03 2003 $epoch 2003 03 +1100 EST %Y %",
+            "Wed Nov November 20 05  5 Nov 23 11 309 23 11 11 34 \n 123456789 America/New_York PM pm 45 44 3 3 44 03 2003 $epoch 2003 03 -0500 EST %Y %",
             "Every token at once"
         ],
 
@@ -40,12 +40,8 @@ use DateTime::Format::Strptime;
         my ( $pattern, $data, $name ) = @$_;
         $name ||= $pattern;
 
-        #print "-- $pattern ($data) --\n";
         $object->pattern($pattern);
 
-        #print "\n" . $object->pattern . "\n" . $object->{parser};
-        #print $object->parse_datetime( $data )->strftime("%Y-%m-%d %H:%M:%S\n");
-        #print $object->parse_datetime( $data )->strftime("Got: $pattern\n");
         is( $object->format_datetime( $object->parse_datetime($data) ), $data,
             $name );
     }
@@ -54,15 +50,15 @@ use DateTime::Format::Strptime;
 {
     my $object = DateTime::Format::Strptime->new(
         pattern    => '%D',
-        time_zone  => 'Australia/Melbourne',
-        locale     => 'en_AU',
+        time_zone  => 'America/New_York',
+        locale     => 'en_US',
         diagnostic => 0,
     );
 
     my $epoch = DateTime->new(
         year      => 2003, month  => 11, day    => 5,
         hour      => 23,   minute => 34, second => 45,
-        time_zone => 'Australia/Melbourne'
+        time_zone => 'America/New_York'
     )->epoch;
 
     my @tests = (
@@ -76,7 +72,7 @@ use DateTime::Format::Strptime;
 
         [
             '%a %b %B %C %d %e %h %H %I %j %k %l %m %M %n %N %p %P %S %U %u %w %W %y %Y %s %G %g %z %Z %%',
-            "Wed Nov November 20 05  5 Nov 23 11 309 23 11 11 34 \n 123456789 PM pm 45 44 3 3 44 03 2003 $epoch 2003 03 +1100 EST %",
+            "Wed Nov November 20 05  5 Nov 23 11 309 23 11 11 34 \n 123456789 PM pm 45 44 3 3 44 03 2003 $epoch 2003 03 -0500 EST %",
             "Every token at once"
         ],
 
