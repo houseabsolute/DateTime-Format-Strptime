@@ -5,9 +5,9 @@
 - Fixed Latin-1 content in test code. It's now UTF-8.
 
 
-1.55
+1.55     2014-08-07.
 
-- Broken release
+- Broken release. I deleted this from PAUSE.
 
 
 1.54     2013-04-02
