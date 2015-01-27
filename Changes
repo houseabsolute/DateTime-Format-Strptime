@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.56     2014-08-07
+
 - Recent DateTime::TimeZone changes broke the tests.
 
 - Fixed Latin-1 content in test code. It's now UTF-8.
