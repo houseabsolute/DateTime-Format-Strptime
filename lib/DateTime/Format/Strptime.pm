@@ -275,10 +275,10 @@ sub parse_datetime {
     die $@ if $@;
 
     if ( $self->{diagnostic} ) {
-        print qq|
+        print <<"EOF";
 
 Entered     = $time_string
-Parser		= $parser
+Parser      = $parser
 
 dow_name    = $dow_name
 month_name  = $month_name
@@ -306,7 +306,7 @@ epoch       = $epoch
 iso_week_year     = $iso_week_year
 iso_week_year_100 = $iso_week_year_100
 
-		|;
+EOF
 
     }
 
@@ -646,14 +646,14 @@ iso_week_year_100 = $iso_week_year_100
     print "Set second to $Second.\n" if $self->{diagnostic};
 
     # Nanoeconds
-    $self->local_croak("$nanosecond is too large to be a nanosecond.")
+    $self->_local_croak("$nanosecond is too large to be a nanosecond.")
         and return undef
         unless length($nanosecond) <= 9;
     $Nanosecond ||= $nanosecond;
     $Nanosecond .= '0' while length($Nanosecond) < 9;
 
-    #	Epoch doesn't return nanoseconds
-    #	croak "Your nanosecond does not match your epoch." if $epoch_dt and $Nanosecond and $Nanosecond != $epoch_dt->nanosecond;
+    #   Epoch doesn't return nanoseconds
+    #   croak "Your nanosecond does not match your epoch." if $epoch_dt and $Nanosecond and $Nanosecond != $epoch_dt->nanosecond;
     print "Set nanosecond to $Nanosecond.\n" if $self->{diagnostic};
 
     my $potential_return = eval {
@@ -1276,7 +1276,7 @@ The day of month (01-31). This will parse single digit numbers as well.
 =item * %D
 
 Equivalent to %m/%d/%y. (This is the American style date, very confusing
-to non-Americans, especially since %d/%m/%y is	widely used in Europe.
+to non-Americans, especially since %d/%m/%y is widely used in Europe.
 The ISO 8601 standard pattern is %F.)
 
 =item * %F
