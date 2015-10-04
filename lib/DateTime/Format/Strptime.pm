@@ -2,6 +2,8 @@ package DateTime::Format::Strptime;
 
 use strict;
 
+our $VERSION = '1.57';
+
 use DateTime 1.00;
 use DateTime::Locale 0.45;
 use DateTime::TimeZone 0.79;
