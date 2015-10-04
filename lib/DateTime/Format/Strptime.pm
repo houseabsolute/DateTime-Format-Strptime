@@ -2,7 +2,7 @@ package DateTime::Format::Strptime;
 
 use strict;
 
-our $VERSION = '1.57';
+our $VERSION = '1.58';
 
 use DateTime 1.00;
 use DateTime::Locale 0.45;
