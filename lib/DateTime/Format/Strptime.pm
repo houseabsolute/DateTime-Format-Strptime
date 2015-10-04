@@ -7,7 +7,8 @@ our $VERSION = '1.57';
 use DateTime 1.00;
 use DateTime::Locale 0.45;
 use DateTime::TimeZone 0.79;
-use Params::Validate 0.64 qw( validate SCALAR SCALARREF BOOLEAN OBJECT CODEREF );
+use Params::Validate 0.64
+    qw( validate SCALAR SCALARREF BOOLEAN OBJECT CODEREF );
 use Carp;
 
 use Exporter;
@@ -140,8 +141,8 @@ sub new {
         "The value supplied to on_error must be either 'croak', 'undef' or a code reference."
         )
         unless ref( $args{on_error} ) eq 'CODE'
-            or $args{on_error} eq 'croak'
-            or $args{on_error} eq 'undef';
+        or $args{on_error} eq 'croak'
+        or $args{on_error} eq 'undef';
 
     # Deal with locale
     unless ( ref( $args{locale} ) ) {
@@ -250,12 +251,12 @@ sub parse_datetime {
 
     # Variables from the parser
     my (
-        $dow_name,   $month_name,        $century,    $day,
-        $hour_24,    $hour_12,           $doy,        $month,
-        $minute,     $ampm,              $second,     $week_sun_0,
-        $dow_sun_0,  $dow_mon_1,         $week_mon_1, $year_100,
-        $year,       $iso_week_year_100, $iso_week_year,
-        $epoch,      $tz_offset,         $timezone,   $tz_olson,
+        $dow_name,  $month_name,        $century,    $day,
+        $hour_24,   $hour_12,           $doy,        $month,
+        $minute,    $ampm,              $second,     $week_sun_0,
+        $dow_sun_0, $dow_mon_1,         $week_mon_1, $year_100,
+        $year,      $iso_week_year_100, $iso_week_year,
+        $epoch,     $tz_offset,         $timezone,   $tz_olson,
         $nanosecond, $ce_year,
 
         $doy_dt, $epoch_dt, $use_timezone, $set_time_zone,
@@ -313,27 +314,27 @@ iso_week_year_100 = $iso_week_year_100
         and return undef
         if ( ( $self->{parser} =~ /\$dow_name\b/ and $dow_name eq '' )
         or ( $self->{parser} =~ /\$month_name\b/ and $month_name eq '' )
-        or ( $self->{parser} =~ /\$century\b/    and $century    eq '' )
-        or ( $self->{parser} =~ /\$day\b/        and $day        eq '' )
-        or ( $self->{parser} =~ /\$hour_24\b/    and $hour_24    eq '' )
-        or ( $self->{parser} =~ /\$hour_12\b/    and $hour_12    eq '' )
-        or ( $self->{parser} =~ /\$doy\b/        and $doy        eq '' )
-        or ( $self->{parser} =~ /\$month\b/      and $month      eq '' )
-        or ( $self->{parser} =~ /\$minute\b/     and $minute     eq '' )
-        or ( $self->{parser} =~ /\$ampm\b/       and $ampm       eq '' )
-        or ( $self->{parser} =~ /\$second\b/     and $second     eq '' )
+        or ( $self->{parser} =~ /\$century\b/    and $century eq '' )
+        or ( $self->{parser} =~ /\$day\b/        and $day eq '' )
+        or ( $self->{parser} =~ /\$hour_24\b/    and $hour_24 eq '' )
+        or ( $self->{parser} =~ /\$hour_12\b/    and $hour_12 eq '' )
+        or ( $self->{parser} =~ /\$doy\b/        and $doy eq '' )
+        or ( $self->{parser} =~ /\$month\b/      and $month eq '' )
+        or ( $self->{parser} =~ /\$minute\b/     and $minute eq '' )
+        or ( $self->{parser} =~ /\$ampm\b/       and $ampm eq '' )
+        or ( $self->{parser} =~ /\$second\b/     and $second eq '' )
         or ( $self->{parser} =~ /\$nanosecond\b/ and $nanosecond eq '' )
         or ( $self->{parser} =~ /\$week_sun_0\b/ and $week_sun_0 eq '' )
-        or ( $self->{parser} =~ /\$dow_sun_0\b/  and $dow_sun_0  eq '' )
-        or ( $self->{parser} =~ /\$dow_mon_1\b/  and $dow_mon_1  eq '' )
+        or ( $self->{parser} =~ /\$dow_sun_0\b/  and $dow_sun_0 eq '' )
+        or ( $self->{parser} =~ /\$dow_mon_1\b/  and $dow_mon_1 eq '' )
         or ( $self->{parser} =~ /\$week_mon_1\b/ and $week_mon_1 eq '' )
-        or ( $self->{parser} =~ /\$year_100\b/   and $year_100   eq '' )
-        or ( $self->{parser} =~ /\$year\b/       and $year       eq '' )
-        or ( $self->{parser} =~ /\$ce_year\b/    and $ce_year    eq '' )
-        or ( $self->{parser} =~ /\$tz_offset\b/  and $tz_offset  eq '' )
-        or ( $self->{parser} =~ /\$tz_olson\b/   and $tz_olson   eq '' )
-        or ( $self->{parser} =~ /\$timezone\b/   and $timezone   eq '' )
-        or ( $self->{parser} =~ /\$epoch\b/      and $epoch      eq '' ) );
+        or ( $self->{parser} =~ /\$year_100\b/   and $year_100 eq '' )
+        or ( $self->{parser} =~ /\$year\b/       and $year eq '' )
+        or ( $self->{parser} =~ /\$ce_year\b/    and $ce_year eq '' )
+        or ( $self->{parser} =~ /\$tz_offset\b/  and $tz_offset eq '' )
+        or ( $self->{parser} =~ /\$tz_olson\b/   and $tz_olson eq '' )
+        or ( $self->{parser} =~ /\$timezone\b/   and $timezone eq '' )
+        or ( $self->{parser} =~ /\$epoch\b/      and $epoch eq '' ) );
 
     # Create a timezone to work with
     if ($tz_offset) {
@@ -347,13 +348,13 @@ iso_week_year_100 = $iso_week_year_100
         $self->local_croak("The timezone '$timezone' is ambiguous.")
             and return undef
             if $ZONEMAP{$timezone} eq 'Ambiguous'
-                and not( $tz_offset or $tz_olson );
+            and not( $tz_offset or $tz_olson );
         $self->local_croak(
             "Your timezones ('$tz_offset' and '$timezone') do not match.")
             and return undef
             if $tz_offset
-                and $ZONEMAP{$timezone} ne 'Ambiguous'
-                and $ZONEMAP{$timezone} != $tz_offset;
+            and $ZONEMAP{$timezone} ne 'Ambiguous'
+            and $ZONEMAP{$timezone} != $tz_offset;
         $use_timezone = $ZONEMAP{$timezone}
             if $ZONEMAP{$timezone} ne 'Ambiguous';
     }
@@ -433,8 +434,8 @@ iso_week_year_100 = $iso_week_year_100
     $self->local_croak("Your year value does not match your epoch.")
         and return undef
         if $epoch_dt
-            and $Year
-            and $Year != $epoch_dt->year;
+        and $Year
+        and $Year != $epoch_dt->year;
 
     # Work out which month we want
     # Month names
@@ -462,7 +463,7 @@ iso_week_year_100 = $iso_week_year_100
                 $month_count++;
 
                 # When abbreviating, sometimes there's a period, sometimes not.
-                $month      =~ s/\.$//;
+                $month =~ s/\.$//;
                 $month_name =~ s/\.$//;
                 if ( lc $month eq lc $month_name ) {
                     $month_number = $month_count;
@@ -489,14 +490,14 @@ iso_week_year_100 = $iso_week_year_100
             "Your two month values ($month_name and $month) do not match.")
             and return undef
             if $Month
-                and $month != $Month;
+            and $month != $Month;
         $Month = $month;
     }
     $self->local_croak("Your month value does not match your epoch.")
         and return undef
         if $epoch_dt
-            and $Month
-            and $Month != $epoch_dt->month;
+        and $Month
+        and $Month != $epoch_dt->month;
     if ($doy) {
         $self->local_croak(
             "There is no use providing a day of the year without providing a year."
@@ -519,14 +520,14 @@ iso_week_year_100 = $iso_week_year_100
                 . ") is not in your month ($Month)" )
             and return undef
             if $Month
-                and $month != $Month;
+            and $month != $Month;
         $Month = $month;
     }
     $self->local_croak("Your day of the year does not match your epoch.")
         and return undef
         if $epoch_dt
-            and $doy_dt
-            and $doy_dt->doy != $epoch_dt->doy;
+        and $doy_dt
+        and $doy_dt->doy != $epoch_dt->doy;
 
     # Day of the month
     $self->local_croak("$day is too large to be a day of the month.")
@@ -536,8 +537,8 @@ iso_week_year_100 = $iso_week_year_100
         "Your day of the month ($day) does not match your day of the year.")
         and return undef
         if $doy_dt
-            and $day
-            and $day != $doy_dt->day;
+        and $day
+        and $day != $doy_dt->day;
     $Day ||=
           ($day)    ? $day
         : ($doy_dt) ? $doy_dt->day
@@ -548,7 +549,7 @@ iso_week_year_100 = $iso_week_year_100
             )
             and return undef
             unless $Year
-                and $Month;
+            and $Month;
         my $dt = eval {
             DateTime->new(
                 year => $Year + 0, month     => $Month + 0, day => $Day + 0,
@@ -565,8 +566,8 @@ iso_week_year_100 = $iso_week_year_100
     $self->local_croak("Your day of the month does not match your epoch.")
         and return undef
         if $epoch_dt
-            and $Day
-            and $Day != $epoch_dt->day;
+        and $Day
+        and $Day != $epoch_dt->day;
 
     # Hour of the day
     $self->local_croak("$hour_24 is too large to be an hour of the day.")
@@ -588,7 +589,7 @@ iso_week_year_100 = $iso_week_year_100
             "Your am/pm value ($ampm) does not match your hour ($hour_24)")
             and return undef
             if $hour_24
-                and $hour_24 < 12;
+            and $hour_24 < 12;
     }
     elsif ( lc $ampm eq lc $Am ) {
         if ($hour_12) {
@@ -616,8 +617,8 @@ iso_week_year_100 = $iso_week_year_100
     $self->local_croak("Your hour does not match your epoch.")
         and return undef
         if $epoch_dt
-            and $Hour
-            and $Hour != $epoch_dt->hour;
+        and $Hour
+        and $Hour != $epoch_dt->hour;
     print "Set hour to $Hour.\n" if $self->{diagnostic};
 
     # Minutes
@@ -628,8 +629,8 @@ iso_week_year_100 = $iso_week_year_100
     $self->local_croak("Your minute does not match your epoch.")
         and return undef
         if $epoch_dt
-            and $Minute
-            and $Minute != $epoch_dt->minute;
+        and $Minute
+        and $Minute != $epoch_dt->minute;
     print "Set minute to $Minute.\n" if $self->{diagnostic};
 
     # Seconds
@@ -640,8 +641,8 @@ iso_week_year_100 = $iso_week_year_100
     $self->local_croak("Your second does not match your epoch.")
         and return undef
         if $epoch_dt
-            and $Second
-            and $Second != $epoch_dt->second;
+        and $Second
+        and $Second != $epoch_dt->second;
     print "Set second to $Second.\n" if $self->{diagnostic};
 
     # Nanoeconds
@@ -677,14 +678,14 @@ iso_week_year_100 = $iso_week_year_100
             . $potential_return->ymd )
         and return undef
         if $dow_mon_1
-            and $potential_return->dow != $dow_mon_1;
+        and $potential_return->dow != $dow_mon_1;
 
     $self->local_croak(
         "Your day of the week ($dow_sun_0) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
         if $dow_sun_0
-            and ( $potential_return->dow % 7 ) != $dow_sun_0;
+        and ( $potential_return->dow % 7 ) != $dow_sun_0;
 
     if ($dow_name) {
         my $dow_count  = 0;
@@ -717,7 +718,7 @@ iso_week_year_100 = $iso_week_year_100
                 . $potential_return->ymd )
             and return undef
             if $dow_number
-                and $potential_return->dow != $dow_number;
+            and $potential_return->dow != $dow_number;
     }
 
     $self->local_croak(
@@ -725,25 +726,25 @@ iso_week_year_100 = $iso_week_year_100
             . $potential_return->ymd )
         and return undef
         if $week_sun_0
-            and $potential_return->strftime('%U') != $week_sun_0;
+        and $potential_return->strftime('%U') != $week_sun_0;
     $self->local_croak(
         "Your week number ($week_mon_1) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
         if $week_mon_1
-            and $potential_return->strftime('%W') != $week_mon_1;
+        and $potential_return->strftime('%W') != $week_mon_1;
     $self->local_croak(
         "Your ISO week year ($iso_week_year) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
         if $iso_week_year
-            and $potential_return->strftime('%G') != $iso_week_year;
+        and $potential_return->strftime('%G') != $iso_week_year;
     $self->local_croak(
         "Your ISO week year ($iso_week_year_100) does not match the date supplied: "
             . $potential_return->ymd )
         and return undef
         if $iso_week_year_100
-            and $potential_return->strftime('%g') != $iso_week_year_100;
+        and $potential_return->strftime('%g') != $iso_week_year_100;
 
     # Move into the timezone in the object - if there is one
     print "Potential Datetime: "
@@ -793,7 +794,7 @@ sub _build_parser {
     $ampm_list .= '|' . lc $ampm_list;
 
     my $default_date_format = $self->{_locale}->glibc_date_format;
-    my @locale_format = $default_date_format =~ m/(%\{\w+\}|%\d*.)/g;
+    my @locale_format       = $default_date_format =~ m/(%\{\w+\}|%\d*.)/g;
     $default_date_format = join( '', @locale_format );
 
     my $default_time_format = $self->{_locale}->glibc_time_format;
@@ -808,20 +809,20 @@ sub _build_parser {
         "Date format: $default_date_format\nTime format: $default_time_format\nDatetime format: $default_datetime_format\n"
         if $self->{diagnostic};
 
-    $regex      =~ s/%%/__ESCAPED_PERCENT_SIGN_MARKER__/g;
+    $regex =~ s/%%/__ESCAPED_PERCENT_SIGN_MARKER__/g;
     $field_list =~ s/%%/__ESCAPED_PERCENT_SIGN_MARKER__/g;
 
-    $regex      =~ s/%c/$self->{_locale}->glibc_datetime_format/eg;
+    $regex =~ s/%c/$self->{_locale}->glibc_datetime_format/eg;
     $field_list =~ s/%c/$default_datetime_format/eg;
 
     # %c is the locale's default datetime format.
 
-    $regex      =~ s/%x/$self->{_locale}->glibc_date_format/eg;
+    $regex =~ s/%x/$self->{_locale}->glibc_date_format/eg;
     $field_list =~ s/%x/$default_date_format/eg;
 
     # %x is the locale's default date format.
 
-    $regex      =~ s/%X/$self->{_locale}->glibc_time_format/eg;
+    $regex =~ s/%X/$self->{_locale}->glibc_time_format/eg;
     $field_list =~ s/%X/$default_time_format/eg;
 
     # %x is the locale's default time format.
@@ -832,27 +833,27 @@ sub _build_parser {
         $regex =~ s/%\\\{([^\}]+)\\\}/%{$1}/g;
     }
 
-    $regex      =~ s/%T/%H:%M:%S/g;
+    $regex =~ s/%T/%H:%M:%S/g;
     $field_list =~ s/%T/%H%M%S/g;
 
     # %T is the time as %H:%M:%S.
 
-    $regex      =~ s/%r/%I:%M:%S %p/g;
+    $regex =~ s/%r/%I:%M:%S %p/g;
     $field_list =~ s/%r/%I%M%S%p/g;
 
     #is the time as %I:%M:%S %p.
 
-    $regex      =~ s/%R/%H:%M/g;
+    $regex =~ s/%R/%H:%M/g;
     $field_list =~ s/%R/%H%M/g;
 
     #is the time as %H:%M.
 
-    $regex      =~ s|%D|%m\\/%d\\/%y|g;
+    $regex =~ s|%D|%m\\/%d\\/%y|g;
     $field_list =~ s|%D|%m%d%y|g;
 
     #is the same as %m/%d/%y.
 
-    $regex      =~ s|%F|%Y\\-%m\\-%d|g;
+    $regex =~ s|%F|%Y\\-%m\\-%d|g;
     $field_list =~ s|%F|%Y%m%d|g;
 
     #is the same as %Y-%m-%d - the ISO date format.
@@ -865,7 +866,7 @@ sub _build_parser {
             @{ $self->{_locale}->day_format_abbreviated } )
     );
     $day_re .= '|' if $day_re;
-    $regex      =~ s/%a/($day_re\\w+)/gi;
+    $regex =~ s/%a/($day_re\\w+)/gi;
     $field_list =~ s/%a/#dow_name#/gi;
 
     # %a is the day of the week, using the locale's weekday names; either the abbreviated or full name may be specified.
@@ -880,7 +881,7 @@ sub _build_parser {
     );
     $month_re .= '|' if $month_re;
     $month_re .= '[^\\s\\d]+';
-    $regex      =~ s/%[bBh]/($month_re)/g;
+    $regex =~ s/%[bBh]/($month_re)/g;
     $field_list =~ s/%[bBh]/#month_name#/g;
 
     #is the month, using the locale's month names; either the abbreviated or full name may be specified.
@@ -890,131 +891,131 @@ sub _build_parser {
     #s/%c//g;
     #is replaced by the locale's appropriate date and time representation.
 
-    $regex      =~ s/%C/([\\d ]?\\d)/g;
+    $regex =~ s/%C/([\\d ]?\\d)/g;
     $field_list =~ s/%C/#century#/g;
 
     #is the century number [0,99]; leading zeros are permitted by not required.
 
-    $regex      =~ s/%[de]/([\\d ]?\\d)/g;
+    $regex =~ s/%[de]/([\\d ]?\\d)/g;
     $field_list =~ s/%[de]/#day#/g;
 
     #is the day of the month [1,31]; leading zeros are permitted but not required.
     #%e is the same as %d.
 
-    $regex      =~ s/%[Hk]/([\\d ]?\\d)/g;
+    $regex =~ s/%[Hk]/([\\d ]?\\d)/g;
     $field_list =~ s/%[Hk]/#hour_24#/g;
 
     #is the hour (24-hour clock) [0,23]; leading zeros are permitted but not required.
     # %k is the same as %H
 
-    $regex      =~ s/%g/([\\d ]?\\d)/g;
+    $regex =~ s/%g/([\\d ]?\\d)/g;
     $field_list =~ s/%g/#iso_week_year_100#/g;
 
     # The year corresponding to the ISO week number, but without the century (0-99).
 
-    $regex      =~ s/%G/(\\d{4})/g;
+    $regex =~ s/%G/(\\d{4})/g;
     $field_list =~ s/%G/#iso_week_year#/g;
 
     # The year corresponding to the ISO week number.
 
-    $regex      =~ s/%[Il]/([\\d ]?\\d)/g;
+    $regex =~ s/%[Il]/([\\d ]?\\d)/g;
     $field_list =~ s/%[Il]/#hour_12#/g;
 
     #is the hour (12-hour clock) [1-12]; leading zeros are permitted but not required.
     # %l is the same as %I.
 
-    $regex      =~ s/%j/(\\d{1,3})/g;
+    $regex =~ s/%j/(\\d{1,3})/g;
     $field_list =~ s/%j/#doy#/g;
 
     #is the day of the year [1,366]; leading zeros are permitted but not required.
 
-    $regex      =~ s/%m/([\\d ]?\\d)/g;
+    $regex =~ s/%m/([\\d ]?\\d)/g;
     $field_list =~ s/%m/#month#/g;
 
     #is the month number [1-12]; leading zeros are permitted but not required.
 
-    $regex      =~ s/%M/([\\d ]?\\d)/g;
+    $regex =~ s/%M/([\\d ]?\\d)/g;
     $field_list =~ s/%M/#minute#/g;
 
     #is the minute [0-59]; leading zeros are permitted but not required.
 
-    $regex      =~ s/%[nt]/\\s+/g;
+    $regex =~ s/%[nt]/\\s+/g;
     $field_list =~ s/%[nt]//g;
 
     # %n is any white space.
     # %t is any white space.
 
-    $regex      =~ s/%p/($ampm_list)/gi;
+    $regex =~ s/%p/($ampm_list)/gi;
     $field_list =~ s/%p/#ampm#/gi;
 
     # %p is the locale's equivalent of either A.M./P.M. indicator for 12-hour clock.
 
-    $regex      =~ s/%s/(\\d+)/g;
+    $regex =~ s/%s/(\\d+)/g;
     $field_list =~ s/%s/#epoch#/g;
 
     # %s is the seconds since the epoch
 
-    $regex      =~ s/%S/([\\d ]?\\d)/g;
+    $regex =~ s/%S/([\\d ]?\\d)/g;
     $field_list =~ s/%S/#second#/g;
 
     # %S is the seconds [0-61]; leading zeros are permitted but not required.
 
-    $regex      =~ s/%(\d*)N/($1) ? "(\\d{$1})" : "(\\d+)"/eg;
+    $regex =~ s/%(\d*)N/($1) ? "(\\d{$1})" : "(\\d+)"/eg;
     $field_list =~ s/%\d*N/#nanosecond#/g;
 
     # %N is the nanoseconds (or sub seconds really)
 
-    $regex      =~ s/%U/([\\d ]?\\d)/g;
+    $regex =~ s/%U/([\\d ]?\\d)/g;
     $field_list =~ s/%U/#week_sun_0#/g;
 
     # %U is the week number of the year (Sunday as the first day of the week) as a decimal number [0-53]; leading zeros are permitted but not required.
 
-    $regex      =~ s/%w/([0-6])/g;
+    $regex =~ s/%w/([0-6])/g;
     $field_list =~ s/%w/#dow_sun_0#/g;
 
     # is the weekday as a decimal number [0-6], with 0 representing Sunday.
 
-    $regex      =~ s/%u/([1-7])/g;
+    $regex =~ s/%u/([1-7])/g;
     $field_list =~ s/%u/#dow_mon_1#/g;
 
     # is the weekday as a decimal number [1-7], with 1 representing Monday - a la DateTime.
 
-    $regex      =~ s/%W/([\\d ]?\\d)/g;
+    $regex =~ s/%W/([\\d ]?\\d)/g;
     $field_list =~ s/%W/#week_mon_1#/g;
 
     #is the week number of the year (Monday as the first day of the week) as a decimal number [0,53]; leading zeros are permitted but not required.
 
-    $regex      =~ s/%y/([\\d ]?\\d)/g;
+    $regex =~ s/%y/([\\d ]?\\d)/g;
     $field_list =~ s/%y/#year_100#/g;
 
     # is the year within the century. When a century is not otherwise specified, values in the range 69-99 refer to years in the twentieth century (1969 to 1999 inclusive); values in the range 0-68 refer to years in the twenty-first century (2000-2068 inclusive). Leading zeros are permitted but not required.
 
-    $regex      =~ s/%Y/(\\d{4})/g;
+    $regex =~ s/%Y/(\\d{4})/g;
     $field_list =~ s/%Y/#year#/g;
 
     # is the year including the century (for example, 1998).
 
-    $regex      =~ s|%z|([+-]\\d{4})|g;
+    $regex =~ s|%z|([+-]\\d{4})|g;
     $field_list =~ s/%z/#tz_offset#/g;
 
     # Timezone Offset.
 
-    $regex      =~ s|%Z|(\\w+)|g;
+    $regex =~ s|%Z|(\\w+)|g;
     $field_list =~ s/%Z/#timezone#/g;
 
     # The short timezone name.
 
-    $regex      =~ s|%O|(\\w+\\/\\w+)|g;
+    $regex =~ s|%O|(\\w+\\/\\w+)|g;
     $field_list =~ s/%O/#tz_olson#/g;
 
     # The Olson timezone name.
 
-    $regex      =~ s|%\{(\w+)\}|(DateTime->can($1)) ? "(.+)" : ".+"|eg;
+    $regex =~ s|%\{(\w+)\}|(DateTime->can($1)) ? "(.+)" : ".+"|eg;
     $field_list =~ s|(%\{(\w+)\})|(DateTime->can($2)) ? "#$2#" : $1 |eg;
 
     # Any function in DateTime.
 
-    $regex      =~ s/__ESCAPED_PERCENT_SIGN_MARKER__/\\%/g;
+    $regex =~ s/__ESCAPED_PERCENT_SIGN_MARKER__/\\%/g;
     $field_list =~ s/__ESCAPED_PERCENT_SIGN_MARKER__//g;
 
     # is replaced by %.

@@ -37,8 +37,10 @@ eval {
     );
     my $parsed = $strptime->parse_datetime('2009-07-13 Static Text');
 };
-is( substr( $@, 0, 42 ), "Your datetime does not match your pattern.",
-    "The strp pattern is OK, but the regex doesn't match the input." );
+is(
+    substr( $@, 0, 42 ), "Your datetime does not match your pattern.",
+    "The strp pattern is OK, but the regex doesn't match the input."
+);
 
 sub test {
     my %arg = @_;

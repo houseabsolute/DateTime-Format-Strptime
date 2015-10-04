@@ -42,8 +42,10 @@ use DateTime::Format::Strptime;
 
         $object->pattern($pattern);
 
-        is( $object->format_datetime( $object->parse_datetime($data) ), $data,
-            $name );
+        is(
+            $object->format_datetime( $object->parse_datetime($data) ), $data,
+            $name
+        );
     }
 }
 
@@ -84,8 +86,10 @@ use DateTime::Format::Strptime;
         my ( $pattern, $data, $name ) = @$_;
         $name ||= $pattern;
         $object->pattern($pattern);
-        is( $object->format_datetime( $object->parse_datetime($data) ), $data,
-            $name );
+        is(
+            $object->format_datetime( $object->parse_datetime($data) ), $data,
+            $name
+        );
     }
 }
 

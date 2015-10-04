@@ -38,8 +38,10 @@ test(
     my $parsed
         = $parser->parse_datetime('2005-11-05 09:33:00 Australia/Melbourne');
     isa_ok( $parsed, 'DateTime' );
-    is( $parsed->time_zone->name, 'Australia/Melbourne',
-        'Time zone determined from string' );
+    is(
+        $parsed->time_zone->name, 'Australia/Melbourne',
+        'Time zone determined from string'
+    );
     is( $parsed->epoch, '1131143580', 'Time zone applied to string' );
 }
 
@@ -54,28 +56,36 @@ my $bad_input_test = DateTime::Format::Strptime->new(
 
 eval { $bad_input_test->parse_datetime('0000-00-00') };
 isnt( $@, '', "Illegal input should carp" );
-is( substr( $@, 0, 39 ), 'Datetime 0000-00-00 is not a valid date',
-    "Croak message should reflect illegal pattern" );
+is(
+    substr( $@, 0, 39 ), 'Datetime 0000-00-00 is not a valid date',
+    "Croak message should reflect illegal pattern"
+);
 
 #diag("1.09 - Time zones with an underscore");
 {
     my $parser = new DateTime::Format::Strptime( pattern => '%O' );
-    is( $parser->parse_datetime('America/New_York')->time_zone->name,
-        'America/New_York' );
+    is(
+        $parser->parse_datetime('America/New_York')->time_zone->name,
+        'America/New_York'
+    );
 }
 
 #diag("1.09 - TZs in the wrong case should work (unless they have a cap in the middle of a word)");
 {
     my $parser
         = new DateTime::Format::Strptime( pattern => '%O', diagnostic => 1 );
-    is( $parser->parse_datetime('AMERICA/NEW_YORK')->time_zone->name,
-        'America/New_York' );
+    is(
+        $parser->parse_datetime('AMERICA/NEW_YORK')->time_zone->name,
+        'America/New_York'
+    );
 }
 
 #diag("1.09 - Bogus TZs shouldn't barf, they should follow the on_error setting");
 {
-    my $parser = new DateTime::Format::Strptime( pattern => '%O',
-        on_error => 'undef' );
+    my $parser = new DateTime::Format::Strptime(
+        pattern  => '%O',
+        on_error => 'undef'
+    );
     is( $parser->parse_datetime('Oz/Munchkinville'), undef );
 }
 

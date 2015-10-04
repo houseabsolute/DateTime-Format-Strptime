@@ -85,5 +85,4 @@ foreach my $locale (@locales) {
     }
 }
 
-
 done_testing();

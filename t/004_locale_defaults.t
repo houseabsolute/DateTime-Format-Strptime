@@ -52,7 +52,7 @@ foreach (@tests) {
     my $datetime = $object->parse_datetime($data);
 
     unless ($datetime) {
-        fail("Could not parse $data with $pattern for $locale") for 1..3;
+        fail("Could not parse $data with $pattern for $locale") for 1 .. 3;
         next;
     }
 
