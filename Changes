@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- Make all tests pass with both the current DateTime::Locale and the upcoming
+  new version (currently still in trial releases).
+
+
 1.56     2014-08-07
 
 - Recent DateTime::TimeZone changes broke the tests.

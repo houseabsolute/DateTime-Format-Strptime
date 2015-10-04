@@ -16,12 +16,13 @@ my $object = DateTime::Format::Strptime->new(
     on_error   => sub { warn @_ },
 );
 
+my $au_thu = DateTime::Locale->VERSION >= 0.93 ? 'Thu.' : 'Thu';
 my @tests = (
 
     # Australian English
     [ 'en_AU', '%x', '31/12/98' ],
     [ 'en_AU', '%X', '13:34:56' ],
-    [ 'en_AU', '%c', 'Thu 31 Dec 1998 13:34:56 AEDT' ],
+    [ 'en_AU', '%c', "$au_thu 31 Dec 1998 13:34:56 AEDT" ],
 
     # US English
     [ 'en_US', '%x', '12/31/1998' ],
