@@ -16,6 +16,7 @@ foreach my $locale (@locales) {
         sub {
             test_days($locale);
             test_months($locale);
+            test_am_pm($locale);
         }
     );
 }
@@ -28,37 +29,53 @@ sub test_days {
     subtest(
         'days',
         sub {
-            my $pattern = "%Y-%m-%d %A";
             foreach my $day ( 1 .. 7 ) {
-                my $dt
-                    = DateTime->now( locale => $locale )->set( day => $day );
-                my $input = $dt->strftime($pattern);
-                my $strptime;
-                is(
-                    exception {
-                        $strptime = DateTime::Format::Strptime->new(
-                            pattern  => $pattern,
-                            locale   => $locale,
-                            on_error => 'croak',
-                        );
-                    },
-                    undef,
-                    "Constructor with Day Name"
-                );
-
-                my $parsed;
-                is(
-                    exception { $parsed = $strptime->parse_datetime($input) },
-                    undef,
-                    "Parsed with Day Name"
-                );
-
-                is(
-                    $parsed->strftime($pattern), $input,
-                    "Matched with Day Name"
+                subtest(
+                    "Day $day",
+                    sub { _test_one_day( $locale, $day ); },
                 );
             }
         }
+    );
+}
+
+sub _test_one_day {
+    my $locale = shift;
+    my $day    = shift;
+
+    _utf8_output();
+
+    my $pattern = '%Y-%m-%d %A';
+
+    my $dt = DateTime->now( locale => $locale )->set( day => $day );
+    my $input = $dt->strftime($pattern);
+
+    my $strptime;
+    is(
+        exception {
+            $strptime = DateTime::Format::Strptime->new(
+                pattern  => $pattern,
+                locale   => $locale,
+                on_error => 'croak',
+            );
+        },
+        undef,
+        'constructor with day name in pattern (%A)'
+    );
+
+    my $parsed;
+    is(
+        exception {
+            $parsed = $strptime->parse_datetime($input)
+        },
+        undef,
+        "parsed $input"
+    );
+
+    is(
+        $parsed->strftime($pattern),
+        $input,
+        'strftime output matches input'
     );
 }
 
@@ -68,37 +85,54 @@ sub test_months {
     subtest(
         'months',
         sub {
-            my $pattern = "%Y-%m-%d %B";
             foreach my $month ( 1 .. 12 ) {
-                my $dt = DateTime->now( locale => $locale )
-                    ->truncate( to => 'month' )->set( month => $month );
-                my $input = $dt->strftime($pattern);
-                my $strptime;
-                is(
-                    exception {
-                        $strptime = DateTime::Format::Strptime->new(
-                            pattern  => $pattern,
-                            locale   => $locale,
-                            on_error => 'croak',
-                        );
-                    },
-                    undef,
-                    "Constructor with Month Name"
-                );
-
-                my $parsed;
-                is(
-                    exception { $parsed = $strptime->parse_datetime($input) },
-                    undef,
-                    "Parsed with Month Name"
-                );
-
-                is(
-                    $parsed->strftime($pattern), $input,
-                    "Matched with Month Name"
+                subtest(
+                    "Month $month",
+                    sub { _test_one_month( $locale, $month ) },
                 );
             }
         }
+    );
+}
+
+sub _test_one_month {
+    my $locale = shift;
+    my $month  = shift;
+
+    _utf8_output();
+
+    my $pattern = '%Y-%m-%d %B';
+
+    my $dt
+        = DateTime->now( locale => $locale )->truncate( to => 'month' )
+        ->set( month => $month );
+    my $input = $dt->strftime($pattern);
+    my $strptime;
+    is(
+        exception {
+            $strptime = DateTime::Format::Strptime->new(
+                pattern  => $pattern,
+                locale   => $locale,
+                on_error => 'croak',
+            );
+        },
+        undef,
+        'constructor with month name (%B)'
+    );
+
+    my $parsed;
+    is(
+        exception {
+            $parsed = $strptime->parse_datetime($input)
+        },
+        undef,
+        "parsed $input"
+    );
+
+    is(
+        $parsed->strftime($pattern),
+        $input,
+        'strftime output matches input'
     );
 }
 
@@ -108,40 +142,57 @@ sub test_am_pm {
     subtest(
         'am/pm',
         sub {
-            my $pattern = "%Y-%m-%d %H:%M %p";
-            foreach my $locale (@locales) {
-                foreach my $hour ( 11, 12 ) {
-                    my $dt = DateTime->now( locale => $locale )
-                        ->set( hour => $hour );
-                    my $input = $dt->strftime($pattern);
-                    my $strptime;
-                    is(
-                        exception {
-                            $strptime = DateTime::Format::Strptime->new(
-                                pattern  => $pattern,
-                                locale   => $locale,
-                                on_error => 'croak',
-                            );
-                        },
-                        undef,
-                        "Constructor with Meridian"
-                    );
-
-                    my $parsed;
-                    is(
-                        exception {
-                            $parsed = $strptime->parse_datetime($input)
-                        },
-                        undef,
-                        "Parsed with Meridian"
-                    );
-
-                    is(
-                        $parsed->strftime($pattern), $input,
-                        "Matched with Meridian"
-                    );
-                }
+            foreach my $hour ( 0, 11, 12, 23 ) {
+                subtest(
+                    "Hour $hour",
+                    sub { _test_one_hour( $locale, $hour ); },
+                );
             }
         }
     );
+}
+
+sub _test_one_hour {
+    my $locale = shift;
+    my $hour   = shift;
+
+    my $pattern = '%Y-%m-%d %H:%M %p';
+
+    _utf8_output();
+
+    my $dt = DateTime->now( locale => $locale )->set( hour => $hour );
+    my $input = $dt->strftime($pattern);
+    my $strptime;
+    is(
+        exception {
+            $strptime = DateTime::Format::Strptime->new(
+                pattern  => $pattern,
+                locale   => $locale,
+                on_error => 'croak',
+            );
+        },
+        undef,
+        'constructor with meridian (%p)'
+    );
+
+    my $parsed;
+    is(
+        exception {
+            $parsed = $strptime->parse_datetime($input)
+        },
+        undef,
+        "parsed $input",
+    );
+
+    is(
+        $parsed->strftime($pattern),
+        $input,
+        'strftime output matches input'
+    );
+}
+
+sub _utf8_output {
+    binmode $_, ':encoding(UTF-8)'
+        for map { Test::Builder->new->$_ }
+        qw( output failure_output todo_output );
 }
