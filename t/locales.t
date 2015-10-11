@@ -8,7 +8,12 @@ use DateTime::Format::Strptime;
 use DateTime::Locale;
 use DateTime;
 
-my @locales = sort DateTime::Locale->ids;
+my @locales
+    = $ENV{AUTHOR_TESTING}
+    ? ( sort DateTime::Locale->ids )
+    : qw( en de ga pt zh );
+
+my $code_meth = DateTime::Locale->load('en')->can('code') ? 'code' : 'id';
 
 foreach my $locale (@locales) {
     subtest(
@@ -17,9 +22,39 @@ foreach my $locale (@locales) {
             test_days($locale);
             test_months($locale);
             test_am_pm($locale);
+            test_locale($locale);
         }
     );
 }
+
+subtest(
+    'format_datetime with locale',
+    sub {
+        my $strptime = DateTime::Format::Strptime->new(
+            pattern  => '%B %Y',
+            locale   => 'pt',
+            on_error => 'croak',
+        );
+
+        my $dt = DateTime->new(
+            year   => 2015,
+            month  => 8,
+            locale => 'en',
+        );
+
+        is(
+            $strptime->format_datetime($dt),
+            'agosto 2015',
+            'formatted output is in locale of formatter (Portugese)'
+        );
+
+        is(
+            $dt->locale->$code_meth,
+            'en',
+            q{formatter leaves DateTime object's locale unchanged}
+        );
+    }
+);
 
 done_testing();
 
@@ -61,19 +96,19 @@ sub _test_one_day {
         },
         undef,
         'constructor with day name in pattern (%A)'
-    );
+    ) or return;
 
-    my $parsed;
+    my $parsed_dt;
     is(
         exception {
-            $parsed = $strptime->parse_datetime($input)
+            $parsed_dt = $strptime->parse_datetime($input)
         },
         undef,
         "parsed $input"
-    );
+    ) or return;
 
     is(
-        $parsed->strftime($pattern),
+        $parsed_dt->strftime($pattern),
         $input,
         'strftime output matches input'
     );
@@ -118,19 +153,19 @@ sub _test_one_month {
         },
         undef,
         'constructor with month name (%B)'
-    );
+    ) or return;
 
-    my $parsed;
+    my $parsed_dt;
     is(
         exception {
-            $parsed = $strptime->parse_datetime($input)
+            $parsed_dt = $strptime->parse_datetime($input)
         },
         undef,
         "parsed $input"
-    );
+    ) or return;
 
     is(
-        $parsed->strftime($pattern),
+        $parsed_dt->strftime($pattern),
         $input,
         'strftime output matches input'
     );
@@ -173,21 +208,54 @@ sub _test_one_hour {
         },
         undef,
         'constructor with meridian (%p)'
-    );
+    ) or return;
 
-    my $parsed;
+    my $parsed_dt;
     is(
         exception {
-            $parsed = $strptime->parse_datetime($input)
+            $parsed_dt = $strptime->parse_datetime($input)
         },
         undef,
         "parsed $input",
-    );
+    ) or return;
 
     is(
-        $parsed->strftime($pattern),
+        $parsed_dt->strftime($pattern),
         $input,
         'strftime output matches input'
+    );
+}
+
+sub test_locale {
+    my $locale = shift;
+
+    my $strptime;
+    is(
+        exception {
+            $strptime = DateTime::Format::Strptime->new(
+                pattern  => '%Y-%m-%d',
+                locale   => $locale,
+                on_error => 'croak',
+            );
+        },
+        undef,
+        'constructor with locale'
+    ) or return;
+
+    my $input = '2015-01-30';
+    my $parsed_dt;
+    is(
+        exception {
+            $parsed_dt = $strptime->parse_datetime($input)
+        },
+        undef,
+        "parsed $input",
+    ) or return;
+
+    is(
+        $parsed_dt->locale->$code_meth,
+        $locale,
+        "code of locale for DateTime returned by parser is $locale"
     );
 }
 
