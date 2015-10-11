@@ -2,44 +2,120 @@ use strict;
 use warnings;
 
 use Test::More 0.96;
+use Test::Fatal;
 
 use DateTime::Format::Strptime;
 
 for my $test ( _tests_from_data() ) {
     subtest(
-        qq{$test->{name} - $test->{pattern} parses "$test->{input}"},
+        qq{$test->{name}},
         sub {
-            my $parser = DateTime::Format::Strptime->new(
-                pattern  => $test->{pattern},
-                on_error => 'croak',
-            );
+            my $parser;
+            is(
+                exception {
+                    $parser = DateTime::Format::Strptime->new(
+                        pattern => $test->{pattern},
+                        (
+                            $test->{locale}
+                            ? ( locale => $test->{locale} )
+                            : ()
+                        ),
+                        on_error => 'croak',
+                    );
+                },
+                undef,
+                "no exception building parser for $test->{pattern}"
+            ) or return;
 
-            my $dt = $parser->parse_datetime( $test->{input} );
+            ( my $real_input = $test->{input} ) =~ s/\\n/\n/g;
+            my $dt;
+            is(
+                exception { $dt = $parser->parse_datetime( $real_input ) },
+                undef,
+                "no exception parsing $test->{input}"
+            ) or return;
 
-            my $expect = $test->{expect};
-            for my $meth ( sort keys %{$expect} ) {
+            _test_dt_methods( $dt, $test->{expect} );
+
+            unless ( $test->{skip_round_trip} ) {
                 is(
-                    $dt->$meth,
-                    $expect->{$meth},
-                    "$meth is $expect->{$meth}"
+                    $parser->format_datetime($dt),
+                    $real_input,
+                    'round trip via strftime produces original input'
                 );
             }
         }
     );
 }
 
+subtest(
+    'parsing whitespace',
+    sub {
+        my $parser = DateTime::Format::Strptime->new(
+            pattern  => '%n%Y%t%m%n',
+            on_error => 'croak',
+        );
+
+        my $dt = $parser->parse_datetime(<<"EOF");
+\t
+  2015
+12
+EOF
+
+        my %expect = (
+            year  => 2015,
+            month => 12,
+        );
+        _test_dt_methods( $dt, \%expect );
+    }
+);
+
+subtest(
+    'parser time zone is set on returned object',
+    sub {
+        my $parser = DateTime::Format::Strptime->new(
+            pattern   => '%Y %H:%M:%S %Z',
+            time_zone => 'America/New_York',
+            on_error  => 'croak',
+        );
+
+        my $dt     = $parser->parse_datetime('2003 23:45:56 MDT');
+        my %expect = (
+            year                => 2003,
+            hour                => 0,
+            minute              => 45,
+            second              => 56,
+            time_zone_long_name => 'America/New_York',
+        );
+
+        _test_dt_methods( $dt, \%expect );
+    }
+);
 
 sub _tests_from_data {
     my @tests;
 
     my $d = do { local $/; <DATA> };
-    while ( $d =~ /\[(.+?)\]\n(.+?)\n(.+?)\n(.+?)\n\n/sg ) {
+
+    my $test_re = qr/
+        \[(.+?)\]\n             # test name
+        (.+?)\n                 # pattern
+        (.+?)\n                 # input
+        (?:locale = (.+)\n)?    # optional locale
+        (skip\ round\ trip\n)?  # skip a round trip?
+        (.+?)\n                 # k-v pairs for expected values
+        (?:\n|\z)               # end of test
+                    /xs;
+
+    while ( $d =~ /$test_re/g ) {
         push @tests, {
-            name    => $1,
-            pattern => $2,
-            input   => $3,
-            expect  => {
-                map { split /\s+=>\s+/ } split /\n/, $4,
+            name            => $1,
+            pattern         => $2,
+            input           => $3,
+            locale          => $4,
+            skip_round_trip => $5,
+            expect          => {
+                map { split /\s+=>\s+/ } split /\n/, $6,
             },
         };
     }
@@ -47,25 +123,18 @@ sub _tests_from_data {
     return @tests;
 }
 
-# my @tests = (
+sub _test_dt_methods {
+    my $dt     = shift;
+    my $expect = shift;
 
-#     # Simple times
-#     [ '%H:%M:%S',    '23:45:56' ],
-#     [ '%l:%M:%S %p', '11:34:56 PM' ],
-
-#     # With Nanoseconds
-#     [ '%H:%M:%S.%N',  '23:45:56.123456789' ],
-#     [ '%H:%M:%S.%6N', '23:45:56.123456' ],
-#     [ '%H:%M:%S.%3N', '23:45:56.123' ],
-
-#     # Complex dates
-#     [ '%Y;%j = %Y-%m-%d',      '2003;056 = 2003-02-25' ],
-#     [ q|%d %b '%y = %Y-%m-%d|, q|25 Feb '03 = 2003-02-25| ],
-
-#     # Leading spaces
-#     [ '%e-%b-%Y %T %z', '13-Jun-2010 09:20:47 -0400' ],
-#     [ '%e-%b-%Y %T %z', ' 3-Jun-2010 09:20:47 -0400' ],
-# );
+    for my $meth ( sort keys %{$expect} ) {
+        is(
+            $dt->$meth,
+            $expect->{$meth},
+            "$meth is $expect->{$meth}"
+        );
+    }
+}
 
 done_testing();
 
@@ -118,6 +187,7 @@ day   => 24
 [date with abbreviated month is case-insensitive]
 %b %d %Y
 jAN 24 2003
+skip round trip
 year  => 2003
 month => 1
 day   => 24
@@ -132,6 +202,7 @@ day   => 24
 [date with full month is case-insensitive]
 %B %d %Y
 jAnUAry 24 2003
+skip round trip
 year  => 2003
 month => 1
 day   => 24
@@ -156,12 +227,123 @@ hour   => 23
 minute => 45
 second => 56
 
-[12 hour time (am) and am/pm is case insensitive]
+[12 hour time (am) and am/pm is case-insensitive]
 %l:%M:%S %p
 11:45:56 am
+skip round trip
 year   => 1
 month  => 1
 day    => 1
 hour   => 11
 minute => 45
 second => 56
+
+[24-hour time]
+%T
+23:34:45
+hour   => 23
+minute => 34
+second => 45
+
+[12-hour time]
+%r
+11:34:45 PM
+hour   => 23
+minute => 34
+second => 45
+
+[24-hour time without second]
+%R
+23:34
+hour   => 23
+minute => 34
+second => 0
+
+[US style date]
+%D
+11/30/03
+year  => 2003
+month => 11
+day   => 30
+
+[ISO style date]
+%F
+2003-11-30
+year  => 2003
+month => 11
+day   => 30
+
+[nanosecond with no length]
+%H:%M:%S.%N
+23:45:56.123456789
+hour       => 23
+minute     => 45
+second     => 56
+nanosecond => 123456789
+
+[nanosecond with length of 6]
+%H:%M:%S.%6N
+23:45:56.123456
+hour       => 23
+minute     => 45
+second     => 56
+nanosecond => 123456000
+
+[nanosecond with length of 3]
+%H:%M:%S.%3N
+23:45:56.123
+hour       => 23
+minute     => 45
+second     => 56
+nanosecond => 123000000
+
+[time zone as numeric offset]
+%H:%M:%S %z
+23:45:56 +1000
+hour       => 23
+minute     => 45
+second     => 56
+offset     => 36000
+
+[time zone as abbreviation]
+%H:%M:%S %Z
+23:45:56 AEST
+skip round trip
+hour       => 23
+minute     => 45
+second     => 56
+offset     => 36000
+
+[time zone as Olson name]
+%H:%M:%S %O
+23:45:56 America/Chicago
+hour   => 23
+minute => 45
+second => 56
+time_zone_long_name => America/Chicago
+
+[escaped percent]
+%Y%%%m%%%d
+2015%05%14
+year  => 2015
+month => 5
+day   => 14
+
+[escaped percent followed by letter token]
+%Y%%%m%%%d%%H
+2015%05%14%H
+year  => 2015
+month => 5
+day   => 14
+
+[every pattern]
+%a %b %B %C %d %e %h %H %I %j %k %l %m %M %n %N %O %p %P %S %U %u %w %W %y %Y %s %G %g %z %Z %%Y %%
+Wed Nov November 20 05  5 Nov 23 11 309 23 11 11 34 \n 123456789 America/New_York PM pm 45 44 3 3 44 03 2003 1068093285 2003 03 -0500 EST %Y %
+year   => 2003
+month  => 11
+day    => 5
+hour   => 23
+minute => 34
+second => 45
+nanosecond => 123456789
+time_zone_long_name => America/New_York
