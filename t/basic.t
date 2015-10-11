@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use utf8;
 
 use Test::More 0.96;
 use Test::Fatal;
@@ -10,6 +11,8 @@ for my $test ( _tests_from_data() ) {
     subtest(
         qq{$test->{name}},
         sub {
+            _utf8_output();
+
             my $parser;
             is(
                 exception {
@@ -27,7 +30,15 @@ for my $test ( _tests_from_data() ) {
                 "no exception building parser for $test->{pattern}"
             ) or return;
 
+            # Thursday changed from "Thu" to "Thu." and December went from
+            # "Dec" to "Dec." between CLDR versions.
+            $test->{input}
+                =~ s/AU_THU/DateTime::Locale->load('en-AU')->day_format_abbreviated->[3]/e;
+            $test->{input}
+                =~ s/AU_DEC/DateTime::Locale->load('en-AU')->month_format_abbreviated->[11]/e;
+
             ( my $real_input = $test->{input} ) =~ s/\\n/\n/g;
+
             my $dt;
             is(
                 exception { $dt = $parser->parse_datetime( $real_input ) },
@@ -98,13 +109,13 @@ sub _tests_from_data {
     my $d = do { local $/; <DATA> };
 
     my $test_re = qr/
-        \[(.+?)\]\n             # test name
-        (.+?)\n                 # pattern
-        (.+?)\n                 # input
-        (?:locale = (.+)\n)?    # optional locale
-        (skip\ round\ trip\n)?  # skip a round trip?
-        (.+?)\n                 # k-v pairs for expected values
-        (?:\n|\z)               # end of test
+        \[(.+?)\]\n              # test name
+        (.+?)\n                  # pattern
+        (.+?)\n                  # input
+        (?:locale\ =\ (.+?)\n)?  # optional locale
+        (skip\ round\ trip\n)?   # skip a round trip?
+        (.+?)\n                  # k-v pairs for expected values
+        (?:\n|\z)                # end of test
                     /xs;
 
     while ( $d =~ /$test_re/g ) {
@@ -121,6 +132,12 @@ sub _tests_from_data {
     }
 
     return @tests;
+}
+
+sub _utf8_output {
+    binmode $_, ':encoding(UTF-8)'
+        for map { Test::Builder->new->$_ }
+        qw( output failure_output todo_output );
 }
 
 sub _test_dt_methods {
@@ -347,3 +364,158 @@ minute => 34
 second => 45
 nanosecond => 123456789
 time_zone_long_name => America/New_York
+
+[Australian date]
+%x
+31/12/98
+locale = en-AU
+skip round trip
+year  => 1998
+month => 12
+day   => 31
+
+[Australian time]
+%X
+13:34:56
+locale = en-AU
+skip round trip
+hour   => 13
+minute => 34
+second => 56
+
+[Australian date/time]
+%c
+AU_THU 31 AU_DEC 1998 13:34:56 AEDT
+locale = en-AU
+skip round trip
+year   => 1998
+month  => 12
+day    => 31
+hour   => 13
+minute => 34
+second => 56
+offset => 39600
+
+[US date]
+%x
+12/31/1998
+locale = en-US
+skip round trip
+year  => 1998
+month => 12
+day   => 31
+
+[US time]
+%X
+01:34:56 PM
+locale = en-US
+skip round trip
+hour   => 13
+minute => 34
+second => 56
+
+[US date/time]
+%c
+Thu 31 Dec 1998 01:34:56 PM MST
+locale = en-US
+skip round trip
+year   => 1998
+month  => 12
+day    => 31
+hour   => 13
+minute => 34
+second => 56
+offset => -25200
+
+[UK date]
+%x
+31/12/98
+locale = en-GB
+skip round trip
+year  => 1998
+month => 12
+day   => 31
+
+[UK time]
+%X
+13:34:56
+locale = en-GB
+skip round trip
+hour   => 13
+minute => 34
+second => 56
+
+[UK date/time]
+%c
+Thu 31 Dec 1998 13:34:56 GMT
+locale = en-GB
+skip round trip
+year   => 1998
+month  => 12
+day    => 31
+hour   => 13
+minute => 34
+second => 56
+offset => 0
+
+[French (France) date]
+%x
+31/12/1998
+locale = fr-FR
+skip round trip
+year  => 1998
+month => 12
+day   => 31
+
+[French (France) time]
+%X
+13:34:56
+locale = fr-FR
+skip round trip
+hour   => 13
+minute => 34
+second => 56
+
+[French (France) date/time]
+%c
+jeu. 31 Déc. 1998 13:34:56 CEST
+locale = fr-FR
+skip round trip
+year   => 1998
+month  => 12
+day    => 31
+hour   => 13
+minute => 34
+second => 56
+offset => 7200
+
+[French (Generic) date]
+%x
+12/31/98
+locale = fr
+skip round trip
+year  => 1998
+month => 12
+day   => 31
+
+[French (Generic) time]
+%X
+13:34:56
+locale = fr
+skip round trip
+hour   => 13
+minute => 34
+second => 56
+
+[French (Generic) date/time]
+%c
+jeu. Déc. 31 13:34:56 1998
+locale = fr
+skip round trip
+year   => 1998
+month  => 12
+day    => 31
+hour   => 13
+minute => 34
+second => 56
+

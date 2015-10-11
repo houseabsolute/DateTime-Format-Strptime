@@ -21,8 +21,8 @@ use Moo;
     my $spec = {
         pattern => { type => SCALAR },
         time_zone => {
-            type    => SCALAR | OBJECT,
-            default => 'floating',
+            type     => SCALAR | OBJECT,
+            optional => 1,
         },
         locale => {
             type    => SCALAR | OBJECT,
@@ -44,7 +44,7 @@ use Moo;
         },
         debug => {
             type    => BOOLEAN,
-            default => 0,
+            default => $ENV{DATETIME_FORMAT_STRPTIME_DEBUG},
         },
     };
 
@@ -67,6 +67,9 @@ use Moo;
             %args,
             zone_map => $class->_build_zone_map,
         }, $class;
+
+        binmode STDERR, ':encoding(UTF-8)'
+            if $self->{debug};
 
         return $self;
     }
@@ -189,7 +192,12 @@ sub parse_datetime {
     my $self   = shift;
     my $string = shift;
 
-    my $parser  = $self->_parser;
+    my $parser = $self->_parser;
+    if ( $self->{debug} ) {
+        warn "Regex for $self->{pattern}: $parser->{regex}\n";
+        warn "Fields: @{$parser->{fields}}\n";
+    }
+
     my @matches = ( $string =~ /$parser->{regex}/ );
     unless (@matches) {
         $self->_our_croak('Your datetime does not match your pattern');
@@ -238,7 +246,15 @@ sub _build_parser {
     ) = $self->_parser_pieces;
 
     my $pattern = $self->{pattern};
-    $pattern =~ s/%($replacement_tokens_re)/$replacements->{$1}/g;
+
+    # When the first replacement is a glibc pattern, the first round of
+    # replacements may simply replace one replacement token (like %X) with
+    # another replacement token (like %I).
+    $pattern =~ s/%($replacement_tokens_re)/$replacements->{$1}/g for 1 .. 2;
+
+    if ( $self->{debug} && $pattern ne $self->{pattern} ) {
+        warn "Pattern after replacement substitution: $pattern\n";
+    }
 
     my $regex;
     my @fields;
@@ -401,7 +417,7 @@ sub _build_parser {
         $patterns{a} = $patterns{A} = {
             regex => do {
                 my $days = join '|', map {quotemeta}
-                    sort { length $b <=> length $a }
+                    sort { ( length $b <=> length $a ) or ( $a cmp $b ) }
                     keys %{ $self->_locale_days };
                 qr/$days/i;
             },
@@ -411,7 +427,7 @@ sub _build_parser {
         $patterns{b} = $patterns{B} = $patterns{h} = {
             regex => do {
                 my $months = join '|', map {quotemeta}
-                    sort { length $b <=> length $a }
+                    sort { ( length $b <=> length $a ) or ( $a cmp $b ) }
                     keys %{ $self->_locale_months };
                 qr/$months/i;
             },
@@ -421,7 +437,9 @@ sub _build_parser {
         $patterns{p} = $patterns{P} = {
             regex => do {
                 my $am_pm = join '|',
-                    map {quotemeta} @{ $self->{locale}->am_pm_abbreviated };
+                    map {quotemeta}
+                    sort { ( length $b <=> length $a ) or ( $a cmp $b ) }
+                    @{ $self->{locale}->am_pm_abbreviated };
                 qr/$am_pm/i;
             },
             field => 'am_pm',
@@ -566,6 +584,9 @@ sub _token_re_for {
             }
             $args->{time_zone}
                 = DateTime::TimeZone->new( name => $self->{zone_map}{$abbr} );
+        }
+        else {
+            $args->{time_zone} = 'floating';
         }
 
         delete @{$args}{@non_dt_keys};
