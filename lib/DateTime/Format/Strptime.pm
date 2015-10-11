@@ -5,11 +5,16 @@ use warnings;
 
 our $VERSION = '1.58';
 
+use Carp qw( carp croak );
 use DateTime 1.00;
 use DateTime::Locale 0.45;
 use DateTime::TimeZone 0.79;
 use Params::Validate 1.20 qw( validate SCALAR BOOLEAN OBJECT CODEREF );
-use Carp qw( carp croak );
+use Try::Tiny;
+
+use Package::DeprecationManager -deprecations => {
+    'accessor writers' => '1.58',
+};
 
 use Exporter qw( import );
 
@@ -67,6 +72,9 @@ use Moo;
             %args,
             zone_map => $class->_build_zone_map,
         }, $class;
+
+        # Forces a check that the pattern is valid
+        $self->_parser;
 
         binmode STDERR, ':encoding(UTF-8)'
             if $self->{debug};
@@ -267,6 +275,8 @@ sub _build_parser {
             |
             %([1-9]?)(N)
             |
+            (%[0-9]*[a-zA-Z])
+            |
             ([^%]+)
                     /xg
         ) {
@@ -286,8 +296,12 @@ sub _build_parser {
             $regex .= $2 ? qr/([0-9]{$2})/ : qr/([0-9]+)/;
             push @fields, 'nanosecond';
         }
+        elsif ($4) {
+            croak
+                qq{Pattern contained an unrecognized strptime specifier, "$4"};
+        }
         else {
-            $regex .= qr/\Q$4/;
+            $regex .= qr/\Q$5/;
         }
     }
 
@@ -376,7 +390,7 @@ sub _build_parser {
         },
         y => {
             regex => $one_or_two_digits,
-            field => 'two_digit_year',
+            field => 'year_100',
         },
         Y => {
             regex => qr/$d+/,
@@ -387,7 +401,7 @@ sub _build_parser {
             field => 'time_zone_offset',
         },
         Z => {
-            regex => qr/[A-Z]{1,6}/,
+            regex => qr/[a-zA-Z]{1,6}/,
             field => 'time_zone_abbreviation',
         },
     );
@@ -512,9 +526,9 @@ sub _token_re_for {
         time_zone_abbreviation
         time_zone_name
         time_zone_offset
-        two_digit_year
         week_mon_1
         week_sun_0
+        year_100
     );
 
     sub _munge_args {
@@ -542,19 +556,19 @@ sub _token_re_for {
         }
         elsif ( defined $args->{hour_12} ) {
             $self->_our_croak(
-                      qq{Parsed a 12-hour based hour, "$args->{hour_12}"}
+                      qq{Parsed a 12-hour based hour, "$args->{hour_12}",}
                     . ' but the pattern does not include an AM/PM specifier'
             );
         }
 
-        if ( defined $args->{two_digit_year} ) {
+        if ( defined $args->{year_100} ) {
             if ( defined $args->{century} ) {
                 $args->{year}
-                    = $args->{two_digit_year} + ( $args->{century} * 100 );
+                    = $args->{year_100} + ( $args->{century} * 100 );
             }
             else {
-                $args->{year} = $args->{two_digit_year} + (
-                    $args->{two_digit_year} >= 69
+                $args->{year} = $args->{year_100} + (
+                    $args->{year_100} >= 69
                     ? 1900
                     : 2000
                 );
@@ -564,21 +578,23 @@ sub _token_re_for {
         if ( $args->{time_zone_name} ) {
             $args->{time_zone} = $args->{time_zone_name};
         }
-        elsif ( $args->{time_zone_offset} ) {
+
+        if ( $args->{time_zone_offset} ) {
             $args->{time_zone} = DateTime::TimeZone->new(
                 name => $args->{time_zone_offset} );
         }
-        elsif ( defined $args->{time_zone_abbreviation} ) {
+
+        if ( defined $args->{time_zone_abbreviation} ) {
             my $abbr = $args->{time_zone_abbreviation};
             unless ( exists $self->{zone_map}{$abbr} ) {
                 $self->_our_croak(
-                    qq{Parsed an unrecognized time zone abbreviation, "$args->{time_zone_abbreviation})"}
+                    qq{Parsed an unrecognized time zone abbreviation, "$args->{time_zone_abbreviation}"}
                 );
                 return;
             }
             if ( !defined $self->{zone_map}{$abbr} ) {
                 $self->_our_croak(
-                    qq{The time zone abbreviation that was parsed is ambiguous, "$args->{time_zone_abbreviation})"}
+                    qq{The time zone abbreviation that was parsed is ambiguous, "$args->{time_zone_abbreviation}"}
                 );
                 return;
             }
@@ -626,12 +642,76 @@ sub _check_dt {
     my $dt   = shift;
     my $args = shift;
 
-    # hour vs hour_12
-    # hour vs am/pm
-    # year vs century vs year_100
-    # tz offset vs abbreviation vs Olson
-    # everything vs epoch
-    # month vs day of year
+    if ( defined $args->{hour} && defined $args->{hour_12} ) {
+        unless ( $dt->hour == $args->{hour}
+            && $dt->hour_12 == $args->{hour_12} ) {
+            $self->_our_croak(
+                'Parsed an input with 24-hour and 12-hour time values that do not match'
+                    . qq{ - "$args->{hour}" versus "$args->{hour_12}"} );
+            return;
+        }
+    }
+
+    if ( defined $args->{hour} && defined $args->{am_pm} ) {
+        my $is_am
+            = lc $args->{am_pm} eq lc $self->{locale}->am_pm_abbreviated->[0];
+        if (   ( $is_am && $args->{hour} >= 12 )
+            || ( !$is_am && $args->{hour} < 12 ) ) {
+            $self->_our_croak(
+                'Parsed an input with 24-hour and AM/PM values that do not match'
+                    . qq{ - "$args->{hour}" versus "$args->{am_pm}"} );
+            return;
+        }
+    }
+
+    if ( defined $args->{year} && defined $args->{century} ) {
+        unless ( int( $args->{year} / 100 ) == $args->{century} ) {
+            $self->_our_croak(
+                'Parsed an input with year and century values that do not match'
+                    . qq{ - "$args->{year}" versus "$args->{century}"} );
+            return;
+        }
+    }
+
+    if ( defined $args->{year} && defined $args->{year_100} ) {
+        unless ( ( $args->{year} % 100 ) == $args->{year_100} ) {
+            $self->_our_croak(
+                'Parsed an input with year and year-within-century values that do not match'
+                    . qq{ - "$args->{year}" versus "$args->{year_100}"} );
+            return;
+        }
+    }
+
+    if ( defined $args->{time_zone_abbreviation} && defined $args->{time_zone_offset} ) {
+        unless ( DateTime::TimeZone->offset_as_string($dt->offset) eq $args->{time_zone_offset} ) {
+            $self->_our_croak(
+                'Parsed an input with time zone abbreviation and time zone offset values that do not match'
+                    . qq{ - "$args->{time_zone_abbreviation}" versus "$args->{time_zone_offset}"} );
+            return;
+        }
+    }
+
+    if ( defined $args->{epoch} ) {
+        for my $key (
+            qw( year month day minute hour second hour_12 day_of_year )) {
+            if ( defined $args->{$key} && $dt->$key != $args->{$key} ) {
+                ( my $print_key = $key ) =~ s/_/-/g;
+                $self->_our_croak(
+                    "Parsed an input with epoch and $print_key values that do not match"
+                        . qq{ - "$args->{epoch}" versus "$args->{$key}"} );
+                return;
+            }
+        }
+    }
+
+    if ( defined $args->{month} && defined $args->{day_of_year} ) {
+        unless ( $dt->month == $args->{month} ) {
+            $self->_our_croak(
+                "Parsed an input with month and day-of-year values that do not match"
+                    . qq{ - "$args->{month}" versus "$args->{day_of_year}"} );
+            return;
+        }
+    }
 
     if ( defined $args->{day_name} ) {
         my $dow = $self->_locale_days->{ lc $args->{day_name} };
@@ -644,7 +724,7 @@ sub _check_dt {
                       qq{The parsed day name, "$args->{day_name}",}
                     . ' does not match the date supplied: '
                     . $dt->ymd );
-            return 0;
+            return;
         }
     }
 
@@ -654,7 +734,7 @@ sub _check_dt {
                       qq{The parsed day of the week, "$args->{day_of_week}",}
                     . ' does not match the date supplied: '
                     . $dt->ymd );
-            return 0;
+            return;
         }
     }
 
@@ -664,7 +744,7 @@ sub _check_dt {
                 qq{The parsed day of the week (with Sunday as 0) - $args->{day_of_week}}
                     . ' - does not match the date supplied: '
                     . $dt->ymd );
-            return 0;
+            return;
         }
     }
 
@@ -674,7 +754,7 @@ sub _check_dt {
                 qq{The parsed ISO week year - $args->{iso_week_year}}
                     . ' - does not match the date supplied: '
                     . $dt->ymd );
-            return 0;
+            return;
         }
     }
 
@@ -685,7 +765,7 @@ sub _check_dt {
                 qq{The parsed 2-digit ISO week year - $args->{iso_week_year_100}}
                     . ' - does not match the date supplied: '
                     . $dt->ymd );
-            return 0;
+            return;
         }
     }
 
@@ -695,7 +775,7 @@ sub _check_dt {
                       qq{The parsed week number - $args->{week_mon_1}}
                     . ' - does not match the date supplied: '
                     . $dt->ymd );
-            return 0;
+            return;
         }
     }
 
@@ -705,7 +785,7 @@ sub _check_dt {
                       qq{The parsed week number (with Sunday as 0) - $args->{week_mon_1}}
                     . ' - does not match the date supplied: '
                     . $dt->ymd );
-            return 0;
+            return;
         }
     }
 
@@ -713,42 +793,52 @@ sub _check_dt {
 }
 
 sub pattern {
-    my $self    = shift;
-    my $pattern = shift;
+    my $self = shift;
 
-    if ($pattern) {
-        my $possible_parser = $self->_build_parser($pattern);
-        if ( $possible_parser =~ /(%\{\w+\}|%\w)/ and $pattern !~ /\%$1/ ) {
-            $self->_our_carp(
-                "Unidentified token in pattern: $1 in $pattern. Leaving old pattern intact."
-            ) and return undef;
+    if (@_) {
+        my $pattern = shift;
+        deprecated(
+            feature => 'accessor writers',
+            message => 'Calling pattern() as a writer is deprecated.',
+        );
+
+        my $new;
+        try {
+            $new = $self->_clone_with(pattern => $pattern);
         }
-        else {
-            $self->{parser}  = $possible_parser;
-            $self->{pattern} = $pattern;
+        catch {
+            $self->_our_carp($_);
         }
+
+        return unless $new;
+
+        %{$self} = %{$new};
     }
+
     return $self->{pattern};
 }
 
 sub locale {
-    my $self   = shift;
-    my $locale = shift;
+    my $self = shift;
 
-    if ($locale) {
-        my $possible_locale = DateTime::Locale->load($locale);
-        unless ($possible_locale) {
-            $self->_our_carp(
-                "Could not create locale from $locale. Leaving old locale intact."
-            ) and return undef;
-        }
-        else {
-            $self->{locale}  = $locale;
-            $self->{_locale} = $possible_locale;
+    if (@_) {
+        my $locale = shift;
+        deprecated(
+            feature => 'accessor writers',
+            message => 'Calling locale() as a writer is deprecated.',
+        );
 
-            # When the locale changes we need to rebuild the parser
-            $self->{parser} = $self->_build_parser( $self->{pattern} );
+        my $new;
+        try {
+            $new = $self->_clone_with( locale => $locale );
         }
+        catch {
+            $self->_our_carp($_);
+        }
+
+        return unless $new;
+
+        %{$self} = %{$new};
     }
 
     return $self->{locale}->can('code')
@@ -757,28 +847,51 @@ sub locale {
 }
 
 sub time_zone {
-    my $self      = shift;
-    my $time_zone = shift;
+    my $self = shift;
 
-    if ($time_zone) {
-        my $possible_time_zone
-            = DateTime::TimeZone->new( name => $time_zone );
-        unless ($possible_time_zone) {
-            $self->_our_carp(
-                "Could not create time zone from $time_zone. Leaving old time zone intact."
-            ) and return undef;
+    if (@_) {
+        my $time_zone = shift;
+        deprecated(
+            feature => 'accessor writers',
+            message => 'Calling time_zone() as a writer is deprecated.',
+        );
+
+        my $new;
+        try {
+            $new = $self->_clone_with( time_zone => $time_zone );
         }
-        else {
-            $self->{time_zone}     = $possible_time_zone;
-            $self->{set_time_zone} = $self->{time_zone};
+        catch {
+            $self->_our_carp($_);
         }
+
+        return unless $new;
+
+        %{$self} = %{$new};
     }
 
     return $self->{time_zone}->name;
 }
 
+# Only used for deprecated accessors-as-writers feature
+sub _clone_with {
+    my $self = shift;
+
+    return ( ref $self )->new(
+        pattern => $self->{pattern},
+        locale  => $self->{locale},
+        (
+            $self->{time_zone}
+            ? ( time_zone => $self->{time_zone} )
+            : ()
+        ),
+        on_error => $self->{on_error},
+        debug    => $self->{debug},
+        @_,
+    );
+}
+
 sub parse_duration {
-    croak "DateTime::Format::Strptime doesn't do durations.";
+    croak q{DateTime::Format::Strptime doesn't do durations.};
 }
 
 sub format_datetime {
@@ -791,7 +904,7 @@ sub format_datetime {
 }
 
 sub format_duration {
-    croak "DateTime::Format::Strptime doesn't do durations.";
+    croak q{DateTime::Format::Strptime doesn't do durations.};
 }
 
 sub _our_croak {
@@ -822,7 +935,10 @@ sub errmsg {
 
 sub strftime {
     my ( $pattern, $dt ) = @_;
-    return $dt->strftime($pattern);
+    return DateTime::Format::Strptime->new(
+        pattern  => $pattern,
+        on_error => 'croak'
+    )->format_datetime($dt);
 }
 
 sub strptime {
