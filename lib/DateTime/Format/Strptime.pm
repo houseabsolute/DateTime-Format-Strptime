@@ -208,7 +208,12 @@ sub parse_datetime {
 
     my @matches = ( $string =~ /$parser->{regex}/ );
     unless (@matches) {
-        $self->_our_croak('Your datetime does not match your pattern');
+        my $msg = 'Your datetime does not match your pattern';
+        if ( $self->{debug} ) {
+            $msg .= qq{ - string = "$string" - regex = $parser->{regex}};
+        }
+        $msg .= q{.};
+        $self->_our_croak($msg);
         return;
     }
 
