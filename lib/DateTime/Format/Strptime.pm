@@ -614,8 +614,12 @@ sub _token_re_for {
             $args->{$k} =~ s/^\s+//;
         }
 
+        # If we parsed "12345" we treat it as "123450000" but if we parsed
+        # "000123456" we treat it as 123,456 nanoseconds. This is all a bit
+        # weird and confusing but it matches how this module has always
+        # worked.
         $args->{nanosecond} *= 10**( 9 - length $args->{nanosecond} )
-            if defined $args->{nanosecond};
+            if defined $args->{nanosecond} && length $args->{nanosecond} != 9;
 
         for my $k (qw( year month day )) {
             $args->{$k} = 1 unless defined $args->{$k};
