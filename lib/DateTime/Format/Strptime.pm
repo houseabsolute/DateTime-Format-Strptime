@@ -576,10 +576,6 @@ sub _token_re_for {
             }
         }
 
-        if ( $args->{time_zone_name} ) {
-            $args->{time_zone} = $args->{time_zone_name};
-        }
-
         if ( $args->{time_zone_offset} ) {
             $args->{time_zone} = DateTime::TimeZone->new(
                 name => $args->{time_zone_offset} );
@@ -604,6 +600,10 @@ sub _token_re_for {
         }
         else {
             $args->{time_zone} ||= 'floating';
+        }
+
+        if ( $args->{time_zone_name} ) {
+            $args->{time_zone} = $args->{time_zone_name};
         }
 
         delete @{$args}{@non_dt_keys};
@@ -646,8 +646,7 @@ sub _check_dt {
     my $is_am = defined $args->{am_pm}
         && lc $args->{am_pm} eq lc $self->{locale}->am_pm_abbreviated->[0];
     if ( defined $args->{hour} && defined $args->{hour_12} ) {
-        unless ( $dt->hour == $args->{hour}
-            && $dt->hour_12 == $args->{hour_12} ) {
+        unless ( ( $args->{hour} % 12 ) == $args->{hour_12} ) {
             $self->_our_croak(
                 'Parsed an input with 24-hour and 12-hour time values that do not match'
                     . qq{ - "$args->{hour}" versus "$args->{hour_12}"} );
@@ -683,11 +682,16 @@ sub _check_dt {
         }
     }
 
-    if ( defined $args->{time_zone_abbreviation} && defined $args->{time_zone_offset} ) {
-        unless ( DateTime::TimeZone->offset_as_string($dt->offset) eq $args->{time_zone_offset} ) {
+    if (   defined $args->{time_zone_abbreviation}
+        && defined $args->{time_zone_offset} ) {
+        unless ( $self->{zone_map}{ $args->{time_zone_abbreviation} }
+            && $self->{zone_map}{ $args->{time_zone_abbreviation} }
+            && $args->{time_zone_offset} ) {
+
             $self->_our_croak(
                 'Parsed an input with time zone abbreviation and time zone offset values that do not match'
-                    . qq{ - "$args->{time_zone_abbreviation}" versus "$args->{time_zone_offset}"} );
+                    . qq{ - "$args->{time_zone_abbreviation}" versus "$args->{time_zone_offset}"}
+            );
             return;
         }
     }
@@ -750,9 +754,9 @@ sub _check_dt {
     }
 
     if ( defined $args->{iso_week_year} ) {
-        unless ($dt->week_year == $args->{iso_week_year}) {
+        unless ( $dt->week_year == $args->{iso_week_year} ) {
             $self->_our_croak(
-                qq{The parsed ISO week year - $args->{iso_week_year}}
+                      qq{The parsed ISO week year - $args->{iso_week_year}}
                     . ' - does not match the date supplied: '
                     . $dt->ymd );
             return;
@@ -760,8 +764,8 @@ sub _check_dt {
     }
 
     if ( defined $args->{iso_week_year_100} ) {
-        unless (
-            ( 0 + substr( $dt->week_year, -2 ) ) == $args->{iso_week_year_100} ) {
+        unless ( ( 0 + substr( $dt->week_year, -2 ) )
+            == $args->{iso_week_year_100} ) {
             $self->_our_croak(
                 qq{The parsed 2-digit ISO week year - $args->{iso_week_year_100}}
                     . ' - does not match the date supplied: '
@@ -783,7 +787,7 @@ sub _check_dt {
     if ( defined $args->{week_sun_0} ) {
         unless ( ( 0 + $dt->strftime('%U') ) == $args->{week_mon_1} ) {
             $self->_our_croak(
-                      qq{The parsed week number (with Sunday as 0) - $args->{week_mon_1}}
+                qq{The parsed week number (with Sunday as 0) - $args->{week_mon_1}}
                     . ' - does not match the date supplied: '
                     . $dt->ymd );
             return;
@@ -805,7 +809,7 @@ sub pattern {
 
         my $new;
         try {
-            $new = $self->_clone_with(pattern => $pattern);
+            $new = $self->_clone_with( pattern => $pattern );
         }
         catch {
             $self->_our_carp($_);

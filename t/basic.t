@@ -364,15 +364,15 @@ day   => 14
 
 [every pattern]
 %a %b %B %C %d %e %h %H %I %j %k %l %m %M %n %N %O %p %P %S %U %u %w %W %y %Y %s %G %g %z %Z %%Y %%
-Wed Nov November 20 05  5 Nov 23 11 309 23 11 11 34 \n 123456789 America/New_York PM pm 45 44 3 3 44 03 2003 1068093285 2003 03 -0500 EST %Y %
+Wed Nov November 20 05  5 Nov 21 09 309 21  9 11 34 \n 123456789 America/Denver PM pm 45 44 3 3 44 03 2003 1068093285 2003 03 -0700 MST %Y %
 year   => 2003
 month  => 11
 day    => 5
-hour   => 23
+hour   => 21
 minute => 34
 second => 45
 nanosecond => 123456789
-time_zone_long_name => America/New_York
+time_zone_long_name => America/Denver
 
 [Australian date]
 %x
@@ -528,3 +528,20 @@ hour   => 13
 minute => 34
 second => 56
 
+[epoch without time zone]
+%s
+42
+epoch => 42
+time_zone_long_name => floating
+
+[epoch with time zone]
+%s %Z
+42 UTC
+epoch  => 42
+offset => 0
+
+[epoch with nanosecond]
+%s %N
+42 000000034
+epoch => 42
+nanosecond => 34
