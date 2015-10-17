@@ -642,6 +642,8 @@ sub _check_dt {
     my $dt   = shift;
     my $args = shift;
 
+    my $is_am = defined $args->{am_pm}
+        && lc $args->{am_pm} eq lc $self->{locale}->am_pm_abbreviated->[0];
     if ( defined $args->{hour} && defined $args->{hour_12} ) {
         unless ( $dt->hour == $args->{hour}
             && $dt->hour_12 == $args->{hour_12} ) {
@@ -653,8 +655,6 @@ sub _check_dt {
     }
 
     if ( defined $args->{hour} && defined $args->{am_pm} ) {
-        my $is_am
-            = lc $args->{am_pm} eq lc $self->{locale}->am_pm_abbreviated->[0];
         if (   ( $is_am && $args->{hour} >= 12 )
             || ( !$is_am && $args->{hour} < 12 ) ) {
             $self->_our_croak(
