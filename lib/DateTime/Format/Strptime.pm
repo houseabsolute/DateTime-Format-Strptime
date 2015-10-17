@@ -228,6 +228,7 @@ sub parse_datetime {
     # constructor.
     my ( $constructor, $args ) = $self->_munge_args( {%args} )
         or return;
+
     my $dt = DateTime->$constructor($args);
     return unless $self->_check_dt( $dt, \%args );
 
@@ -602,7 +603,7 @@ sub _token_re_for {
                 = DateTime::TimeZone->new( name => $self->{zone_map}{$abbr} );
         }
         else {
-            $args->{time_zone} = 'floating';
+            $args->{time_zone} ||= 'floating';
         }
 
         delete @{$args}{@non_dt_keys};
