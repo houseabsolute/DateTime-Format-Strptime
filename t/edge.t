@@ -12,7 +12,7 @@ use Test::Fatal;
 
 use DateTime::Format::Strptime;
 
-run_tests_from_data(\*DATA);
+run_tests_from_data( \*DATA );
 
 done_testing();
 
