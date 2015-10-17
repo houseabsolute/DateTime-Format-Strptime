@@ -314,6 +314,15 @@ minute     => 45
 second     => 56
 nanosecond => 123000000
 
+[nanosecond with no length but < 9 digits]
+%H:%M:%S.%N
+23:45:56.543
+skip round trip
+hour       => 23
+minute     => 45
+second     => 56
+nanosecond => 543000000
+
 [time zone as numeric offset]
 %H:%M:%S %z
 23:45:56 +1000
