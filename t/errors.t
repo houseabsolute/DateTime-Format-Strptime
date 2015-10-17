@@ -103,7 +103,7 @@ subtest(
                 qr{\QParsed an input with year and year-within-century values that do not match - "2015" versus "14"},
         },
         {
-            name    => 'year vs year-within-century',
+            name    => 'time zone offset vs time zone abbreviation',
             pattern => '%Y %z %Z',
             input   => '2015 -0500 AEST',
             error =>
@@ -152,25 +152,74 @@ subtest(
                 qr{\QParsed an input with epoch and second values that do not match - "42" versus "16"},
         },
         {
-            name    => 'epoch vs hour-12',
+            name    => 'epoch vs hour (1-12)',
             pattern => '%s %I %P',
             input   => '42 4 PM',
             error =>
-                qr{\QParsed an input with epoch and hour-12 values that do not match - "42" versus "4"},
+                qr{\QParsed an input with epoch and hour (1-12) values that do not match - "42" versus "4"},
         },
         {
-            name    => 'epoch vs day-of-year',
+            name    => 'epoch vs day of year',
             pattern => '%s %j',
             input   => '42 17',
             error =>
-                qr{\QParsed an input with epoch and day-of-year values that do not match - "42" versus "17"},
+                qr{\QParsed an input with epoch and day of year values that do not match - "42" versus "17"},
         },
         {
-            name    => 'epoch vs day-of-year',
+            name    => 'month vs day of year',
             pattern => '%Y %m %j',
             input   => '2015 8 17',
             error =>
-                qr{\QParsed an input with month and day-of-year values that do not match - "8" versus "17"},
+                qr{\QParsed an input with month and day of year values that do not match - "8" versus "17"},
+        },
+        {
+            name    => 'day name vs date',
+            pattern => '%Y %m %d %a',
+            input   => '2015 8 17 Tuesday',
+            error =>
+                qr{\QParsed an input where the day name does not match the date - "Tuesday" versus "2015-08-17"},
+        },
+        {
+            name    => 'day of week vs date',
+            pattern => '%Y %m %d %u',
+            input   => '2015 8 17 2',
+            error =>
+                qr{\QParsed an input where the day of week does not match the date - "2" versus "2015-08-17"},
+        },
+        {
+            name    => 'day of week (Sunday as 0) vs date',
+            pattern => '%Y %m %d %w',
+            input   => '2015 8 17 2',
+            error =>
+                qr{\QParsed an input where the day of week (Sunday as 0) does not match the date - "2" versus "2015-08-17"},
+        },
+        {
+            name    => 'iso week year vs date',
+            pattern => '%Y %m %d %G',
+            input   => '2015 8 17 2013',
+            error =>
+                qr{\QParsed an input where the ISO week year does not match the date - "2013" versus "2015-08-17"},
+        },
+        {
+            name    => 'iso week year (without century) vs date',
+            pattern => '%Y %m %d %g',
+            input   => '2015 8 17 13',
+            error =>
+                qr{\QParsed an input where the ISO week year (without century) does not match the date - "13" versus "2015-08-17"},
+        },
+        {
+            name    => 'iso week number vs date',
+            pattern => '%Y %m %d %W',
+            input   => '2015 8 17 15',
+            error =>
+                qr{\QParsed an input where the ISO week number (Monday starts week) does not match the date - "15" versus "2015-08-17"},
+        },
+        {
+            name    => 'iso week number vs date',
+            pattern => '%Y %m %d %U',
+            input   => '2015 8 17 15',
+            error =>
+                qr{\QParsed an input where the ISO week number (Sunday starts week) does not match the date - "15" versus "2015-08-17"},
         },
     );
 

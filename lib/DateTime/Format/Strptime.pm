@@ -685,8 +685,8 @@ sub _check_dt {
     if (   defined $args->{time_zone_abbreviation}
         && defined $args->{time_zone_offset} ) {
         unless ( $self->{zone_map}{ $args->{time_zone_abbreviation} }
-            && $self->{zone_map}{ $args->{time_zone_abbreviation} }
-            && $args->{time_zone_offset} ) {
+            && $self->{zone_map}{ $args->{time_zone_abbreviation} } eq
+            $args->{time_zone_offset} ) {
 
             $self->_our_croak(
                 'Parsed an input with time zone abbreviation and time zone offset values that do not match'
@@ -700,7 +700,10 @@ sub _check_dt {
         for my $key (
             qw( year month day minute hour second hour_12 day_of_year )) {
             if ( defined $args->{$key} && $dt->$key != $args->{$key} ) {
-                ( my $print_key = $key ) =~ s/_/-/g;
+                my $print_key
+                    = $key eq 'hour_12'     ? 'hour (1-12)'
+                    : $key eq 'day_of_year' ? 'day of year'
+                    :                         $key;
                 $self->_our_croak(
                     "Parsed an input with epoch and $print_key values that do not match"
                         . qq{ - "$args->{epoch}" versus "$args->{$key}"} );
@@ -712,7 +715,7 @@ sub _check_dt {
     if ( defined $args->{month} && defined $args->{day_of_year} ) {
         unless ( $dt->month == $args->{month} ) {
             $self->_our_croak(
-                "Parsed an input with month and day-of-year values that do not match"
+                'Parsed an input with month and day of year values that do not match'
                     . qq{ - "$args->{month}" versus "$args->{day_of_year}"} );
             return;
         }
@@ -726,9 +729,9 @@ sub _check_dt {
 
         unless ( $dt->day_of_week_0 == $dow ) {
             $self->_our_croak(
-                      qq{The parsed day name, "$args->{day_name}",}
-                    . ' does not match the date supplied: '
-                    . $dt->ymd );
+                'Parsed an input where the day name does not match the date'
+                    . qq{ - "$args->{day_name}" versus "}
+                    . $dt->ymd . q{"} );
             return;
         }
     }
@@ -736,19 +739,21 @@ sub _check_dt {
     if ( defined $args->{day_of_week} ) {
         unless ( $dt->day_of_week == $args->{day_of_week} ) {
             $self->_our_croak(
-                      qq{The parsed day of the week, "$args->{day_of_week}",}
-                    . ' does not match the date supplied: '
-                    . $dt->ymd );
+                'Parsed an input where the day of week does not match the date'
+                    . qq{ - "$args->{day_of_week}" versus "}
+                    . $dt->ymd
+                    . q{"} );
             return;
         }
     }
 
     if ( defined $args->{day_of_week_sun_0} ) {
-        unless ( ( $dt->day_of_week % 7 ) == $args->{day_of_week} ) {
+        unless ( ( $dt->day_of_week % 7 ) == $args->{day_of_week_sun_0} ) {
             $self->_our_croak(
-                qq{The parsed day of the week (with Sunday as 0) - $args->{day_of_week}}
-                    . ' - does not match the date supplied: '
-                    . $dt->ymd );
+                'Parsed an input where the day of week (Sunday as 0) does not match the date'
+                    . qq{ - "$args->{day_of_week_sun_0}" versus "}
+                    . $dt->ymd
+                    . q{"} );
             return;
         }
     }
@@ -756,9 +761,10 @@ sub _check_dt {
     if ( defined $args->{iso_week_year} ) {
         unless ( $dt->week_year == $args->{iso_week_year} ) {
             $self->_our_croak(
-                      qq{The parsed ISO week year - $args->{iso_week_year}}
-                    . ' - does not match the date supplied: '
-                    . $dt->ymd );
+                'Parsed an input where the ISO week year does not match the date'
+                    . qq{ - "$args->{iso_week_year}" versus "}
+                    . $dt->ymd
+                    . q{"} );
             return;
         }
     }
@@ -767,9 +773,10 @@ sub _check_dt {
         unless ( ( 0 + substr( $dt->week_year, -2 ) )
             == $args->{iso_week_year_100} ) {
             $self->_our_croak(
-                qq{The parsed 2-digit ISO week year - $args->{iso_week_year_100}}
-                    . ' - does not match the date supplied: '
-                    . $dt->ymd );
+                'Parsed an input where the ISO week year (without century) does not match the date'
+                    . qq{ - "$args->{iso_week_year_100}" versus "}
+                    . $dt->ymd
+                    . q{"} );
             return;
         }
     }
@@ -777,19 +784,21 @@ sub _check_dt {
     if ( defined $args->{week_mon_1} ) {
         unless ( ( 0 + $dt->strftime('%W') ) == $args->{week_mon_1} ) {
             $self->_our_croak(
-                      qq{The parsed week number - $args->{week_mon_1}}
-                    . ' - does not match the date supplied: '
-                    . $dt->ymd );
+                'Parsed an input where the ISO week number (Monday starts week) does not match the date'
+                    . qq{ - "$args->{week_mon_1}" versus "}
+                    . $dt->ymd
+                    . q{"} );
             return;
         }
     }
 
     if ( defined $args->{week_sun_0} ) {
-        unless ( ( 0 + $dt->strftime('%U') ) == $args->{week_mon_1} ) {
+        unless ( ( 0 + $dt->strftime('%U') ) == $args->{week_sun_0} ) {
             $self->_our_croak(
-                qq{The parsed week number (with Sunday as 0) - $args->{week_mon_1}}
-                    . ' - does not match the date supplied: '
-                    . $dt->ymd );
+                'Parsed an input where the ISO week number (Sunday starts week) does not match the date'
+                    . qq{ - "$args->{week_sun_0}" versus "}
+                    . $dt->ymd
+                    . q{"} );
             return;
         }
     }
