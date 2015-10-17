@@ -2,62 +2,15 @@ use strict;
 use warnings;
 use utf8;
 
+use lib 't/lib';
+
+use T qw( run_tests_from_data test_datetime_object );
 use Test::More 0.96;
 use Test::Fatal;
 
 use DateTime::Format::Strptime;
 
-for my $test ( _tests_from_data() ) {
-    subtest(
-        qq{$test->{name}},
-        sub {
-            _utf8_output();
-
-            my $parser;
-            is(
-                exception {
-                    $parser = DateTime::Format::Strptime->new(
-                        pattern => $test->{pattern},
-                        (
-                            $test->{locale}
-                            ? ( locale => $test->{locale} )
-                            : ()
-                        ),
-                        on_error => 'croak',
-                    );
-                },
-                undef,
-                "no exception building parser for $test->{pattern}"
-            ) or return;
-
-            # Thursday changed from "Thu" to "Thu." and December went from
-            # "Dec" to "Dec." between CLDR versions.
-            $test->{input}
-                =~ s/AU_THU/DateTime::Locale->load('en-AU')->day_format_abbreviated->[3]/e;
-            $test->{input}
-                =~ s/AU_DEC/DateTime::Locale->load('en-AU')->month_format_abbreviated->[11]/e;
-
-            ( my $real_input = $test->{input} ) =~ s/\\n/\n/g;
-
-            my $dt;
-            is(
-                exception { $dt = $parser->parse_datetime( $real_input ) },
-                undef,
-                "no exception parsing $test->{input}"
-            ) or return;
-
-            _test_dt_methods( $dt, $test->{expect} );
-
-            unless ( $test->{skip_round_trip} ) {
-                is(
-                    $parser->format_datetime($dt),
-                    $real_input,
-                    'round trip via strftime produces original input'
-                );
-            }
-        }
-    );
-}
+run_tests_from_data(\*DATA);
 
 subtest(
     'parsing whitespace',
@@ -77,7 +30,7 @@ EOF
             year  => 2015,
             month => 12,
         );
-        _test_dt_methods( $dt, \%expect );
+        test_datetime_object( $dt, \%expect );
     }
 );
 
@@ -99,59 +52,9 @@ subtest(
             time_zone_long_name => 'America/New_York',
         );
 
-        _test_dt_methods( $dt, \%expect );
+        test_datetime_object( $dt, \%expect );
     }
 );
-
-sub _tests_from_data {
-    my @tests;
-
-    my $d = do { local $/; <DATA> };
-
-    my $test_re = qr/
-        \[(.+?)\]\n              # test name
-        (.+?)\n                  # pattern
-        (.+?)\n                  # input
-        (?:locale\ =\ (.+?)\n)?  # optional locale
-        (skip\ round\ trip\n)?   # skip a round trip?
-        (.+?)\n                  # k-v pairs for expected values
-        (?:\n|\z)                # end of test
-                    /xs;
-
-    while ( $d =~ /$test_re/g ) {
-        push @tests, {
-            name            => $1,
-            pattern         => $2,
-            input           => $3,
-            locale          => $4,
-            skip_round_trip => $5,
-            expect          => {
-                map { split /\s+=>\s+/ } split /\n/, $6,
-            },
-        };
-    }
-
-    return @tests;
-}
-
-sub _utf8_output {
-    binmode $_, ':encoding(UTF-8)'
-        for map { Test::Builder->new->$_ }
-        qw( output failure_output todo_output );
-}
-
-sub _test_dt_methods {
-    my $dt     = shift;
-    my $expect = shift;
-
-    for my $meth ( sort keys %{$expect} ) {
-        is(
-            $dt->$meth,
-            $expect->{$meth},
-            "$meth is $expect->{$meth}"
-        );
-    }
-}
 
 done_testing();
 
