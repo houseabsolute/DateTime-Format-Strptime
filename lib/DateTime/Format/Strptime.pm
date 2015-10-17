@@ -206,6 +206,7 @@ sub parse_datetime {
         warn "Fields: @{$parser->{fields}}\n";
     }
 
+    $string =~ s/\A\s+|\s+\z//g;
     my @matches = ( $string =~ /$parser->{regex}/ );
     unless (@matches) {
         my $msg = 'Your datetime does not match your pattern';
