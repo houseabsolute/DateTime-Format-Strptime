@@ -335,7 +335,7 @@ sub _build_parser {
             field => 'iso_week_year_100',
         },
         G => {
-            regex => qr/$d+/,
+            regex => qr/$d{4}/,
             field => 'iso_week_year',
         },
         H => {
@@ -394,7 +394,7 @@ sub _build_parser {
             field => 'year_100',
         },
         Y => {
-            regex => qr/$d+/,
+            regex => qr/$d{4}/,
             field => 'year',
         },
         z => {
