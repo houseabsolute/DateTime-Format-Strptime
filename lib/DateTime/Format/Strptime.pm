@@ -294,7 +294,7 @@ sub _build_parser {
             }
         }
         elsif ($3) {
-            $regex .= $2 ? qr/[0-9]({$2})/ : qr/([0-9]+)/;
+            $regex .= $2 ? qr/([0-9]{$2})/ : qr/([0-9]+)/;
             push @fields, 'nanosecond';
         }
         elsif ($4) {
