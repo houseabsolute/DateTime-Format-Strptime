@@ -1,5 +1,27 @@
 {{$NEXT}}
 
+- This release is a substantial rewrite. Please test it and file bugs for any
+  unintentional breakage.
+
+* The error messages for various types of failures have changed.
+
+* The never-documented diagnostic parameter for the constructor has been
+  removed.
+
+* The never-documented feature to allow you to use arbitrary DateTime.pm
+  methods in the parsing pattern has been removed. This never made much sense
+  anyway, since most DateTime.pm methods are not constructor params, but they
+  were used that way.
+
+* Using the pattern, locale, and time_zone to set the respective attribute is
+  now deprecated. Make a new object instead of changing one of these values.
+
+- Fixed a warning from the tests with newer Perl versions. RT #107620.
+
+- Clarified docs to note that %Y and %G require 4-digit years. Reported by
+  Karen Etheridge. RT #103147.
+
+
 1.57     2015-10-04
 
 - Make all tests pass with both the current DateTime::Locale and the upcoming
