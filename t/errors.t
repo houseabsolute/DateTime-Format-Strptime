@@ -232,15 +232,13 @@ subtest(
             name    => 'illegal date',
             pattern => '%Y-%m-%d',
             input   => '0000-00-00',
-            error =>
-                qr{\QParsed values did not produce a valid date},
+            error   => qr{\QParsed values did not produce a valid date},
         },
         {
             name    => 'illegal time',
             pattern => '%Y-%m-%d %H:%M',
             input   => '0000-00-00 26:99',
-            error =>
-                qr{\QParsed values did not produce a valid date},
+            error   => qr{\QParsed values did not produce a valid date},
         },
     );
 
