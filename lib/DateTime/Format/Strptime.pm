@@ -235,7 +235,9 @@ sub parse_datetime {
     my ( $constructor, $args ) = $self->_munge_args( {%args} )
         or return;
 
-    my $dt = DateTime->$constructor($args);
+    my $dt = try { DateTime->$constructor($args) };
+    $self->_our_croak('Parsed values did not produce a valid date')
+        unless $dt;
     return unless $self->_check_dt( $dt, \%args );
 
     $dt->set_time_zone( $self->{time_zone} )

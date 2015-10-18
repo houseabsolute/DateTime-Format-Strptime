@@ -228,6 +228,20 @@ subtest(
             error =>
                 qr{\QThe Olson time zone name that was parsed does not appear to be valid, "Dev/Null"},
         },
+        {
+            name    => 'illegal date',
+            pattern => '%Y-%m-%d',
+            input   => '0000-00-00',
+            error =>
+                qr{\QParsed values did not produce a valid date},
+        },
+        {
+            name    => 'illegal time',
+            pattern => '%Y-%m-%d %H:%M',
+            input   => '0000-00-00 26:99',
+            error =>
+                qr{\QParsed values did not produce a valid date},
+        },
     );
 
     for my $test (@tests) {
