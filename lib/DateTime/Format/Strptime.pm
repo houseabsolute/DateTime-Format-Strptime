@@ -20,8 +20,6 @@ use Exporter qw( import );
 
 our @EXPORT_OK = qw( strftime strptime );
 
-use Moo;
-
 {
     my $spec = {
         pattern => { type => SCALAR },
