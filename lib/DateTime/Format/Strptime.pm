@@ -741,7 +741,8 @@ sub _check_dt {
             $self->_our_croak(
                 'Parsed an input where the day name does not match the date'
                     . qq{ - "$args->{day_name}" versus "}
-                    . $dt->ymd . q{"} );
+                    . $dt->ymd
+                    . q{"} );
             return;
         }
     }
