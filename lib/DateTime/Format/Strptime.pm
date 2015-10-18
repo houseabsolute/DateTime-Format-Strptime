@@ -1224,7 +1224,7 @@ The year corresponding to the ISO week number, but without the century
 
 =item * %G
 
-The year corresponding to the ISO week number.
+The 4-digit year corresponding to the ISO week number.
 
 =item * %H
 
@@ -1311,7 +1311,7 @@ twenty-first century (2000-2068).
 
 =item * %Y
 
-The year, including century (for example, 1991).
+A 4-digit year, including century (for example, 1991).
 
 =item * %z
 
