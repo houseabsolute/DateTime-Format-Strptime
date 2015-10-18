@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.58     2015-10-18 (TRIAL RELEASE)
+
 - This release is a substantial rewrite. Please test it and file bugs for any
   unintentional breakage.
 
