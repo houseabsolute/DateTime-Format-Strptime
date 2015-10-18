@@ -20,6 +20,8 @@ use Exporter qw( import );
 
 our @EXPORT_OK = qw( strftime strptime );
 
+use constant PERL_58 => $] < 5.010;
+
 {
     my $spec = {
         pattern => { type => SCALAR },
@@ -286,6 +288,10 @@ sub _build_parser {
             ([^%]+)
                     /xg
         ) {
+        # Using \G in the regex match fails for some reason on Perl 5.8, so we
+        # do this hack instead.
+        substr( $pattern, 0, pos $pattern, q{} )
+            if PERL_58;
         if ($1) {
             my $p = $patterns->{$1}
                 or croak
@@ -303,8 +309,7 @@ sub _build_parser {
             push @fields, 'nanosecond';
         }
         elsif ($4) {
-            croak
-                qq{Pattern contained an unrecognized strptime token, "$4"};
+            croak qq{Pattern contained an unrecognized strptime token, "$4"};
         }
         else {
             $regex .= qr/\Q$5/;

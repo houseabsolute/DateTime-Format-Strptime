@@ -1,0 +1,297 @@
+Installing Test-Command-0.11 for App-Icli-0.48
+Installing Encode-UTF8Mac-0.04 for App-dropboxapi-1.17
+Installing Term-Size-0.207 for App-Icli-0.48
+Installing Mozilla-PublicSuffix-v0.1.19 for HTTP-CookieJar-0.007 (started with App-dropboxapi-1.17)
+Installing HTTP-CookieJar-0.007 for Furl-3.08 (started with App-dropboxapi-1.17)
+Installing Lingua-EN-Numbers-Ordinate-1.04 for App-PM-Website-0.131611
+Installing Class-Accessor-Lite-0.08 for Furl-3.08 (started with App-dropboxapi-1.17)
+Installing Config-YAML-1.42 for App-PM-Website-0.131611
+Installing Net-IDN-Encode-2.300 for Furl-3.08 (started with App-dropboxapi-1.17)
+Installing Furl-3.08 for WebService-Dropbox-1.22 (started with App-dropboxapi-1.17)
+Installing libxml-perl-0.08 for XML-DOM-1.45 (started with App-PM-Website-0.131611)
+Installing WebService-Dropbox-1.22 for App-dropboxapi-1.17
+Installing XML-DOM-1.45 for HTTP-DAV-0.48 (started with App-PM-Website-0.131611)
+Installing HTTP-DAV-0.48 for App-PM-Website-0.131611
+Installing File-ReadBackwards-1.05 for App-SCM-Digest-0.01
+Installing Template-Plugin-Gravatar-0.09 for App-PM-Website-0.131611
+Installing Template-Plugin-DateTime-0.06002 for App-PM-Website-0.131611
+Installing Template-Plugin-String-Compare-0.01 for App-PM-Website-0.131611
+Installing Badger-0.09 for Backup-Omni-0.02
+Installing Business-PayPal-NVP-1.08 for Business-CPI-Gateway-PayPal-0.905
+Installing Type-EmailAddress-0.001 for Business-CPI-0.924 (started with Business-CPI-Gateway-PayPal-0.905)
+Installing Business-CPI-0.924 for Business-CPI-Gateway-PayPal-0.905
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing Text-PDF-0.29a for PDF-Reuse-0.36 (started with Business-DPD-0.22)
+Installing Font-TTF-1.05 for PDF-Reuse-0.36 (started with Business-DPD-0.22)
+Installing PDF-Reuse-0.36 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing Barcode-Code128-2.21 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing GD-Barcode-1.15 for PDF-Reuse-Barcode-0.07 (started with Business-DPD-0.22)
+Installing PDF-Reuse-Barcode-0.07 for Business-DPD-0.22
+Installing HTML-Selector-XPath-0.18 for Web-Scraper-0.38 (started with Business-DPD-0.22)
+Installing Web-Scraper-0.38 for Business-DPD-0.22
+Installing PDF-Reuse-0.36 for Business-DPD-0.22
+Installing Module-Build-Prereqs-FromCPANfile-0.02 for BusyBird-0.12
+Installing Test-Identity-0.01 for CPS-0.18 (started with BusyBird-0.12)
+Installing List-UtilsBy-0.10 for Devel-MAT-0.20 (started with BusyBird-0.12)
+Installing Devel-MAT-0.20 for Test-Refcount-0.08 (started with BusyBird-0.12)
+Installing Test-Refcount-0.08 for CPS-0.18 (started with BusyBird-0.12)
+Installing CPS-0.18 for BusyBird-0.12
+Installing JavaScript-Value-Escape-0.07 for BusyBird-0.12
+Installing Twiggy-0.1025 for BusyBird-0.12
+Installing Async-Selector-1.03 for BusyBird-0.12
+Installing Data-Diver-1.0101 for BusyBird-0.12
+Installing BusyBird-DateTime-Format-0.05 for BusyBird-0.12
+Installing SQL-QueryMaker-0.03 for SQL-Maker-1.21 (started with BusyBird-0.12)
+Installing SQL-Maker-1.21 for BusyBird-0.12
+Installing SQL-QueryMaker-0.03 for BusyBird-0.12
+Installing Router-Simple-0.17 for BusyBird-0.12
+Installing Async-Queue-0.021 for BusyBird-0.12
+Installing Async-Selector-1.03 for BusyBird-0.12
+Installing Future-Q-0.110 for BusyBird-0.12
+Installing Test-Name-FromLine-0.13 for Test-Time-0.04 (started with BusyBird-0.12)
+Installing Test-Time-0.04 for Cache-Memory-Simple-1.03 (started with BusyBird-0.12)
+Installing Cache-Memory-Simple-1.03 for BusyBird-0.12
+Installing Test-Time-0.04 for Cache-Memory-Simple-1.03 (started with BusyBird-0.12)
+Installing Cache-Memory-Simple-1.03 for BusyBird-0.12
+Installing Future-Q-0.110 for BusyBird-0.12
+Installing Async-Queue-0.021 for BusyBird-0.12
+Installing AnyEvent-HTTP-2.22 for Cmd-Dwarf-1.30
+Installing Hash-Util-FieldHash-Compat-0.10 for Data-Util-0.63 (started with Catmandu-Fix-Date-0.0124)
+Installing Data-Util-0.63 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing HTML-StickyQuery-0.13 for HTTP-Session-0.49 (started with Cmd-Dwarf-1.30)
+Installing HTTP-Session-0.49 for HTTP-Session-Store-DBI-0.02 (started with Cmd-Dwarf-1.30)
+Installing HTTP-Session-Store-DBI-0.02 for Cmd-Dwarf-1.30
+Installing HTTP-Session-0.49 for Cmd-Dwarf-1.30
+Installing Image-Info-1.38 for Cmd-Dwarf-1.30
+Installing Dispatch-Class-0.02 for Try-Tiny-ByClass-0.01 (started with Catmandu-Fix-Date-0.0124)
+Installing Try-Tiny-ByClass-0.01 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing Text-TestBase-0.12 for FormValidator-Lite-0.38 (started with Cmd-Dwarf-1.30)
+Installing Email-Valid-Loose-0.05 for FormValidator-Lite-0.38 (started with Cmd-Dwarf-1.30)
+Installing URI-Template-0.22 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing FormValidator-Lite-0.38 for Cmd-Dwarf-1.30
+Installing Config-Onion-1.004 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing String-CamelCase-0.02 for Cmd-Dwarf-1.30
+Installing MooX-Aliases-0.001006 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing Module-Info-0.35 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing URI-Escape-XS-0.13 for Plack-Handler-CLI-0.05 (started with Cmd-Dwarf-1.30)
+Installing Plack-Handler-CLI-0.05 for Cmd-Dwarf-1.30
+Installing CGI-Expand-2.05 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing HTML-FillInForm-Lite-1.13 for Cmd-Dwarf-1.30
+Installing Config-AutoConf-0.311 for Marpa-R2-3.000000 (started with Catmandu-Fix-Date-0.0124)
+Installing Test-Mock-Guard-0.10 for Teng-0.28 (started with Cmd-Dwarf-1.30)
+Installing DBIx-TransactionManager-1.13 for Teng-0.28 (started with Cmd-Dwarf-1.30)
+Installing Data-Page-NoTotalEntries-0.02 for Teng-0.28 (started with Cmd-Dwarf-1.30)
+Installing DBIx-Inspector-0.12 for Teng-0.28 (started with Cmd-Dwarf-1.30)
+Installing Teng-0.28 for Cmd-Dwarf-1.30
+Installing Iterator-0.03 for Iterator-Util-0.02 (started with Cmd-Dwarf-1.30)
+Installing Iterator-Util-0.02 for Data-DPath-0.55 (started with Cmd-Dwarf-1.30)
+Installing Data-DPath-0.55 for Cmd-Dwarf-1.30
+Installing Test-PostgreSQL-1.06 for Cmd-Dwarf-1.30
+Installing Log-Dispatch-FileRotate-1.19 for Cmd-Dwarf-1.30
+Installing Statistics-Regression-0.53 for CPAN-Testers-ParseReport-0.2.9
+Installing Marpa-R2-3.000000 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing Log-Any-Adapter-Log4perl-0.08 for Catmandu-0.9501 (started with Catmandu-Fix-Date-0.0124)
+Installing Catmandu-0.9501 for Catmandu-Fix-Date-0.0124
+Installing HTTP-Server-Simple-PSGI-0.16 for Dancer-1.3142 (started with Dancer-Plugin-Catmandu-OAI-0.0307)
+Installing Devel-Hide-0.0009 for Dancer-1.3142 (started with Dancer-Plugin-Catmandu-OAI-0.0307)
+Installing Dancer-1.3142 for Dancer-Plugin-Catmandu-OAI-0.0307
+Installing Dancer-1.3142 for Dancer-Plugin-Catmandu-OAI-0.0307
+Installing Catmandu-Template-0.08 for Dancer-Plugin-Catmandu-OAI-0.0307
+Installing Data-Util-0.63 for Catmandu-0.9501 (started with Dancer-Plugin-Catmandu-OAI-0.0307)
+Installing UNIVERSAL-ref-0.14 for DateTimeX-Auto-0.008
+Installing DBIx-Skinny-0.0742 for DBIx-Skinny-InflateColumn-DateTime-0.06
+Installing Marpa-R2-3.000000 for Catmandu-0.9501 (started with Dancer-Plugin-Catmandu-OAI-0.0307)
+Installing Catmandu-0.9501 for Dancer-Plugin-Catmandu-OAI-0.0307
+Installing AnyEvent-HTTP-LWP-UserAgent-0.10 for Facebook-Graph-1.1000
+Installing Ouch-0.0409 for Facebook-Graph-1.1000
+Installing Class-XSAccessor-Compat-0.01 for Finance-FITF-0.31
+Installing MIME-Base64-URLSafe-0.01 for Facebook-Graph-1.1000
+Installing Parse-Binary-0.11 for Finance-FITF-0.31
+Installing Class-Data-Accessor-0.04004 for FormValidator-Simple-0.29
+Installing Net-Domain-TLD-1.73 for Data-Validate-Domain-0.11 (started with FormValidator-LazyWay-0.20)
+Installing Data-Validate-Domain-0.11 for Data-Validate-URI-0.06 (started with FormValidator-LazyWay-0.20)
+Installing Tie-Handle-Scalar-0.1 for Getopt-Alt-v0.3.4 (started with Group-Git-Cmd-Ivan-v0.0.2)
+Installing Getopt-Alt-v0.3.4 for Group-Git-Cmd-Ivan-v0.0.2
+Installing DateTime-Format-Epoch-0.16 for Hessian-Translator-1.06
+Installing Smart-Comments-1.000005 for Hessian-Translator-1.06
+Installing DateTime-Format-Epoch-0.16 for Hessian-Translator-1.06
+Installing Math-Int64-0.53 for Hessian-Translator-1.06
+Installing Class-Std-0.013 for Hessian-Translator-1.06
+Installing NetAddr-IP-4.078 for Data-Validate-IP-0.24 (started with FormValidator-LazyWay-0.20)
+Installing Contextual-Return-0.004008 for Hessian-Translator-1.06
+Installing Data-Validate-IP-0.24 for Data-Validate-URI-0.06 (started with FormValidator-LazyWay-0.20)
+Installing Data-Validate-URI-0.06 for FormValidator-LazyWay-0.20
+Installing Test-Aggregate-0.373 for HTML-FormFu-2.01
+Installing MooseX-Aliases-0.11 for HTML-FormFu-2.01
+Installing Hash-Flatten-1.19 for HTML-FormFu-2.01
+Installing Package-New-0.07 for Geo-GoogleEarth-Pluggable-0.15 (started with HTML-Microformats-0.105)
+Installing XML-LibXML-LazyBuilder-0.08 for Geo-GoogleEarth-Pluggable-0.15 (started with HTML-Microformats-0.105)
+Installing Method-Autoload-0.02 for Geo-GoogleEarth-Pluggable-0.15 (started with HTML-Microformats-0.105)
+Installing Geo-GoogleEarth-Pluggable-0.15 for RDF-KML-Exporter-0.003 (started with HTML-Microformats-0.105)
+Installing RDF-KML-Exporter-0.003 for HTML-Microformats-0.105
+Installing Text-vFile-asData-0.08 for RDF-vCard-0.012 (started with HTML-Microformats-0.105)
+Installing RDF-vCard-0.012 for RDF-iCalendar-0.005 (started with HTML-Microformats-0.105)
+Installing RDF-iCalendar-0.005 for HTML-Microformats-0.105
+Installing RDF-vCard-0.012 for HTML-Microformats-0.105
+Installing Set-Object-1.35 for KiokuDB-0.57
+Installing MooseX-Clone-0.06 for KiokuDB-0.57
+Installing Data-Stream-Bulk-0.11 for KiokuDB-0.57
+Installing MooseX-Blessed-Reconstruct-1.00 for MooseX-YAML-0.04 (started with KiokuDB-0.57)
+Installing MooseX-YAML-0.04 for KiokuDB-0.57
+Installing MooseX-Types-Set-Object-0.05 for Search-GIN-0.11 (started with KiokuDB-0.57)
+Installing Test-TempDir-Tiny-0.004 for Search-GIN-0.11 (started with KiokuDB-0.57)
+Installing Search-GIN-0.11 for KiokuDB-0.57
+Installing Search-GIN-0.11 for KiokuDB-0.57
+Installing Cache-Ref-0.04 for KiokuDB-0.57
+Installing Data-Stream-Bulk-0.11 for KiokuDB-0.57
+Installing Search-GIN-0.11 for KiokuDB-0.57
+Installing Cache-Ref-0.04 for KiokuDB-0.57
+Installing Cache-Ref-0.04 for KiokuDB-0.57
+Installing MooseX-Clone-0.06 for KiokuDB-0.57
+Installing Search-GIN-0.11 for KiokuDB-0.57
+Installing Search-GIN-0.11 for KiokuDB-0.57
+Installing Data-Stream-Bulk-0.11 for KiokuDB-0.57
+Installing Search-GIN-0.11 for KiokuDB-0.57
+Installing Data-Swap-0.08 for KiokuDB-0.57
+Installing Config-IniFiles-2.88 for Module-Metadata-Changes-2.05
+Installing Perl6-Slurp-0.051005 for Module-Metadata-Changes-2.05
+Installing Heap-0.80 for Cache-2.11 (started with Net-Amazon-DynamoDB-v0.1.16)
+Installing File-NFSLock-1.27 for Cache-2.11 (started with Net-Amazon-DynamoDB-v0.1.16)
+Installing Cache-2.11 for Net-Amazon-DynamoDB-v0.1.16
+Installing Cache-2.11 for Net-Amazon-DynamoDB-v0.1.16
+Installing Template-Extract-0.41 for Net-Amazon-Recommended-v0.0.4
+Installing Net-Amazon-AWSSign-0.12 for Net-Amazon-DynamoDB-v0.1.16
+Installing Net-Async-HTTP-0.40 for Net-Async-Webservice-UPS-1.1.4
+Installing Types-DateTime-0.001 for Net-Async-Webservice-UPS-1.1.4
+Installing UUID-Tiny-1.04 for Types-UUID-0.004 (started with Net-Async-Webservice-UPS-1.1.4)
+Installing Types-UUID-0.004 for Types-URI-0.006 (started with Net-Async-Webservice-UPS-1.1.4)
+Installing Types-URI-0.006 for Net-Async-Webservice-Common-1.0.2 (started with Net-Async-Webservice-UPS-1.1.4)
+Installing Net-Async-Webservice-Common-1.0.2 for Net-Async-Webservice-UPS-1.1.4
+Installing Types-URI-0.006 for Net-Async-Webservice-UPS-1.1.4
+Installing String-PerlQuote-0.01 for Data-Clean-JSON-0.28 (started with Net-PMP-Profile-0.101)
+Installing Acme-Damn-0.06 for Data-Clean-JSON-0.28 (started with Net-PMP-Profile-0.101)
+Installing Function-Fallback-CoreOrPP-0.06 for Data-Clean-JSON-0.28 (started with Net-PMP-Profile-0.101)
+Installing Log-Any-IfLOG-0.07 for Data-Clean-JSON-0.28 (started with Net-PMP-Profile-0.101)
+Installing String-LineNumber-0.01 for Data-Clean-JSON-0.28 (started with Net-PMP-Profile-0.101)
+Installing Data-Clean-JSON-0.28 for Net-PMP-Profile-0.101
+Installing Test-Fork-0.02 for Media-Type-Simple-v0.31.0 (started with Net-PMP-Profile-0.101)
+Installing File-Share-0.25 for Media-Type-Simple-v0.31.0 (started with Net-PMP-Profile-0.101)
+Installing Media-Type-Simple-v0.31.0 for Net-PMP-Profile-0.101
+Installing MooseX-ConfigFromFile-0.14 for MooseX-SimpleConfig-0.11 (started with Net-PMP-Profile-0.101)
+Installing MooseX-SimpleConfig-0.11 for Net-PMP-0.006 (started with Net-PMP-Profile-0.101)
+Installing Net-PMP-0.006 for Net-PMP-Profile-0.101
+Installing DateTime-Format-Duration-1.04 for Parse-FixedRecord-0.06
+Installing MooseX-POE-0.215 for POE-Component-Client-SimpleFTP-0.004
+Installing Test-RDF-1.20 for RDF-Closure-0.001
+Installing DateTime-Format-XSD-0.2 for RDF-Closure-0.001
+Installing Number-Fraction-2.00 for RDF-Closure-0.001
+Installing Memcached-libmemcached-1.001801 for SimpleDB-Class-1.0503
+Installing XML-Fast-0.11 for SimpleDB-Client-1.0600 (started with SimpleDB-Class-1.0503)
+Installing SimpleDB-Client-1.0600 for SimpleDB-Class-1.0503
+Installing Astro-MoonPhase-0.60 for SVG-Calendar-v0.3.9
+Installing Astro-satpass-0.070 for SVG-Calendar-v0.3.9
+Installing Test-Distribution-2.00 for Config-Std-0.901 (started with SVG-Calendar-v0.3.9)
+Installing Config-Std-0.901 for SVG-Calendar-v0.3.9
+Installing DBICx-TestDatabase-0.05 for DBIx-Class-InflateColumn-Object-Enum-0.06 (started with Tapper-Reports-Web-4.1.2)
+Installing Object-Enum-0.074 for DBIx-Class-InflateColumn-Object-Enum-0.06 (started with Tapper-Reports-Web-4.1.2)
+Installing DBIx-Class-InflateColumn-Object-Enum-0.06 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing TAP-DOM-0.12 for Tapper-TAP-Harness-4.1.1 (started with Tapper-Reports-Web-4.1.2)
+Installing String-Random-0.28 for Directory-Scratch-0.18 (started with Tapper-Reports-Web-4.1.2)
+Installing Directory-Scratch-0.18 for Tapper-TAP-Harness-4.1.1 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-TAP-Harness-4.1.1 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing Time-Warp-0.52 for DBIx-Class-TimeStamp-0.14 (started with Tapper-Reports-Web-4.1.2)
+Installing DBIx-Class-DynamicDefault-0.04 for DBIx-Class-TimeStamp-0.14 (started with Tapper-Reports-Web-4.1.2)
+Installing DateTime-Format-SQLite-0.11 for DBIx-Class-TimeStamp-0.14 (started with Tapper-Reports-Web-4.1.2)
+Installing DBIx-Class-TimeStamp-0.14 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing Kwalify-1.22 for Test-Fixture-DBIC-Schema-0.04 (started with Tapper-Reports-Web-4.1.2)
+Installing Test-Fixture-DBIC-Schema-0.04 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Config-4.1.3 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing DateTime-Format-SQLite-0.11 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing Compress-Bzip2-2.22 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing TAP-DOM-0.12 for Tapper-Schema-4.1.3 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Schema-4.1.3 for Tapper-Testplan-4.1.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Model-4.1.2 for Tapper-Testplan-4.1.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Test-Fixture-DBIC-Schema-0.04 for Tapper-Testplan-4.1.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Reports-DPath-4.1.1 for Tapper-Cmd-4.1.8 (started with Tapper-Reports-Web-4.1.2)
+Installing MooseX-Log-Log4perl-0.46 for Tapper-Base-4.1.4 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Base-4.1.4 for Tapper-Cmd-4.1.8 (started with Tapper-Reports-Web-4.1.2)
+Installing Net-OpenSSH-0.66 for Tapper-Cmd-4.1.8 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Cmd-4.1.8 for Tapper-Testplan-4.1.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Config-4.1.3 for Tapper-Testplan-4.1.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Text-CSV-Slurp-1.02 for Tapper-Testplan-4.1.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Testplan-4.1.2 for Tapper-Reports-Web-4.1.2
+Installing accessors-1.01 for TAP-Formatter-HTML-0.11 (started with Tapper-Reports-Web-4.1.2)
+Installing TAP-Formatter-HTML-0.11 for Tapper-Reports-Web-4.1.2
+Installing HTML-FormFu-2.01 for Catalyst-Controller-HTML-FormFu-1.00 (started with Tapper-Reports-Web-4.1.2)
+Installing Catalyst-Component-InstancePerContext-0.001001 for Catalyst-Controller-HTML-FormFu-1.00 (started with Tapper-Reports-Web-4.1.2)
+Installing MooseX-Attribute-Chained-1.0.1 for Catalyst-Controller-HTML-FormFu-1.00 (started with Tapper-Reports-Web-4.1.2)
+Installing Catalyst-Controller-HTML-FormFu-1.00 for Tapper-Reports-Web-4.1.2
+Installing Authen-PAM-0.16 for Authen-Simple-PAM-0.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Authen-Simple-0.5 for Authen-Simple-PAM-0.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Authen-Simple-PAM-0.2 for Tapper-Reports-Web-4.1.2
+Installing Test-Fixture-DBIC-Schema-0.04 for Tapper-Reports-Web-4.1.2
+Installing Set-Intersection-0.04 for Tapper-Reports-Web-4.1.2
+Installing MooseX-Traits-Pluggable-0.12 for CatalystX-Component-Traits-0.19 (started with Tapper-Reports-Web-4.1.2)
+Installing CatalystX-Component-Traits-0.19 for Catalyst-Model-DBIC-Schema-0.65 (started with Tapper-Reports-Web-4.1.2)
+Installing Catalyst-Model-DBIC-Schema-0.65 for Tapper-Reports-Web-4.1.2
+Installing Tapper-Schema-4.1.3 for Tapper-Reports-Web-4.1.2
+Installing Term-VT102-0.91 for Term-VT102-Boundless-0.04 (started with Tapper-Reports-Web-4.1.2)
+Installing Term-VT102-Boundless-0.04 for HTML-FromANSI-2.03 (started with Tapper-Reports-Web-4.1.2)
+Installing HTML-FromANSI-2.03 for Tapper-Reports-Web-4.1.2
+Installing Tapper-Schema-4.1.3 for Tapper-Model-4.1.2 (started with Tapper-Reports-Web-4.1.2)
+Installing Tapper-Model-4.1.2 for Tapper-Reports-Web-4.1.2
+Installing Tapper-Cmd-4.1.8 for Tapper-Reports-Web-4.1.2
+Installing Tapper-Cmd-4.1.8 for Tapper-Reports-Web-4.1.2
+Installing Tapper-Config-4.1.3 for Tapper-Reports-Web-4.1.2
+Installing Tapper-Cmd-4.1.8 for Tapper-Reports-Web-4.1.2
+Installing Catalyst-Authentication-Credential-Authen-Simple-0.09 for Tapper-Reports-Web-4.1.2
+Installing Tapper-Testplan-4.1.2 for Tapper-Reports-Web-4.1.2
+Installing Time-TZOffset-0.04 for Time-Strptime-0.03
+Installing Locale-Scope-0.03 for Time-Strptime-0.03
+Installing Text-LevenshteinXS-0.03 for Travel-Status-DE-IRIS-1.03
+Installing List-Compare-0.53 for Travel-Status-DE-IRIS-1.03
+Installing Modern-Perl-1.20150127 for WebService-GlucoseBuddy-1.113540
+Installing Text-ASCIITable-0.20 for WebService-GlucoseBuddy-1.113540
+Installing MooseX-Iterator-0.11 for WebService-GlucoseBuddy-1.113540
+Installing Module-Build-Pluggable-0.10 for Module-Build-Pluggable-ReadmeMarkdownFromPod-0.04 (started with WebService-Pushover-v1.0.0)
+Installing Module-Build-Pluggable-ReadmeMarkdownFromPod-0.04 for WebService-Pushover-v1.0.0
+Installing Module-Build-Pluggable-0.10 for WebService-Pushover-v1.0.0
+Installing HTTP-Daemon-SSL-1.04 for Test-Fake-HTTPD-0.07 (started with WebService-Pushover-v1.0.0)
+Installing Test-Fake-HTTPD-0.07 for WebService-Pushover-v1.0.0
+Installing Class-Data-ConfigHash-0.00002 for WebService-Simple-0.25 (started with WebService-Pushover-v1.0.0)
+Installing XML-Parser-Lite-Tree-0.14 for WebService-Simple-0.25 (started with WebService-Pushover-v1.0.0)
+Installing XML-Parser-Lite-Tree-XPath-0.24 for WebService-Simple-0.25 (started with WebService-Pushover-v1.0.0)
+Installing WebService-Simple-0.25 for WebService-Pushover-v1.0.0
+Installing WebService-Simple-0.25 for WebService-Pushover-v1.0.0
+Installing Sys-Info-Base-0.7804 for WebService-Raygun-0.024
+Installing Filesys-DfPortable-0.85 for WebService-Raygun-0.024
+Installing Test-Sys-Info-0.20 for Sys-Info-Driver-Linux-0.7903 (started with WebService-Raygun-0.024)
+Installing Unix-Processors-2.043 for Sys-Info-Driver-Linux-0.7903 (started with WebService-Raygun-0.024)
+Installing Sys-Info-Driver-Linux-0.7903 for Sys-Info-0.78 (started with WebService-Raygun-0.024)
+Installing Test-Sys-Info-0.20 for Sys-Info-0.78 (started with WebService-Raygun-0.024)
+Installing Sys-Info-0.78 for WebService-Raygun-0.024
+Installing Class-Observable-1.04 for Workflow-1.42
+Installing Class-Factory-1.06 for Workflow-1.42
+Installing Class-Date-1.1.15 for SPOPS-0.87 (started with Workflow-1.42)
+Installing Class-Fields-0.204 for SPOPS-0.87 (started with Workflow-1.42)
+Installing SPOPS-0.87 for Workflow-1.42
+Installing Class-Interface-1.01 for Gtk2-Ex-DbLinker-DbTools-0.101 (started with Wx-Perl-DbLinker-0.002)
+Installing Gtk2-Ex-DbLinker-DbTools-0.101 for Wx-Perl-DbLinker-0.002
+Installing Alien-wxWidgets-0.67 for Wx-0.9927 (started with Wx-Perl-DbLinker-0.002)
+Installing ExtUtils-XSpp-0.18 for Wx-0.9927 (started with Wx-Perl-DbLinker-0.002)
+Installing Wx-0.9927 for Wx-Perl-DbLinker-0.002
+Installing Try-Tiny-Retry-0.004 for XAS-0.11
+Installing Array-RefElem-1.00 for Set-Light-0.04 (started with XAS-0.11)
+Installing Set-Light-0.04 for XAS-0.11
+Installing WWW-Curl-4.17 for XAS-0.11
+Installing Net-SSH2-0.56 for XAS-0.11
