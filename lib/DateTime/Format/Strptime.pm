@@ -304,7 +304,7 @@ sub _build_parser {
         }
         elsif ($4) {
             croak
-                qq{Pattern contained an unrecognized strptime specifier, "$4"};
+                qq{Pattern contained an unrecognized strptime token, "$4"};
         }
         else {
             $regex .= qr/\Q$5/;

@@ -33,7 +33,7 @@ subtest(
                 $parser
                     = DateTime::Format::Strptime->new( pattern => '%Y %Q' )
             },
-            qr/\QPattern contained an unrecognized strptime specifier, "%Q"/,
+            qr/\QPattern contained an unrecognized strptime token, "%Q"/,
             'no exception when constructing object with valid pattern'
         );
         is(
