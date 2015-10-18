@@ -1028,9 +1028,8 @@ __END__
         on_error  => 'croak',
     );
 
+    # Will throw an exception
     $newpattern = $strp->pattern('%Q');
-
-    # Unidentified token in pattern: %Q in %Q at line 34 of script.pl
 
     # Do something else when things go wrong:
     my $strp = DateTime::Format::Strptime->new(
@@ -1042,141 +1041,92 @@ __END__
 
 =head1 DESCRIPTION
 
-This module implements most of C<strptime(3)>, the POSIX function that
-is the reverse of C<strftime(3)>, for C<DateTime>. While C<strftime>
-takes a C<DateTime> and a pattern and returns a string, C<strptime> takes
-a string and a pattern and returns the C<DateTime> object
-associated.
-
-=head1 CONSTRUCTOR
-
-=over 4
-
-=item * new( pattern => $strptime_pattern )
-
-Creates the format object. You must specify a pattern, you can also
-specify a C<time_zone> and a C<locale>. If you specify a time zone
-then any resulting C<DateTime> object will be in that time zone. If you
-do not specify a C<time_zone> parameter, but there is a time zone in the
-string you pass to C<parse_datetime>, then the resulting C<DateTime> will
-use that time zone.
-
-You can optionally use an on_error parameter. This parameter has three
-valid options:
-
-=over 4
-
-=item * 'undef'
-
-(not undef, 'undef', it's a string not an undefined value)
-
-This is the default behavior. The module will return undef whenever it gets
-upset. The error can be accessed using the C<< $object->errmsg >> method.
-This is the ideal behaviour for interactive use where a user might provide an
-illegal pattern or a date that doesn't match the pattern.
-
-=item * 'croak'
-
-(not croak, 'croak', it's a string, not a function)
-
-This used to be the default behaviour. The module will croak with an
-error message whenever it gets upset.
-
-=item * sub{...} or \&subname
-
-When given a code ref, the module will call that sub when it gets upset.
-The sub receives two parameters: the object and the error message. Using
-these two it is possible to emulate the 'undef' behavior. (Returning a
-true value causes the method to return undef. Returning a false value
-causes the method to bravely continue):
-
-    sub { $_[0]->{errmsg} = $_[1]; 1 },
-
-=back
-
-=back
+This module implements most of C<strptime(3)>, the POSIX function that is the
+reverse of C<strftime(3)>, for C<DateTime>. While C<strftime> takes a
+C<DateTime> and a pattern and returns a string, C<strptime> takes a string and
+a pattern and returns the C<DateTime> object associated.
 
 =head1 METHODS
 
 This class offers the following methods.
 
-=over 4
+=head2 DateTime::Format::Strptime->new(%args)
 
-=item * parse_datetime($string)
+This methods creates a new object. It accepts the following arguments:
+
+=item * pattern
+
+This is the pattern to use for parsing. This is required.
+
+=item * on_error
+
+This can be one of C<'undef'> (the string, not an C<undef>), 'croak', or a
+subroutine reference.
+
+=over 8
+
+=item * 'undef'
+
+This is the default behavior. The module will return C<undef> on errors. The
+error can be accessed using the C<< $object->errmsg >> method. This is the
+ideal behaviour for interactive use where a user might provide an illegal
+pattern or a date that doesn't match the pattern.
+
+=item * 'croak'
+
+The module will croak with an error message on errors.
+
+=item * sub{...} or \&subname
+
+When given a code ref, the module will call that sub on errors. The sub
+receives two parameters: the object and the error message.
+
+If your sub does not die, then the formatter will continue on as if
+C<on_error> was C<'undef'>.
+
+=head2 $strptime->parse_datetime($string)
 
 Given a string in the pattern specified in the constructor, this method
 will return a new C<DateTime> object.
 
-If given a string that doesn't match the pattern, the formatter will
-croak or return undef, depending on the setting of on_error in the constructor.
+If given a string that doesn't match the pattern, the formatter will croak or
+return undef, depending on the setting of C<on_error> in the constructor.
 
-=item * format_datetime($datetime)
+=head2 $strptime->format_datetime($datetime)
 
-Given a C<DateTime> object, this methods returns a string formatted in
-the object's format. This method is synonymous with C<DateTime>'s
-strftime method.
+Given a C<DateTime> object, this methods returns a string formatted in the
+object's format. This method is synonymous with C<DateTime>'s strftime method.
 
-=item * locale($locale)
+=head2 $strptime->locale
 
-When given a locale or C<DateTime::Locale> object, this method sets
-its locale appropriately. If the locale is not understood, the method
-will croak or return undef (depending on the setting of on_error in
-the constructor)
+This method returns the locale passed to the object's constructor.
 
-If successful this method returns the current locale. (After
-processing as above).
+=head2 $strptime->pattern
 
-=item * pattern($strptime_pattern)
+This method returns the pattern passed to the object's constructor.
 
-When given a pattern, this method sets the object's pattern. If the
-pattern is invalid, the method will croak or return undef (depending on
-the value of the C<on_error> parameter)
+=head2 $strptime->time_zone
 
-If successful this method returns the current pattern. (After processing
-as above)
+This method returns the time zone passed to the object's constructor.
 
-=item * time_zone($time_zone)
+=head2 $strptime->errmsg
 
-When given a name, offset or C<DateTime::TimeZone> object, this method
-sets the object's time zone. This effects the C<DateTime> object
-returned by parse_datetime
-
-If the time zone is invalid, the method will croak or return undef
-(depending on the value of the C<on_error> parameter)
-
-If successful this method returns the current time zone. (After processing
-as above)
-
-=item * errmsg
-
-If the on_error behavior of the object is 'undef', error messages with
-this method so you can work out why things went wrong.
-
-This code emulates a C<$DateTime::Format::Strptime> with
-the C<on_error> parameter equal to C<'croak'>:
-
-C<< $strp->pattern($pattern) or die $DateTime::Format::Strptime::errmsg >>
-
-=back
+If the on_error behavior of the object is 'undef', you can retrieve error
+messages with this method so you can work out why things went wrong.
 
 =head1 EXPORTS
 
-There are no methods exported by default, however the following are
-available:
+These subs are available as optional exports.
 
-=over 4
-
-=item * strptime( $strptime_pattern, $string )
+=head2 strptime( $strptime_pattern, $string )
 
 Given a pattern and a string this function will return a new C<DateTime>
 object.
 
-=item * strftime( $strftime_pattern, $datetime )
+=head2 strftime( $strftime_pattern, $datetime )
 
 Given a pattern and a C<DateTime> object this function will return a
 formatted string.
-
-=back
 
 =head1 STRPTIME PATTERN TOKENS
 
