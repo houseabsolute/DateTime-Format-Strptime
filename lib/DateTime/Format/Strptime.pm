@@ -1054,9 +1054,19 @@ This class offers the following methods.
 
 This methods creates a new object. It accepts the following arguments:
 
+=over 4
+
 =item * pattern
 
 This is the pattern to use for parsing. This is required.
+
+=item * time_zone
+
+The default time zone to use for objects returned from parsing.
+
+=item * locale
+
+The locale to use for objects returned from parsing.
 
 =item * on_error
 
@@ -1083,6 +1093,10 @@ receives two parameters: the object and the error message.
 
 If your sub does not die, then the formatter will continue on as if
 C<on_error> was C<'undef'>.
+
+=back
+
+=back
 
 =head2 $strptime->parse_datetime($string)
 
