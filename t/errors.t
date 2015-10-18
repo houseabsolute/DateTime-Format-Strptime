@@ -221,6 +221,13 @@ subtest(
             error =>
                 qr{\QParsed an input where the ISO week number (Sunday starts week) does not match the date - "15" versus "2015-08-17"},
         },
+        {
+            name    => 'invalid time zone name',
+            pattern => '%Y %O',
+            input   => '2015 Dev/Null',
+            error =>
+                qr{\QThe Olson time zone name that was parsed does not appear to be valid, "Dev/Null"},
+        },
     );
 
     for my $test (@tests) {
@@ -249,12 +256,18 @@ sub _test_error_handling {
         on_error => 'undef',
     );
 
-    $parser->parse_datetime( $test->{input} );
+    my $dt = $parser->parse_datetime( $test->{input} );
 
     like(
         $parser->errmsg,
         $test->{error},
         'errmsg error '
+    );
+
+    is(
+        $dt,
+        undef,
+        'no datetime object is returned when there is a parse error'
     );
 
     $parser = DateTime::Format::Strptime->new(

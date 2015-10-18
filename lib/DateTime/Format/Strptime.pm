@@ -566,6 +566,7 @@ sub _token_re_for {
                       qq{Parsed a 12-hour based hour, "$args->{hour_12}",}
                     . ' but the pattern does not include an AM/PM specifier'
             );
+            return;
         }
 
         if ( defined $args->{year_100} ) {
@@ -609,7 +610,22 @@ sub _token_re_for {
         }
 
         if ( $args->{time_zone_name} ) {
-            $args->{time_zone} = $args->{time_zone_name};
+            my $name = $args->{time_zone_name};
+            my $tz;
+            unless ( $tz = try { DateTime::TimeZone->new( name => $name ) } )
+            {
+                $name = lc $name;
+                $name =~ s{(^|[/_])(.)}{$1\U$2}g;
+            }
+            $tz = try { DateTime::TimeZone->new( name => $name ) };
+            unless ($tz) {
+                $self->_our_croak(
+                    qq{The Olson time zone name that was parsed does not appear to be valid, "$args->{time_zone_name}"}
+                );
+                return;
+            }
+            $args->{time_zone} = $tz
+                if $tz;
         }
 
         delete @{$args}{@non_dt_keys};

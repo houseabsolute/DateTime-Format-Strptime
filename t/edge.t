@@ -24,3 +24,31 @@ skip round trip
 year => 2015
 month => 12
 day => 22
+
+[Olson time zone in upper case]
+%Y %O
+2015 AMERICA/NEW_YORK
+skip round trip
+year => 2015
+time_zone_long_name => America/New_York
+
+[Olson time zone in lower case]
+%Y %O
+2015 america/new_york
+skip round trip
+year => 2015
+time_zone_long_name => America/New_York
+
+[Olson time zone in random case]
+%Y %O
+2015 amERicA/new_YORK
+skip round trip
+year => 2015
+time_zone_long_name => America/New_York
+
+[Month name match is not too greedy]
+%d%b%y
+15Aug07
+year  => 2007
+month => 8
+day   => 15
