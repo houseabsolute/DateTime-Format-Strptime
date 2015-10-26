@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.59     2015-10-25 (TRIAL RELEASE)
+
 - The previous release accidentally included an old version of Strptime.pm in
   the root dir, causing all sorts of chaos and test failures.
 
