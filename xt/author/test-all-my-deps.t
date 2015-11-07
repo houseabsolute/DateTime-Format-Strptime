@@ -85,6 +85,9 @@ test_all_dependents(
             # Fails regardless of Strptime
             return 0 if $_[0] eq 'Smolder';
 
+            # Is either hanging or installing all of CPAN
+            return 0 if $_[0] eq 'Strehler';
+
             # Fails regardless of Strptime
             return 0 if $_[0] eq 'Video-PlaybackMachine';
 
