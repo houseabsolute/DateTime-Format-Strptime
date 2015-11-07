@@ -31,6 +31,9 @@ test_all_dependents(
             # Fails regardless of Strptime
             return 0 if $_[0] eq 'Business-RO-CNP';
 
+            # Fails regardless of Strptime
+            return 0 if $_[0] eq 'Catmandu-Fix-Date';
+
             # Requires Coro
             return 0 if $_[0] eq 'Cikl';
 
