@@ -1,5 +1,35 @@
 {{$NEXT}}
 
+- This release is identical to the prior trial release. The changes for the
+  trial releases are reproduced below for convenience.
+
+[BACKWARDS INCOMPATIBILITIES]
+
+- The error messages for various types of failures have changed.
+
+- The never-documented diagnostic parameter for the constructor has been
+  removed.
+
+- The never-documented feature to allow you to use arbitrary DateTime.pm
+  methods in the parsing pattern has been removed. This never made much sense
+  anyway, since most DateTime.pm methods are not constructor params, but they
+  were used that way.
+
+- Using the pattern, locale, and time_zone to set the respective attribute is
+  now deprecated. Make a new object instead of changing one of these values.
+
+[BUG FIXES]
+
+- Fixed a warning from the tests with newer Perl versions. RT #107620.
+
+- Clarified docs to note that %Y and %G require 4-digit years. Reported by
+  Karen Etheridge. RT #103147.
+
+- Using the 24-hour token (%H) with an AM/PM specifier (%p) now leads to an
+  error if you try to parse something like "23:01 AM". Reported by Ric
+  Signes. RT #92445.
+
+
 1.59     2015-10-25 (TRIAL RELEASE)
 
 - The previous release accidentally included an old version of Strptime.pm in
