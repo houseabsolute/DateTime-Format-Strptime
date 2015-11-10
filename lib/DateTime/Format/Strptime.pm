@@ -16,9 +16,12 @@ use Package::DeprecationManager -deprecations => {
     'accessor writers' => '1.58',
 };
 
-use Exporter qw( import );
-
-our @EXPORT_OK = qw( strftime strptime );
+our (@ISA, @EXPORT_OK);
+BEGIN {
+    require Exporter;
+    @ISA = qw(Exporter);
+    @EXPORT_OK = qw(strftime strptime);  # symbols to export on request
+}
 
 use constant PERL_58 => $] < 5.010;
 
