@@ -1,5 +1,14 @@
 {{$NEXT}}
 
+[BUG FIXES]
+
+- If you loaded this module with warnings globally enabled ("perl -w", which
+  you should never do), then you'd get a warning about the import subroutine
+  being redefined. This broke the Package::DeprecationManager API for turning
+  off deprecation warnings. This has been fixed in
+  Package::DeprecationManager 0.15. Reported by Martin. RT #108871.
+
+
 1.60     2015-11-07
 
 - This release is identical to the prior trial release. The changes for the

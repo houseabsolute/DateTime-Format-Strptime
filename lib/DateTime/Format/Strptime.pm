@@ -12,11 +12,11 @@ use DateTime::TimeZone 0.79;
 use Params::Validate 1.20 qw( validate SCALAR BOOLEAN OBJECT CODEREF );
 use Try::Tiny;
 
-use Package::DeprecationManager -deprecations => {
+use Exporter qw( import );
+
+use Package::DeprecationManager 0.15 -deprecations => {
     'accessor writers' => '1.58',
 };
-
-use Exporter qw( import );
 
 our @EXPORT_OK = qw( strftime strptime );
 
