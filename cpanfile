@@ -3,7 +3,7 @@ requires "DateTime" => "1.00";
 requires "DateTime::Locale" => "0.45";
 requires "DateTime::TimeZone" => "0.79";
 requires "Exporter" => "0";
-requires "Package::DeprecationManager" => "0";
+requires "Package::DeprecationManager" => "0.15";
 requires "Params::Validate" => "1.20";
 requires "Try::Tiny" => "0";
 requires "constant" => "0";
@@ -16,6 +16,7 @@ on 'test' => sub {
   requires "Test::Builder" => "0";
   requires "Test::Fatal" => "0";
   requires "Test::More" => "0.96";
+  requires "Test::Warnings" => "0";
   requires "lib" => "0";
   requires "utf8" => "0";
 };

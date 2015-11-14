@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.61     2015-11-13
+
 [BUG FIXES]
 
 - If you loaded this module with warnings globally enabled ("perl -w", which
