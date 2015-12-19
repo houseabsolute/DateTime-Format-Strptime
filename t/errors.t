@@ -240,6 +240,12 @@ subtest(
             input   => '0000-00-00 26:99',
             error   => qr{\QParsed values did not produce a valid date},
         },
+        {
+            name    => 'February 29, 2013 - RT #110247',
+            pattern => '%a %b %d %T %Y',
+            input   => 'Wed Feb 29 12:02:28 2013',
+            error   => qr{\QParsed values did not produce a valid date},
+        },
     );
 
     for my $test (@tests) {

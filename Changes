@@ -1,5 +1,13 @@
 {{$NEXT}}
 
+[BUG FIXES]
+
+- When on_error was set to something that did not die (including the default
+  error handling), calling ->parse_datetime with some bad inputs could cause
+  the module to error out internally by trying to call methods on an undefined
+  value instead of returning undef. Reported by Mike Dorman. RT #110247.
+
+
 1.61     2015-11-13
 
 [BUG FIXES]
