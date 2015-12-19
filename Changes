@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.62     2015-12-19
+
 [BUG FIXES]
 
 - When on_error was set to something that did not die (including the default
