@@ -1002,6 +1002,8 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =for Pod::Coverage parse_duration format_duration
 
 =head1 SYNOPSIS
