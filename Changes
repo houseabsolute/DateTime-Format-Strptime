@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.63     2016-01-13
+
 [BUG FIXES]
 
 - The behaviour of silently ignoring text after the matching part was

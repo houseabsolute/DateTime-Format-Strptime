@@ -3,6 +3,7 @@ requires "DateTime" => "1.00";
 requires "DateTime::Locale" => "0.45";
 requires "DateTime::TimeZone" => "0.79";
 requires "Exporter" => "0";
+requires "JSON::PP" => "2.27300";
 requires "Package::DeprecationManager" => "0.15";
 requires "Params::Validate" => "1.20";
 requires "Try::Tiny" => "0";
