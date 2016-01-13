@@ -317,7 +317,7 @@ sub _build_parser {
     }
 
     return {
-        regex  => qr/\A\s*$regex\s*\z/,
+        regex  => qr/\A\s*$regex/,
         fields => \@fields,
     };
 }

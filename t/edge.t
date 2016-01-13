@@ -52,3 +52,11 @@ time_zone_long_name => America/New_York
 year  => 2007
 month => 8
 day   => 15
+
+[Trailing text after match]
+%Y-%m-%d
+2016-01-13 in the afternoon
+skip round trip
+year  => 2016
+month => 1
+day   => 13

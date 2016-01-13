@@ -1,5 +1,12 @@
 {{$NEXT}}
 
+[BUG FIXES]
+
+- The behaviour of silently ignoring text after the matching part was
+  lost in the rewrite. This has been restored. Patch by Dagfinn Ilmari
+  Mannsåker. RT #111155.
+
+
 1.62     2015-12-19
 
 [BUG FIXES]
