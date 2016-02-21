@@ -274,7 +274,6 @@ sub _build_parser {
 
     my $regex;
     my @fields;
-    my @postprocess;
 
     while (
         $pattern =~ /
