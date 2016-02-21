@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+- Changed how a string that contains separate epoch and nanosecond fields is
+  turned into a DateTime object in order to deal with changes coming in the
+  next DateTime release.
+
+
 1.63     2016-01-13
 
 [BUG FIXES]

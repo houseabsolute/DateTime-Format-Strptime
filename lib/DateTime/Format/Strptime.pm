@@ -231,12 +231,16 @@ sub parse_datetime {
     # We need to copy the %args here because _munge_args will delete keys in
     # order to turn this into something that can be passed to a DateTime
     # constructor.
-    my ( $constructor, $args ) = $self->_munge_args( {%args} )
-        or return;
+    my ( $constructor, $args, $post_construct )
+        = $self->_munge_args( {%args} );
+    return unless $constructor && $args;
 
     my $dt = try { DateTime->$constructor($args) };
     $self->_our_croak('Parsed values did not produce a valid date')
         unless $dt;
+    if ($post_construct) {
+        $post_construct->($dt);
+    }
     return unless $dt && $self->_check_dt( $dt, \%args );
 
     $dt->set_time_zone( $self->{time_zone} )
@@ -639,24 +643,39 @@ sub _token_re_for {
             $args->{$k} =~ s/^\s+//;
         }
 
-        # If we parsed "12345" we treat it as "123450000" but if we parsed
-        # "000123456" we treat it as 123,456 nanoseconds. This is all a bit
-        # weird and confusing but it matches how this module has always
-        # worked.
-        $args->{nanosecond} *= 10**( 9 - length $args->{nanosecond} )
-            if defined $args->{nanosecond} && length $args->{nanosecond} != 9;
+        if ( defined $args->{nanosecond} ) {
+
+            # If we parsed "12345" we treat it as "123450000" but if we parsed
+            # "000123456" we treat it as 123,456 nanoseconds. This is all a bit
+            # weird and confusing but it matches how this module has always
+            # worked.
+            $args->{nanosecond} *= 10**( 9 - length $args->{nanosecond} )
+                if length $args->{nanosecond} != 9;
+
+            # If we parsed 000000123 we want to turn this into a number.
+            $args->{nanosecond} += 0;
+        }
 
         for my $k (qw( year month day )) {
             $args->{$k} = 1 unless defined $args->{$k};
         }
 
         if ( defined $args->{epoch} ) {
-            $args->{epoch} .= q{.} . $args->{nanosecond}
-                if defined $args->{nanosecond};
+
+            # We don't want to pass a non-integer epoch value since that gets
+            # truncated as of DateTime 1.22. Instead, we'll set the nanosecond
+            # to parsed value after constructing the object. This is a hack,
+            # but it's the best I can come up with.
+            my $post_construct;
+            if ( my $nano = $args->{nanosecond} ) {
+                $post_construct = sub { $_[0]->set( nanosecond => $nano ) };
+            }
+
             delete @{$args}{
                 qw( day_of_year year month day hour minute second nanosecond )
             };
-            return ( 'from_epoch', $args );
+
+            return ( 'from_epoch', $args, $post_construct );
         }
         elsif ( $args->{day_of_year} ) {
             delete @{$args}{qw( epoch month day )};

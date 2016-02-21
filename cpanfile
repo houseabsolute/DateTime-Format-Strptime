@@ -3,7 +3,6 @@ requires "DateTime" => "1.00";
 requires "DateTime::Locale" => "0.45";
 requires "DateTime::TimeZone" => "0.79";
 requires "Exporter" => "0";
-requires "JSON::PP" => "2.27300";
 requires "Package::DeprecationManager" => "0.15";
 requires "Params::Validate" => "1.20";
 requires "Try::Tiny" => "0";
@@ -30,6 +29,10 @@ on 'configure' => sub {
   requires "ExtUtils::MakeMaker" => "0";
 };
 
+on 'configure' => sub {
+  suggests "JSON::PP" => "2.27300";
+};
+
 on 'develop' => sub {
   requires "Code::TidyAll" => "0.24";
   requires "File::Spec" => "0";
@@ -38,6 +41,7 @@ on 'develop' => sub {
   requires "Perl::Critic" => "1.123";
   requires "Perl::Tidy" => "20140711";
   requires "Pod::Coverage::TrustPod" => "0";
+  requires "Test::CPAN::Meta::JSON" => "0.16";
   requires "Test::Code::TidyAll" => "0.24";
   requires "Test::EOL" => "0";
   requires "Test::Fatal" => "0";
