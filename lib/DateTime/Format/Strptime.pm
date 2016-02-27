@@ -24,7 +24,7 @@ use constant PERL_58 => $] < 5.010;
 
 {
     my $spec = {
-        pattern => { type => SCALAR },
+        pattern   => { type => SCALAR },
         time_zone => {
             type     => SCALAR | OBJECT,
             optional => 1,

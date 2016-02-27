@@ -289,7 +289,7 @@ sub _test_error_handling {
     );
 
     $parser = DateTime::Format::Strptime->new(
-        pattern => $test->{pattern},
+        pattern  => $test->{pattern},
         on_error => sub { die { e => $_[1] } },
     );
 
