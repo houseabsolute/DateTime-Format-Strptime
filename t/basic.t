@@ -243,6 +243,15 @@ minute     => 45
 second     => 56
 offset     => 36000
 
+[time zone as abbreviation with short name of +07]
+%H:%M:%S %Z
+23:45:56 +07
+skip round trip
+hour       => 23
+minute     => 45
+second     => 56
+offset     => 25200
+
 [time zone as Olson name]
 %H:%M:%S %O
 23:45:56 America/Chicago

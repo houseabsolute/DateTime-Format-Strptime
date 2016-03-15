@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- Updated zone short name parsing to handle names like "+07", which were
+  introduced in the latest IANA time zone database release.
+
+
 1.64     2016-02-21
 
 - Changed how a string that contains separate epoch and nanosecond fields is

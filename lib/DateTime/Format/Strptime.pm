@@ -191,6 +191,11 @@ use constant PERL_58 => $] < 5.010;
         'UTC'    => '+0000',
     );
 
+    for my $i ( map { sprintf( '%02d', $_ ) } 1 .. 12 ) {
+        $zone_map{ '-' . $i } = '-' . $i . '00';
+        $zone_map{ '+' . $i } = '+' . $i . '00';
+    }
+
     sub _build_zone_map {
         return \%zone_map;
     }
@@ -415,7 +420,7 @@ sub _build_parser {
             field => 'time_zone_offset',
         },
         Z => {
-            regex => qr/[a-zA-Z]{1,6}/,
+            regex => qr/[a-zA-Z]{1,6}|[\-\+][0-9]{2}/,
             field => 'time_zone_abbreviation',
         },
     );
