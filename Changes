@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.65     2016-03-15
+
 - Updated zone short name parsing to handle names like "+07", which were
   introduced in the latest IANA time zone database release.
 
