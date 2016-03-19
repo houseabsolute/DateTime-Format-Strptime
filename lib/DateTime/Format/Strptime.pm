@@ -3,7 +3,7 @@ package DateTime::Format::Strptime;
 use strict;
 use warnings;
 
-our $VERSION = '1.65';
+our $VERSION = '1.66';
 
 use Carp qw( carp croak );
 use DateTime 1.00;
