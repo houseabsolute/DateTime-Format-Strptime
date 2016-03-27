@@ -4,7 +4,7 @@ DateTime::Format::Strptime - Parse and format strp and strf time patterns
 
 # VERSION
 
-version 1.56
+version 1.66
 
 # SYNOPSIS
 
@@ -30,10 +30,6 @@ version 1.56
         on_error  => 'croak',
     );
 
-    $newpattern = $strp->pattern('%Q');
-
-    # Unidentified token in pattern: %Q in %Q at line 34 of script.pl
-
     # Do something else when things go wrong:
     my $strp = DateTime::Format::Strptime->new(
         pattern   => '%T',
@@ -44,125 +40,108 @@ version 1.56
 
 # DESCRIPTION
 
-This module implements most of `strptime(3)`, the POSIX function that
-is the reverse of `strftime(3)`, for `DateTime`. While `strftime`
-takes a `DateTime` and a pattern and returns a string, `strptime` takes
-a string and a pattern and returns the `DateTime` object
-associated.
-
-# CONSTRUCTOR
-
-- new( pattern => $strptime\_pattern )
-
-    Creates the format object. You must specify a pattern, you can also
-    specify a `time_zone` and a `locale`. If you specify a time zone
-    then any resulting `DateTime` object will be in that time zone. If you
-    do not specify a `time_zone` parameter, but there is a time zone in the
-    string you pass to `parse_datetime`, then the resulting `DateTime` will
-    use that time zone.
-
-    You can optionally use an on\_error parameter. This parameter has three
-    valid options:
-
-    - 'undef'
-
-        (not undef, 'undef', it's a string not an undefined value)
-
-        This is the default behavior. The module will return undef whenever it gets
-        upset. The error can be accessed using the `$object->errmsg` method.
-        This is the ideal behaviour for interactive use where a user might provide an
-        illegal pattern or a date that doesn't match the pattern.
-
-    - 'croak'
-
-        (not croak, 'croak', it's a string, not a function)
-
-        This used to be the default behaviour. The module will croak with an
-        error message whenever it gets upset.
-
-    - sub{...} or \\&subname
-
-        When given a code ref, the module will call that sub when it gets upset.
-        The sub receives two parameters: the object and the error message. Using
-        these two it is possible to emulate the 'undef' behavior. (Returning a
-        true value causes the method to return undef. Returning a false value
-        causes the method to bravely continue):
-
-            sub { $_[0]->{errmsg} = $_[1]; 1 },
+This module implements most of `strptime(3)`, the POSIX function that is the
+reverse of `strftime(3)`, for `DateTime`. While `strftime` takes a
+`DateTime` and a pattern and returns a string, `strptime` takes a string and
+a pattern and returns the `DateTime` object associated.
 
 # METHODS
 
 This class offers the following methods.
 
-- parse\_datetime($string)
+## DateTime::Format::Strptime->new(%args)
 
-    Given a string in the pattern specified in the constructor, this method
-    will return a new `DateTime` object.
+This methods creates a new object. It accepts the following arguments:
 
-    If given a string that doesn't match the pattern, the formatter will
-    croak or return undef, depending on the setting of on\_error in the constructor.
+- pattern
 
-- format\_datetime($datetime)
+    This is the pattern to use for parsing. This is required.
 
-    Given a `DateTime` object, this methods returns a string formatted in
-    the object's format. This method is synonymous with `DateTime`'s
-    strftime method.
+- time\_zone
 
-- locale($locale)
+    The default time zone to use for objects returned from parsing.
 
-    When given a locale or `DateTime::Locale` object, this method sets
-    its locale appropriately. If the locale is not understood, the method
-    will croak or return undef (depending on the setting of on\_error in
-    the constructor)
+- zone\_map
 
-    If successful this method returns the current locale. (After
-    processing as above).
+    Some time zone abbreviations are ambiguous (e.g. PST, EST, EDT). By default,
+    the parser will die when it parses an ambiguous abbreviation. You may specify
+    a `zone_map` parameter as a hashref to map zone abbreviations however you like:
 
-- pattern($strptime\_pattern)
+        zone_map => { PST => '-0800', EST => '-0600' }
 
-    When given a pattern, this method sets the object's pattern. If the
-    pattern is invalid, the method will croak or return undef (depending on
-    the value of the `on_error` parameter)
+    Note that you can also override non-ambiguous mappings if you want to as well.
 
-    If successful this method returns the current pattern. (After processing
-    as above)
+- locale
 
-- time\_zone($time\_zone)
+    The locale to use for objects returned from parsing.
 
-    When given a name, offset or `DateTime::TimeZone` object, this method
-    sets the object's time zone. This effects the `DateTime` object
-    returned by parse\_datetime
+- on\_error
 
-    If the time zone is invalid, the method will croak or return undef
-    (depending on the value of the `on_error` parameter)
+    This can be one of `'undef'` (the string, not an `undef`), 'croak', or a
+    subroutine reference.
 
-    If successful this method returns the current time zone. (After processing
-    as above)
+    - 'undef'
 
-- errmsg
+        This is the default behavior. The module will return `undef` on errors. The
+        error can be accessed using the `$object->errmsg` method. This is the
+        ideal behaviour for interactive use where a user might provide an illegal
+        pattern or a date that doesn't match the pattern.
 
-    If the on\_error behavior of the object is 'undef', error messages with
-    this method so you can work out why things went wrong.
+    - 'croak'
 
-    This code emulates a `$DateTime::Format::Strptime` with
-    the `on_error` parameter equal to `'croak'`:
+        The module will croak with an error message on errors.
 
-    `$strp->pattern($pattern) or die $DateTime::Format::Strptime::errmsg`
+    - sub{...} or \\&subname
+
+        When given a code ref, the module will call that sub on errors. The sub
+        receives two parameters: the object and the error message.
+
+        If your sub does not die, then the formatter will continue on as if
+        `on_error` was `'undef'`.
+
+## $strptime->parse\_datetime($string)
+
+Given a string in the pattern specified in the constructor, this method
+will return a new `DateTime` object.
+
+If given a string that doesn't match the pattern, the formatter will croak or
+return undef, depending on the setting of `on_error` in the constructor.
+
+## $strptime->format\_datetime($datetime)
+
+Given a `DateTime` object, this methods returns a string formatted in the
+object's format. This method is synonymous with `DateTime`'s strftime method.
+
+## $strptime->locale
+
+This method returns the locale passed to the object's constructor.
+
+## $strptime->pattern
+
+This method returns the pattern passed to the object's constructor.
+
+## $strptime->time\_zone
+
+This method returns the time zone passed to the object's constructor.
+
+## $strptime->errmsg
+
+If the on\_error behavior of the object is 'undef', you can retrieve error
+messages with this method so you can work out why things went wrong.
 
 # EXPORTS
 
-There are no methods exported by default, however the following are
-available:
+These subs are available as optional exports.
 
-- strptime( $strptime\_pattern, $string )
+## strptime( $strptime\_pattern, $string )
 
-    Given a pattern and a string this function will return a new `DateTime`
-    object.
+Given a pattern and a string this function will return a new `DateTime`
+object.
 
-- strftime( $strftime\_pattern, $datetime )
+## strftime( $strftime\_pattern, $datetime )
 
-    Given a pattern and a `DateTime` object this function will return a
-    formatted string.
+Given a pattern and a `DateTime` object this function will return a
+formatted string.
 
 # STRPTIME PATTERN TOKENS
 
@@ -194,7 +173,7 @@ The following tokens are allowed in the pattern string for strptime
 - %D
 
     Equivalent to %m/%d/%y. (This is the American style date, very confusing
-    to non-Americans, especially since %d/%m/%y is	widely used in Europe.
+    to non-Americans, especially since %d/%m/%y is widely used in Europe.
     The ISO 8601 standard pattern is %F.)
 
 - %F
@@ -208,7 +187,7 @@ The following tokens are allowed in the pattern string for strptime
 
 - %G
 
-    The year corresponding to the ISO week number.
+    The 4-digit year corresponding to the ISO week number.
 
 - %H
 
@@ -295,7 +274,7 @@ The following tokens are allowed in the pattern string for strptime
 
 - %Y
 
-    The year, including century (for example, 1991).
+    A 4-digit year, including century (for example, 1991).
 
 - %z
 
@@ -317,13 +296,6 @@ The following tokens are allowed in the pattern string for strptime
 
 This module was created by Rick Measham.
 
-# BUGS
-
-Please report any bugs or feature requests to
-`bug-datetime-format-strptime@rt.cpan.org`, or through the web interface at
-[http://rt.cpan.org](http://rt.cpan.org). I will be notified, and then you'll automatically be
-notified of progress on your bug as I make changes.
-
 # SEE ALSO
 
 `datetime@perl.org` mailing list.
@@ -332,14 +304,50 @@ http://datetime.perl.org/
 
 [perl](https://metacpan.org/pod/perl), [DateTime](https://metacpan.org/pod/DateTime), [DateTime::TimeZone](https://metacpan.org/pod/DateTime::TimeZone), [DateTime::Locale](https://metacpan.org/pod/DateTime::Locale)
 
+# BUGS
+
+Please report any bugs or feature requests to
+`bug-datetime-format-strptime@rt.cpan.org`, or through the web interface at
+[http://rt.cpan.org](http://rt.cpan.org). I will be notified, and then you'll automatically be
+notified of progress on your bug as I make changes.
+
+Bugs may be submitted through [the RT bug tracker](http://rt.cpan.org/Public/Dist/Display.html?Name=DateTime-Format-Strptime)
+(or [bug-datetime-format-strptime@rt.cpan.org](mailto:bug-datetime-format-strptime@rt.cpan.org)).
+
+There is a mailing list available for users of this distribution,
+[mailto:datetime@perl.org](mailto:datetime@perl.org).
+
+I am also usually active on IRC as 'drolsky' on `irc://irc.perl.org`.
+
+# DONATIONS
+
+If you'd like to thank me for the work I've done on this module, please
+consider making a "donation" to me via PayPal. I spend a lot of free time
+creating free software, and would appreciate any support you'd care to offer.
+
+Please note that **I am not suggesting that you must do this** in order for me
+to continue working on this particular software. I will continue to do so,
+inasmuch as I have in the past, for as long as it interests me.
+
+Similarly, a donation made in this way will probably not make me work on this
+software much more, unless I get so many donations that I can consider working
+on free software full time (let's all have a chuckle at that together).
+
+To donate, log into PayPal and send money to autarch@urth.org, or use the
+button at [http://www.urth.org/~autarch/fs-donation.html](http://www.urth.org/~autarch/fs-donation.html).
+
 # AUTHORS
 
-- Dave Rolsky <autarch@urth.org>
-- Rick Measham <rickm@cpan.org>
+- Dave Rolsky &lt;autarch@urth.org>
+- Rick Measham &lt;rickm@cpan.org>
 
-# COPYRIGHT AND LICENSE
+# CONTRIBUTOR
 
-This software is Copyright (c) 2014 by Dave Rolsky.
+D. Ilmari Mannsåker &lt;ilmari.mannsaker@net-a-porter.com>
+
+# COPYRIGHT AND LICENCE
+
+This software is Copyright (c) 2015 - 2016 by Dave Rolsky.
 
 This is free software, licensed under:
 

@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.66     2016-03-27
+
 - Added a zone_map constructor argument. This lets you supply a mapping for
   ambiguous time zone abbreviations. Based on a patch from Douglas Wilson. RT
   #74762.
