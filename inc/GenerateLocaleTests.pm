@@ -1,3 +1,20 @@
+package inc::GenerateLocaleTests;
+
+use strict;
+use warnings;
+use namespace::autoclean;
+
+use DateTime::Locale 1.03;
+use Dist::Zilla::File::InMemory;
+
+use Moose;
+
+with(
+    'Dist::Zilla::Role::FileGatherer',
+    'Dist::Zilla::Role::TextTemplate',
+);
+
+my $template = <<'EOF';
 use strict;
 use warnings;
 
@@ -8,57 +25,17 @@ use DateTime::Format::Strptime;
 use DateTime::Locale;
 use DateTime;
 
-my @locales
-    = $ENV{AUTHOR_TESTING}
-    ? ( sort DateTime::Locale->ids )
-    : qw( en de ga pt zh );
-
 my $code_meth = DateTime::Locale->load('en')->can('code') ? 'code' : 'id';
 
 binmode $_, ':encoding(UTF-8)'
     for map { Test::Builder->new->$_ }
     qw( output failure_output todo_output );
 
-foreach my $locale (@locales) {
-    subtest(
-        $locale,
-        sub {
-            test_days($locale);
-            test_months($locale);
-            test_am_pm($locale);
-            test_locale($locale);
-        }
-    );
-}
-
-subtest(
-    'format_datetime with locale',
-    sub {
-        my $strptime = DateTime::Format::Strptime->new(
-            pattern  => '%B %Y',
-            locale   => 'pt',
-            on_error => 'croak',
-        );
-
-        my $dt = DateTime->new(
-            year   => 2015,
-            month  => 8,
-            locale => 'en',
-        );
-
-        is(
-            $strptime->format_datetime($dt),
-            'agosto 2015',
-            'formatted output is in locale of formatter (Portugese)'
-        );
-
-        is(
-            $dt->locale->$code_meth,
-            'en',
-            q{formatter leaves DateTime object's locale unchanged}
-        );
-    }
-);
+my $locale = '{{$code}}';
+test_days($locale);
+test_months($locale);
+test_am_pm($locale);
+test_locale($locale);
 
 done_testing();
 
@@ -256,6 +233,28 @@ sub test_locale {
         "code of locale for DateTime returned by parser is $locale"
     );
 }
+EOF
 
-sub _utf8_output {
+sub gather_files {
+    my $self = shift;
+
+    my %non_author = map { $_ => 1 } qw( en de ga pt zh );
+    for my $code ( DateTime::Locale->codes ) {
+        my $filename
+            = $non_author{$code}
+            ? "t/locale-$code.t"
+            : "xt/author/locale-$code.t";
+
+        $self->add_file(
+            Dist::Zilla::File::InMemory->new(
+                name    => $filename,
+                content => $self->fill_in_string(
+                    $template,
+                    { code => $code },
+                ),
+            )
+        );
+    }
 }
+
+1;
