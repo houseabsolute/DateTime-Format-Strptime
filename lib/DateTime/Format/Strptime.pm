@@ -1061,9 +1061,6 @@ __END__
         on_error  => 'croak',
     );
 
-    # Will throw an exception
-    $newpattern = $strp->pattern('%Q');
-
     # Do something else when things go wrong:
     my $strp = DateTime::Format::Strptime->new(
         pattern   => '%T',
