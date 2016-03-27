@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+- Added a zone_map constructor argument. This lets you supply a mapping for
+  ambiguous time zone abbreviations. Based on a patch from Douglas Wilson. RT
+  #74762.
+
+
 1.65     2016-03-15
 
 - Updated zone short name parsing to handle names like "+07", which were

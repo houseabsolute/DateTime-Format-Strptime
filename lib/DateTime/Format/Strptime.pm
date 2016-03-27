@@ -9,7 +9,8 @@ use Carp qw( carp croak );
 use DateTime 1.00;
 use DateTime::Locale 0.45;
 use DateTime::TimeZone 0.79;
-use Params::Validate 1.20 qw( validate SCALAR BOOLEAN OBJECT CODEREF );
+use Params::Validate 1.20
+    qw( validate SCALAR BOOLEAN OBJECT CODEREF HASHREF );
 use Try::Tiny;
 
 use Exporter qw( import );
@@ -28,6 +29,10 @@ use constant PERL_58 => $] < 5.010;
         time_zone => {
             type     => SCALAR | OBJECT,
             optional => 1,
+        },
+        zone_map => {
+            type    => HASHREF,
+            default => {},
         },
         locale => {
             type    => SCALAR | OBJECT,
@@ -70,7 +75,7 @@ use constant PERL_58 => $] < 5.010;
 
         my $self = bless {
             %args,
-            zone_map => $class->_build_zone_map,
+            zone_map => $class->_build_zone_map( $args{zone_map} ),
         }, $class;
 
         # Forces a check that the pattern is valid
@@ -197,7 +202,10 @@ use constant PERL_58 => $] < 5.010;
     }
 
     sub _build_zone_map {
-        return \%zone_map;
+        return {
+            %zone_map,
+            %{ $_[1] },
+        };
     }
 }
 
@@ -1088,6 +1096,16 @@ This is the pattern to use for parsing. This is required.
 =item * time_zone
 
 The default time zone to use for objects returned from parsing.
+
+=item * zone_map
+
+Some time zone abbreviations are ambiguous (e.g. PST, EST, EDT). By default,
+the parser will die when it parses an ambiguous abbreviation. You may specify
+a C<zone_map> parameter as a hashref to map zone abbreviations however you like:
+
+    zone_map => { PST => '-0800', EST => '-0600' }
+
+Note that you can also override non-ambiguous mappings if you want to as well.
 
 =item * locale
 
