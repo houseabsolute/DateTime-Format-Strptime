@@ -27,10 +27,6 @@ use DateTime;
 
 my $code_meth = DateTime::Locale->load('en')->can('code') ? 'code' : 'id';
 
-binmode $_, ':encoding(UTF-8)'
-    for map { Test::Builder->new->$_ }
-    qw( output failure_output todo_output );
-
 my $locale = '{{$code}}';
 test_days($locale);
 test_months($locale);
@@ -58,6 +54,8 @@ sub test_days {
 sub _test_one_day {
     my $locale = shift;
     my $day    = shift;
+
+    _utf8_output();
 
     my $pattern = '%Y-%m-%d %A';
 
@@ -113,6 +111,8 @@ sub _test_one_month {
     my $locale = shift;
     my $month  = shift;
 
+    _utf8_output();
+
     my $pattern = '%Y-%m-%d %B';
 
     my $dt
@@ -167,6 +167,8 @@ sub test_am_pm {
 sub _test_one_hour {
     my $locale = shift;
     my $hour   = shift;
+
+    _utf8_output();
 
     my $pattern = '%Y-%m-%d %H:%M %p';
 
@@ -233,6 +235,13 @@ sub test_locale {
         "code of locale for DateTime returned by parser is $locale"
     );
 }
+
+sub _utf8_output {
+    binmode $_, ':encoding(UTF-8)'
+        for map { Test::Builder->new->$_ }
+        qw( output failure_output todo_output );
+}
+
 EOF
 
 sub gather_files {
