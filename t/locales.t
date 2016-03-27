@@ -15,6 +15,10 @@ my @locales
 
 my $code_meth = DateTime::Locale->load('en')->can('code') ? 'code' : 'id';
 
+binmode $_, ':encoding(UTF-8)'
+    for map { Test::Builder->new->$_ }
+    qw( output failure_output todo_output );
+
 foreach my $locale (@locales) {
     subtest(
         $locale,
@@ -78,8 +82,6 @@ sub _test_one_day {
     my $locale = shift;
     my $day    = shift;
 
-    _utf8_output();
-
     my $pattern = '%Y-%m-%d %A';
 
     my $dt = DateTime->now( locale => $locale )->set( day => $day );
@@ -133,8 +135,6 @@ sub test_months {
 sub _test_one_month {
     my $locale = shift;
     my $month  = shift;
-
-    _utf8_output();
 
     my $pattern = '%Y-%m-%d %B';
 
@@ -192,8 +192,6 @@ sub _test_one_hour {
     my $hour   = shift;
 
     my $pattern = '%Y-%m-%d %H:%M %p';
-
-    _utf8_output();
 
     my $dt = DateTime->now( locale => $locale )->set( hour => $hour );
     my $input = $dt->strftime($pattern);
@@ -260,7 +258,4 @@ sub test_locale {
 }
 
 sub _utf8_output {
-    binmode $_, ':encoding(UTF-8)'
-        for map { Test::Builder->new->$_ }
-        qw( output failure_output todo_output );
 }
