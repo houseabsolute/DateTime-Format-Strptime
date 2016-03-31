@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.67     2016-03-31
+
 - Fixed a regression introduced in 1.60. Older versions of this library would
   match dates pretty match anywhere in a string, so "%Y-%m-%d" would match a
   string like "abcd1234-12-30efgh". This is probably _too_ permissive, but we
