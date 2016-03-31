@@ -1,5 +1,12 @@
 {{$NEXT}}
 
+- Fixed a regression introduced in 1.60. Older versions of this library would
+  match dates pretty match anywhere in a string, so "%Y-%m-%d" would match a
+  string like "abcd1234-12-30efgh". This is probably _too_ permissive, but we
+  definitely want to match on word boundaries so that we match
+  "log.2016-03-31". Based on a PR from YASUTAKE Kiyoshi. GitHub #3.
+
+
 1.66     2016-03-27
 
 - Added a zone_map constructor argument. This lets you supply a mapping for

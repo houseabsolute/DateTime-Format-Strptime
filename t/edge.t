@@ -60,3 +60,53 @@ skip round trip
 year  => 2016
 month => 1
 day   => 13
+
+[Leading text before match]
+%Y-%m-%d
+in the afternoon of 2016-01-13
+skip round trip
+year  => 2016
+month => 1
+day   => 13
+
+[%Y.suffix]
+%Y
+2016.suffix
+skip round trip
+year => 2016
+
+[%Y-%m-%d.suffix]
+%Y-%m-%d
+2016-03-31.suffix
+skip round trip
+year  => 2016
+month => 3
+day   => 31
+
+[prefix.year]
+%Y
+log.2016
+skip round trip
+year => 2016
+
+[prefix.date]
+%Y-%m-%d
+log.2016-03-31
+skip round trip
+year  => 2016
+month => 3
+day   => 31
+
+[prefix.year.suffix]
+%Y
+cron.2016.log
+skip round trip
+year => 2016
+
+[prefix.date.suffix]
+%Y-%m-%d
+cron.2016-03-31.log
+skip round trip
+year  => 2016
+month => 3
+day   => 31
