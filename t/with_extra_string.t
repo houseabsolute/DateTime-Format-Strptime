@@ -4,6 +4,15 @@ use Test::More;
 
 use DateTime::Format::Strptime;
 
+my $parse_test = sub {
+    my ($pattern, $subject, $expect) = @_;
+    my $parser = DateTime::Format::Strptime->new( pattern => $pattern );
+    is(
+        $parser->parse_datetime( $subject )->strftime( $pattern ),
+        $expect,
+        "$subject is parsed as $expect",
+    );
+};
 
 subtest 'With suffix' => sub {
     my @subjects = (
@@ -11,12 +20,7 @@ subtest 'With suffix' => sub {
         { pattern => '%F', string => '2015-03-31.log', expect => '2015-03-31' },
     );
     for my $sbj (@subjects) {
-        my $parser = DateTime::Format::Strptime->new( pattern => $sbj->{pattern} );
-        is(
-            $parser->parse_datetime( $sbj->{string} )->strftime( $sbj->{pattern} ),
-            $sbj->{expect},
-            "$sbj->{string} is parsed as $sbj->{expect}",
-        );
+        $parse_test->( @$sbj{qw/ pattern string expect /} )
     }
 };
 
@@ -26,12 +30,7 @@ subtest 'With prefix' => sub {
         { pattern => '%Y%m%d_%H', string => 'access_log.20150331_23', expect => '20150331_23' },
     );
     for my $sbj (@subjects) {
-        my $parser = DateTime::Format::Strptime->new( pattern => $sbj->{pattern} );
-        is(
-            $parser->parse_datetime( $sbj->{string} )->strftime( $sbj->{pattern} ),
-            $sbj->{expect},
-            "$sbj->{string} is parsed as $sbj->{expect}",
-        );
+        $parse_test->( @$sbj{qw/ pattern string expect /} )
     }
 };
 
@@ -41,12 +40,7 @@ subtest 'With prefix and suffix' => sub {
         { pattern => '%Y%m%d_%H', string => 'access_log.20150331_23.txt', expect => '20150331_23' },
     );
     for my $sbj (@subjects) {
-        my $parser = DateTime::Format::Strptime->new( pattern => $sbj->{pattern} );
-        is(
-            $parser->parse_datetime( $sbj->{string} )->strftime( $sbj->{pattern} ),
-            $sbj->{expect},
-            "$sbj->{string} is parsed as $sbj->{expect}",
-        );
+        $parse_test->( @$sbj{qw/ pattern string expect /} )
     }
 };
 
