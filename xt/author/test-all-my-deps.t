@@ -1,3 +1,4 @@
+## no critic (Modules::ProhibitExcessMainComplexity)
 use strict;
 use warnings;
 
