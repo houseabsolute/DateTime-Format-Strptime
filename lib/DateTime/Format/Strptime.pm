@@ -21,6 +21,7 @@ use Package::DeprecationManager 0.15 -deprecations => {
 
 our @EXPORT_OK = qw( strftime strptime );
 
+## no critic (ValuesAndExpressions::ProhibitConstantPragma)
 use constant PERL_58 => $] < 5.010;
 
 {
@@ -81,8 +82,9 @@ use constant PERL_58 => $] < 5.010;
         # Forces a check that the pattern is valid
         $self->_parser;
 
-        binmode STDERR, ':encoding(UTF-8)'
-            if $self->{debug};
+        if ( $self->{debug} ) {
+            binmode STDERR, ':encoding(UTF-8)' or die $!;
+        }
 
         return $self;
     }
@@ -558,6 +560,7 @@ sub _token_re_for {
         year_100
     );
 
+    ## no critic (Subroutines::ProhibitExcessComplexity)
     sub _munge_args {
         my $self = shift;
         my $args = shift;
@@ -699,6 +702,7 @@ sub _token_re_for {
     }
 }
 
+## no critic (Subroutines::ProhibitExcessComplexity)
 sub _check_dt {
     my $self = shift;
     my $dt   = shift;
@@ -867,6 +871,7 @@ sub _check_dt {
 
     return 1;
 }
+## use critic
 
 sub pattern {
     my $self = shift;

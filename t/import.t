@@ -3,6 +3,7 @@ use warnings;
 
 # We need this to be set to catch warning from inside other packages.
 BEGIN {
+    ## no critic (Variables::RequireLocalizedPunctuationVars)
     $^W = 1;
 }
 

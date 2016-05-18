@@ -72,6 +72,7 @@ sub run_tests_from_data {
 
 sub utf8_output {
     binmode $_, ':encoding(UTF-8)'
+        or die $!
         for map { Test::Builder->new->$_ }
         qw( output failure_output todo_output );
 }
@@ -94,7 +95,7 @@ sub _tests_from_fh {
 
     my @tests;
 
-    my $d = do { local $/; <$fh> };
+    my $d = do { local $/ = undef; <$fh> };
 
     my $test_re = qr/
         \[(.+?)\]\n              # test name
