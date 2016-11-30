@@ -426,7 +426,7 @@ sub _build_parser {
             field => 'year',
         },
         z => {
-            regex => qr/[+-]$digit{4}/,
+            regex => qr/(?:Z|[+-][0-9]{2}(?:[:]?[0-9]{2})?)/,
             field => 'time_zone_offset',
         },
         Z => {
@@ -607,8 +607,19 @@ sub _token_re_for {
         }
 
         if ( $args->{time_zone_offset} ) {
+            my ( $sign, $hours, $minutes ) = ( '+', 0, 0 );
+
+            if ( $args->{time_zone_offset} ne 'Z' ) {
+                $args->{time_zone_offset} =~ s/://;
+                ( $sign, $hours, $minutes ) = unpack 'A(A2)*',
+                    $args->{time_zone_offset};
+                $minutes = 0 unless defined $minutes;
+            }
+
             $args->{time_zone} = DateTime::TimeZone->new(
-                name => $args->{time_zone_offset} );
+                name => sprintf '%s%.2d:%.2d',
+                $sign, $hours, $minutes
+            );
         }
 
         if ( defined $args->{time_zone_abbreviation} ) {

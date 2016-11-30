@@ -226,13 +226,66 @@ minute     => 45
 second     => 56
 nanosecond => 543000000
 
-[time zone as numeric offset]
+[time zone as numeric offset Z]
 %H:%M:%S %z
-23:45:56 +1000
+23:45:56 Z
+skip round trip
+hour       => 23
+minute     => 45
+second     => 56
+offset     => 0
+
+[time zone as numeric offset +HH]
+%H:%M:%S %z
+23:45:56 +10
+skip round trip
 hour       => 23
 minute     => 45
 second     => 56
 offset     => 36000
+
+[time zone as numeric offset -HH]
+%H:%M:%S %z
+23:45:56 -10
+skip round trip
+hour       => 23
+minute     => 45
+second     => 56
+offset     => -36000
+
+[time zone as numeric offset +HHMM]
+%H:%M:%S %z
+23:45:56 +1030
+hour       => 23
+minute     => 45
+second     => 56
+offset     => 37800
+
+[time zone as numeric offset -HHMM]
+%H:%M:%S %z
+23:45:56 -1030
+hour       => 23
+minute     => 45
+second     => 56
+offset     => -37800
+
+[time zone as numeric offset +HH:MM]
+%H:%M:%S %z
+23:45:56 +10:30
+skip round trip
+hour       => 23
+minute     => 45
+second     => 56
+offset     => 37800
+
+[time zone as numeric offset -HH:MM]
+%H:%M:%S %z
+23:45:56 -10:30
+skip round trip
+hour       => 23
+minute     => 45
+second     => 56
+offset     => -37800
 
 [time zone as abbreviation]
 %H:%M:%S %Z
