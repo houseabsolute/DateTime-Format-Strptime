@@ -426,11 +426,11 @@ sub _build_parser {
             field => 'year',
         },
         z => {
-            regex => qr/[+-]$digit{4}/,
+            regex => qr/(?:Z|[+-]$digit{2}(?:[:]?$digit{2})?)/,
             field => 'time_zone_offset',
         },
         Z => {
-            regex => qr/[a-zA-Z]{1,6}|[\-\+][0-9]{2}/,
+            regex => qr/[a-zA-Z]{1,6}|[\-\+]$digit{2}/,
             field => 'time_zone_abbreviation',
         },
     );
@@ -607,8 +607,16 @@ sub _token_re_for {
         }
 
         if ( $args->{time_zone_offset} ) {
-            $args->{time_zone} = DateTime::TimeZone->new(
-                name => $args->{time_zone_offset} );
+            my $offset = $args->{time_zone_offset};
+
+            if ( $offset eq 'Z' ) {
+                $offset = '+0000';
+            }
+            elsif ( $offset =~ /^[+-][0-9]{2}$/ ) {
+                $offset .= '00';
+            }
+
+            $args->{time_zone} = DateTime::TimeZone->new( name => $offset );
         }
 
         if ( defined $args->{time_zone_abbreviation} ) {
