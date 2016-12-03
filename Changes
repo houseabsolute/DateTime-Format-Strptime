@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+- Added docs for several formats which had long been supported but not
+  documented. These are %P, %c, %x, and %X. Reported by Alexander
+  Hartmaier. GH #10.
+
+
 1.68     2016-05-08
 
 - Author tests are no longer in t/. This makes running tests for non-authors

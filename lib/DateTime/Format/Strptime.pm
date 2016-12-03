@@ -1200,13 +1200,17 @@ The % character.
 
 =item * %a or %A
 
-The weekday name according to the current locale, in abbreviated form or
+The weekday name according to the given locale, in abbreviated form or
 the full name.
 
 =item * %b or %B or %h
 
-The month name according to the current locale, in abbreviated form or
+The month name according to the given locale, in abbreviated form or
 the full name.
+
+=item * %c
+
+The datetime format according to the given locale.
 
 =item * %C
 
@@ -1263,10 +1267,10 @@ Arbitrary whitespace.
 
 Nanoseconds. For other sub-second values use C<%[number]N>.
 
-=item * %p
+=item * %p or %P
 
-The equivalent of AM or PM according to the locale in use. (See
-L<DateTime::Locale>)
+The equivalent of AM or PM according to the locale in use. See
+L<DateTime::Locale>.
 
 =item * %r
 
@@ -1310,6 +1314,14 @@ The weekday number (0-6) with Sunday = 0.
 
 The week number with Monday the first day of the week (0-53). The first
 Monday of January is the first day of week 1.
+
+=item * %x
+
+The date format according to the given locale.
+
+=item * %X
+
+The time format according to the given locale.
 
 =item * %y
 
