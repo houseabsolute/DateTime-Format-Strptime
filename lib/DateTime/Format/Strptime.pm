@@ -341,8 +341,8 @@ sub _build_parser {
 }
 
 {
-    my $d                 = qr/(?:[0-9])/;
-    my $one_or_two_digits = qr/[0-9 ]?$d/;
+    my $digit             = qr/(?:[0-9])/;
+    my $one_or_two_digits = qr/[0-9 ]?$digit/;
 
     # These patterns are all locale-independent. There are a few that depend
     # on the locale, and must be re-calculated for each new parser object.
@@ -363,7 +363,7 @@ sub _build_parser {
             field => 'iso_week_year_100',
         },
         G => {
-            regex => qr/$d{4}/,
+            regex => qr/$digit{4}/,
             field => 'iso_week_year',
         },
         H => {
@@ -375,7 +375,7 @@ sub _build_parser {
             field => 'hour_12',
         },
         j => {
-            regex => qr/$d{1,3}/,
+            regex => qr/$digit{1,3}/,
             field => 'day_of_year',
         },
         m => {
@@ -394,7 +394,7 @@ sub _build_parser {
             field => 'time_zone_name',
         },
         s => {
-            regex => qr/$d+/,
+            regex => qr/$digit+/,
             field => 'epoch',
         },
         S => {
@@ -422,11 +422,11 @@ sub _build_parser {
             field => 'year_100',
         },
         Y => {
-            regex => qr/$d{4}/,
+            regex => qr/$digit{4}/,
             field => 'year',
         },
         z => {
-            regex => qr/[+-]$d{4}/,
+            regex => qr/[+-]$digit{4}/,
             field => 'time_zone_offset',
         },
         Z => {
