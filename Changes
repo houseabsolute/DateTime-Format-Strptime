@@ -1,5 +1,12 @@
 {{$NEXT}}
 
+- The word boundary check supposedly added in 1.67 didn't really work
+  properly, and still matched too much. For example, the pattern "%d-%m-%y"
+  would match "2016-11-30" and turn it into November 16, 2030. This also had
+  problems at the end of strings, so that the same pattern would improperly
+  match "30-11-2016" as November 30, 2020. Reported by Erik Huelsmann. GitHub
+  #11.
+
 - Added docs for several formats which had long been supported but not
   documented. These are %P, %c, %x, and %X. Reported by Alexander
   Hartmaier. GH #10.

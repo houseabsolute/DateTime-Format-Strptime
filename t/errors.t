@@ -246,6 +246,18 @@ subtest(
             input   => 'Wed Feb 29 12:02:28 2013',
             error   => qr{\QParsed values did not produce a valid date},
         },
+        {
+            name    => 'Failed word boundary check at beginning - GitHub #11',
+            pattern => '%d-%m-%y',
+            input   => '2016-11-30',
+            error   => qr{\QYour datetime does not match your pattern},
+        },
+        {
+            name    => 'Failed word boundary check at end',
+            pattern => '%d-%m-%y',
+            input   => '30-11-2016',
+            error   => qr{\QYour datetime does not match your pattern},
+        },
     );
 
     for my $test (@tests) {
