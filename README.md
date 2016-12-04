@@ -154,13 +154,17 @@ The following tokens are allowed in the pattern string for strptime
 
 - %a or %A
 
-    The weekday name according to the current locale, in abbreviated form or
+    The weekday name according to the given locale, in abbreviated form or
     the full name.
 
 - %b or %B or %h
 
-    The month name according to the current locale, in abbreviated form or
+    The month name according to the given locale, in abbreviated form or
     the full name.
+
+- %c
+
+    The datetime format according to the given locale.
 
 - %C
 
@@ -217,10 +221,10 @@ The following tokens are allowed in the pattern string for strptime
 
     Nanoseconds. For other sub-second values use `%[number]N`.
 
-- %p
+- %p or %P
 
-    The equivalent of AM or PM according to the locale in use. (See
-    [DateTime::Locale](https://metacpan.org/pod/DateTime::Locale))
+    The equivalent of AM or PM according to the locale in use. See
+    [DateTime::Locale](https://metacpan.org/pod/DateTime::Locale).
 
 - %r
 
@@ -264,6 +268,14 @@ The following tokens are allowed in the pattern string for strptime
 
     The week number with Monday the first day of the week (0-53). The first
     Monday of January is the first day of week 1.
+
+- %x
+
+    The date format according to the given locale.
+
+- %X
+
+    The time format according to the given locale.
 
 - %y
 
@@ -311,13 +323,12 @@ Please report any bugs or feature requests to
 [http://rt.cpan.org](http://rt.cpan.org). I will be notified, and then you'll automatically be
 notified of progress on your bug as I make changes.
 
-Bugs may be submitted through [the RT bug tracker](http://rt.cpan.org/Public/Dist/Display.html?Name=DateTime-Format-Strptime)
-(or [bug-datetime-format-strptime@rt.cpan.org](mailto:bug-datetime-format-strptime@rt.cpan.org)).
+Bugs may be submitted through [https://github.com/houseabsolute/DateTime-Format-Strptime/issues](https://github.com/houseabsolute/DateTime-Format-Strptime/issues).
 
 There is a mailing list available for users of this distribution,
 [mailto:datetime@perl.org](mailto:datetime@perl.org).
 
-I am also usually active on IRC as 'drolsky' on `irc://irc.perl.org`.
+I am also usually active on IRC as 'autarch' on `irc://irc.perl.org`.
 
 # DONATIONS
 
@@ -346,7 +357,7 @@ button at [http://www.urth.org/~autarch/fs-donation.html](http://www.urth.org/~a
 - D. Ilmari Mannsåker <ilmari.mannsaker@net-a-porter.com>
 - key-amb <yasutake.kiyoshi@gmail.com>
 
-# COPYRIGHT AND LICENCE
+# COPYRIGHT AND LICENSE
 
 This software is Copyright (c) 2015 - 2016 by Dave Rolsky.
 

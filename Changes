@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.69     2016-12-04 (TRIAL RELEASE)
+
 - The word boundary check supposedly added in 1.67 didn't really work
   properly, and still matched too much. For example, the pattern "%d-%m-%y"
   would match "2016-11-30" and turn it into November 16, 2030. This also had
