@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- Altered the conversion specifier %z to accept ±HH, ±HHMM, ±HH:MM and Z.
+  Previously only ±HHMM where accepted. PR from Christian Hansen, GitHub #13.
+
+
 1.69     2016-12-04 (TRIAL RELEASE)
 
 - The word boundary check supposedly added in 1.67 didn't really work
