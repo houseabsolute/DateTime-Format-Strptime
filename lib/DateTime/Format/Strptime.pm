@@ -607,19 +607,16 @@ sub _token_re_for {
         }
 
         if ( $args->{time_zone_offset} ) {
-            my ( $sign, $hours, $minutes ) = ( '+', 0, 0 );
+            my $offset = $args->{time_zone_offset};
 
-            if ( $args->{time_zone_offset} ne 'Z' ) {
-                $args->{time_zone_offset} =~ s/://;
-                ( $sign, $hours, $minutes ) = unpack 'A(A2)*',
-                    $args->{time_zone_offset};
-                $minutes = 0 unless defined $minutes;
+            if ( $offset eq 'Z' ) {
+                $offset = '+0000';
+            }
+            elsif ( $offset =~ /^[+-][0-9]{2}$/ ) {
+                $offset .= '00';
             }
 
-            $args->{time_zone} = DateTime::TimeZone->new(
-                name => sprintf '%s%.2d:%.2d',
-                $sign, $hours, $minutes
-            );
+            $args->{time_zone} = DateTime::TimeZone->new( name => $offset );
         }
 
         if ( defined $args->{time_zone_abbreviation} ) {
