@@ -226,7 +226,7 @@ minute     => 45
 second     => 56
 nanosecond => 543000000
 
-[time zone as numeric offset Z]
+[time zone as letter Z]
 %H:%M:%S %z
 23:45:56 Z
 skip round trip
