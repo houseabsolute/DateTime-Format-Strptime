@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.70     2016-12-10
+
 - Altered the conversion specifier %z to accept ±HH, ±HHMM, ±HH:MM and Z.
   Previously only ±HHMM where accepted. PR from Christian Hansen, GitHub #13.
 
