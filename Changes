@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- By default, the word boundary checks added in 1.69 are now off. You can
+  enable them by passing "strict => 1" to the constructor. This was reported
+  as an issue by Toby Corkindale as GitHub #15.
+
 - Switched from Params::Validate to Params::ValidationCompiler.
 
 

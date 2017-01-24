@@ -46,6 +46,10 @@ use constant PERL_58 => $] < 5.010;
                 type    => t('OnError'),
                 default => 'undef',
             },
+            strict => {
+                type    => t('Bool'),
+                default => 0,
+            },
             debug => {
                 type    => t('Bool'),
                 default => $ENV{DATETIME_FORMAT_STRPTIME_DEBUG},
@@ -329,7 +333,8 @@ sub _build_parser {
     }
 
     return {
-        regex  => qr/(?:\A|\b)$regex(\b|\Z)/,
+        regex =>
+            ( $self->{strict} ? qr/(?:\A|\b)$regex(?:\b|\Z)/ : qr/$regex/ ),
         fields => \@fields,
     };
 }
@@ -1096,6 +1101,29 @@ This methods creates a new object. It accepts the following arguments:
 =item * pattern
 
 This is the pattern to use for parsing. This is required.
+
+=item * strict
+
+This is a boolean which disables or enables strict matching mode.
+
+By default, this module turns your pattern into a regex that will match
+anywhere in a string. So given the pattern C<%Y%m%d%H%M%S> it will match a
+string like C<20161214233712Z>. However, this also means that a this pattern
+will match B<any> string that contains 14 or more numbers! This behavior can
+be very surprising.
+
+If you enable strict mode, then the generated regex is wrapped in boundary
+checks of the form C</(?:\A|\b)...(?:\b|\z_/)>. These checks ensure that the
+pattern will only match when at the beginning or end of a string, or when it
+is separated by other text with a word boundary (C<\w> versus C<\W>).
+
+By default, strict mode is off. This is done for backwards
+compatibility. Future releases may turn it on by default, as it produces less
+surprising behavior in many cases.
+
+Because the default may change in the future, B<< you are strongly encouraged
+to explicitly set this when constructing all C<DateTime::Format::Strptime>
+objects >>.
 
 =item * time_zone
 
