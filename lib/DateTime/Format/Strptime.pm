@@ -8,9 +8,9 @@ our $VERSION = '1.71';
 use Carp qw( carp croak );
 use DateTime 1.00;
 use DateTime::Locale 0.45;
+use DateTime::Format::Strptime::Types;
 use DateTime::TimeZone 0.79;
-use Params::Validate 1.20
-    qw( validate SCALAR BOOLEAN OBJECT CODEREF HASHREF );
+use Params::ValidationCompiler qw( validation_for );
 use Try::Tiny;
 
 use Exporter qw( import );
@@ -25,43 +25,37 @@ our @EXPORT_OK = qw( strftime strptime );
 use constant PERL_58 => $] < 5.010;
 
 {
-    my $spec = {
-        pattern   => { type => SCALAR },
-        time_zone => {
-            type     => SCALAR | OBJECT,
-            optional => 1,
-        },
-        zone_map => {
-            type    => HASHREF,
-            default => {},
-        },
-        locale => {
-            type    => SCALAR | OBJECT,
-            default => DateTime::Locale->load('en'),
-        },
-        on_error => {
-            type      => SCALAR | CODEREF,
-            default   => 'undef',
-            callbacks => {
-                'valid on_error' => sub {
-                    return 1
-                        if $_[0]
-                        && ( ref $_[0] eq 'CODE'
-                        || $_[0] =~ /\A(?:croak|undef)\z/ );
-                    die
-                        q{The value supplied to on_error must be either 'croak', 'undef' or a code reference.};
-                },
+    my $en_locale = DateTime::Locale->load('en');
+
+    my $validator = validation_for(
+        params => {
+            pattern   => { type => t('NonEmptyStr') },
+            time_zone => {
+                type     => t('TimeZone'),
+                optional => 1,
+            },
+            zone_map => {
+                type    => t('HashRef'),
+                default => sub { {} },
+            },
+            locale => {
+                type    => t('Locale'),
+                default => sub {$en_locale},
+            },
+            on_error => {
+                type    => t('OnError'),
+                default => 'undef',
+            },
+            debug => {
+                type    => t('Bool'),
+                default => $ENV{DATETIME_FORMAT_STRPTIME_DEBUG},
             },
         },
-        debug => {
-            type    => BOOLEAN,
-            default => $ENV{DATETIME_FORMAT_STRPTIME_DEBUG},
-        },
-    };
+    );
 
     sub new {
         my $class = shift;
-        my %args = validate( @_, $spec );
+        my %args  = $validator->(@_);
 
         if ( $args{locale} && !ref $args{locale} ) {
             $args{locale} = DateTime::Locale->load( $args{locale} )

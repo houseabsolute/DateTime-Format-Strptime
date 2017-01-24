@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+- Switched from Params::Validate to Params::ValidationCompiler.
+
+
 1.70     2016-12-10
 
 - Altered the conversion specifier %z to accept ±HH, ±HHMM, ±HH:MM and Z.
