@@ -99,6 +99,7 @@ If you have found a bug, but do not have an accompanying patch to fix it, you
 can submit an issue report [via the web](https://github.com/houseabsolute/DateTime-Format-Strptime/issues)
 ).
 
+
 There is a mailing list available for users of this distribution,
 datetime@perl.org
 
@@ -129,5 +130,5 @@ commit or patch), unless you specifically request for it not to be. If you
 wish to be listed under a different name or address, you should submit a pull
 request to the .mailmap file to contain the correct mapping.
 
-This file was generated via Dist::Zilla::Plugin::GenerateFile::FromShareDir 0.012 from a
-template file originating in Dist-Zilla-PluginBundle-DROLSKY-0.78.
+This file was generated via Dist::Zilla::Plugin::GenerateFile::FromShareDir 0.013 from a
+template file originating in Dist-Zilla-PluginBundle-DROLSKY-0.80.

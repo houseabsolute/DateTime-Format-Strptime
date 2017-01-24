@@ -4,7 +4,7 @@ DateTime::Format::Strptime - Parse and format strp and strf time patterns
 
 # VERSION
 
-version 1.70
+version 1.71
 
 # SYNOPSIS
 
@@ -56,6 +56,29 @@ This methods creates a new object. It accepts the following arguments:
 - pattern
 
     This is the pattern to use for parsing. This is required.
+
+- strict
+
+    This is a boolean which disables or enables strict matching mode.
+
+    By default, this module turns your pattern into a regex that will match
+    anywhere in a string. So given the pattern `%Y%m%d%H%M%S` it will match a
+    string like `20161214233712Z`. However, this also means that a this pattern
+    will match **any** string that contains 14 or more numbers! This behavior can
+    be very surprising.
+
+    If you enable strict mode, then the generated regex is wrapped in boundary
+    checks of the form `/(?:\A|\b)...(?:\b|\z_/)`. These checks ensure that the
+    pattern will only match when at the beginning or end of a string, or when it
+    is separated by other text with a word boundary (`\w` versus `\W`).
+
+    By default, strict mode is off. This is done for backwards
+    compatibility. Future releases may turn it on by default, as it produces less
+    surprising behavior in many cases.
+
+    Because the default may change in the future, **you are strongly encouraged
+    to explicitly set this when constructing all `DateTime::Format::Strptime`
+    objects**.
 
 - time\_zone
 
@@ -323,12 +346,16 @@ Please report any bugs or feature requests to
 [http://rt.cpan.org](http://rt.cpan.org). I will be notified, and then you'll automatically be
 notified of progress on your bug as I make changes.
 
-Bugs may be submitted through [https://github.com/houseabsolute/DateTime-Format-Strptime/issues](https://github.com/houseabsolute/DateTime-Format-Strptime/issues).
+Bugs may be submitted at [https://github.com/houseabsolute/DateTime-Format-Strptime/issues](https://github.com/houseabsolute/DateTime-Format-Strptime/issues).
 
 There is a mailing list available for users of this distribution,
 [mailto:datetime@perl.org](mailto:datetime@perl.org).
 
 I am also usually active on IRC as 'autarch' on `irc://irc.perl.org`.
+
+# SOURCE
+
+The source code repository for DateTime-Format-Strptime can be found at [https://github.com/houseabsolute/DateTime-Format-Strptime](https://github.com/houseabsolute/DateTime-Format-Strptime).
 
 # DONATIONS
 
@@ -360,8 +387,11 @@ button at [http://www.urth.org/~autarch/fs-donation.html](http://www.urth.org/~a
 
 # COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2015 - 2016 by Dave Rolsky.
+This software is Copyright (c) 2015 - 2017 by Dave Rolsky.
 
 This is free software, licensed under:
 
     The Artistic License 2.0 (GPL Compatible)
+
+The full text of the license can be found in the
+`LICENSE` file included with this distribution.
