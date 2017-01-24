@@ -103,6 +103,13 @@ cron.2016.log
 skip round trip
 year => 2016
 
+[prefix.year.suffix with strict]
+%Y
+cron.2016.log
+skip round trip
+strict
+year => 2016
+
 [prefix.date.suffix]
 %Y-%m-%d
 cron.2016-03-31.log
@@ -110,3 +117,23 @@ skip round trip
 year  => 2016
 month => 3
 day   => 31
+
+[prefix.date.suffix with strict]
+%Y-%m-%d
+cron.2016-03-31.log
+skip round trip
+strict
+year  => 2016
+month => 3
+day   => 31
+
+[ISO8601 + Z with Z at end ignored]
+%Y%m%d%H%M%S
+20161214233712Z
+skip round trip
+year   => 2016
+month  => 12
+day    => 14
+hour   => 23
+minute => 37
+second => 12

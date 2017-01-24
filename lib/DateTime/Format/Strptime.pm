@@ -8,9 +8,9 @@ our $VERSION = '1.71';
 use Carp qw( carp croak );
 use DateTime 1.00;
 use DateTime::Locale 0.45;
+use DateTime::Format::Strptime::Types;
 use DateTime::TimeZone 0.79;
-use Params::Validate 1.20
-    qw( validate SCALAR BOOLEAN OBJECT CODEREF HASHREF );
+use Params::ValidationCompiler qw( validation_for );
 use Try::Tiny;
 
 use Exporter qw( import );
@@ -25,43 +25,41 @@ our @EXPORT_OK = qw( strftime strptime );
 use constant PERL_58 => $] < 5.010;
 
 {
-    my $spec = {
-        pattern   => { type => SCALAR },
-        time_zone => {
-            type     => SCALAR | OBJECT,
-            optional => 1,
-        },
-        zone_map => {
-            type    => HASHREF,
-            default => {},
-        },
-        locale => {
-            type    => SCALAR | OBJECT,
-            default => DateTime::Locale->load('en'),
-        },
-        on_error => {
-            type      => SCALAR | CODEREF,
-            default   => 'undef',
-            callbacks => {
-                'valid on_error' => sub {
-                    return 1
-                        if $_[0]
-                        && ( ref $_[0] eq 'CODE'
-                        || $_[0] =~ /\A(?:croak|undef)\z/ );
-                    die
-                        q{The value supplied to on_error must be either 'croak', 'undef' or a code reference.};
-                },
+    my $en_locale = DateTime::Locale->load('en');
+
+    my $validator = validation_for(
+        params => {
+            pattern   => { type => t('NonEmptyStr') },
+            time_zone => {
+                type     => t('TimeZone'),
+                optional => 1,
+            },
+            zone_map => {
+                type    => t('HashRef'),
+                default => sub { {} },
+            },
+            locale => {
+                type    => t('Locale'),
+                default => sub {$en_locale},
+            },
+            on_error => {
+                type    => t('OnError'),
+                default => 'undef',
+            },
+            strict => {
+                type    => t('Bool'),
+                default => 0,
+            },
+            debug => {
+                type    => t('Bool'),
+                default => $ENV{DATETIME_FORMAT_STRPTIME_DEBUG},
             },
         },
-        debug => {
-            type    => BOOLEAN,
-            default => $ENV{DATETIME_FORMAT_STRPTIME_DEBUG},
-        },
-    };
+    );
 
     sub new {
         my $class = shift;
-        my %args = validate( @_, $spec );
+        my %args  = $validator->(@_);
 
         if ( $args{locale} && !ref $args{locale} ) {
             $args{locale} = DateTime::Locale->load( $args{locale} )
@@ -335,7 +333,8 @@ sub _build_parser {
     }
 
     return {
-        regex  => qr/(?:\A|\b)$regex(\b|\Z)/,
+        regex =>
+            ( $self->{strict} ? qr/(?:\A|\b)$regex(?:\b|\Z)/ : qr/$regex/ ),
         fields => \@fields,
     };
 }
@@ -1102,6 +1101,29 @@ This methods creates a new object. It accepts the following arguments:
 =item * pattern
 
 This is the pattern to use for parsing. This is required.
+
+=item * strict
+
+This is a boolean which disables or enables strict matching mode.
+
+By default, this module turns your pattern into a regex that will match
+anywhere in a string. So given the pattern C<%Y%m%d%H%M%S> it will match a
+string like C<20161214233712Z>. However, this also means that a this pattern
+will match B<any> string that contains 14 or more numbers! This behavior can
+be very surprising.
+
+If you enable strict mode, then the generated regex is wrapped in boundary
+checks of the form C</(?:\A|\b)...(?:\b|\z_/)>. These checks ensure that the
+pattern will only match when at the beginning or end of a string, or when it
+is separated by other text with a word boundary (C<\w> versus C<\W>).
+
+By default, strict mode is off. This is done for backwards
+compatibility. Future releases may turn it on by default, as it produces less
+surprising behavior in many cases.
+
+Because the default may change in the future, B<< you are strongly encouraged
+to explicitly set this when constructing all C<DateTime::Format::Strptime>
+objects >>.
 
 =item * time_zone
 

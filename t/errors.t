@@ -250,12 +250,14 @@ subtest(
             name    => 'Failed word boundary check at beginning - GitHub #11',
             pattern => '%d-%m-%y',
             input   => '2016-11-30',
+            strict  => 1,
             error   => qr{\QYour datetime does not match your pattern},
         },
         {
             name    => 'Failed word boundary check at end',
             pattern => '%d-%m-%y',
             input   => '30-11-2016',
+            strict  => 1,
             error   => qr{\QYour datetime does not match your pattern},
         },
     );
@@ -273,6 +275,7 @@ sub _test_error_handling {
     my $parser = DateTime::Format::Strptime->new(
         pattern  => $test->{pattern},
         on_error => 'croak',
+        strict   => $test->{strict},
     );
 
     like(
@@ -284,6 +287,7 @@ sub _test_error_handling {
     $parser = DateTime::Format::Strptime->new(
         pattern  => $test->{pattern},
         on_error => 'undef',
+        strict   => $test->{strict},
     );
 
     my $dt = $parser->parse_datetime( $test->{input} );
@@ -303,6 +307,7 @@ sub _test_error_handling {
     $parser = DateTime::Format::Strptime->new(
         pattern  => $test->{pattern},
         on_error => sub { die { e => $_[1] } },
+        strict   => $test->{strict},
     );
 
     my $e = exception { $parser->parse_datetime( $test->{input} ) };

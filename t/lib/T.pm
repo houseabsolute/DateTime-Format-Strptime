@@ -33,6 +33,7 @@ sub run_tests_from_data {
                                 ? ( locale => $test->{locale} )
                                 : ()
                             ),
+                            strict   => $test->{strict},
                             on_error => 'croak',
                         );
                     },
@@ -103,6 +104,7 @@ sub _tests_from_fh {
         (.+?)\n                  # input
         (?:locale\ =\ (.+?)\n)?  # optional locale
         (skip\ round\ trip\n)?   # skip a round trip?
+        (strict\n)?              # strict parsing flag?
         (.+?)\n                  # k-v pairs for expected values
         (?:\n|\z)                # end of test
                     /xs;
@@ -114,8 +116,9 @@ sub _tests_from_fh {
             input           => $3,
             locale          => $4,
             skip_round_trip => $5,
+            strict          => ( $6 ? 1 : 0 ),
             expect          => {
-                map { split /\s+=>\s+/ } split /\n/, $6,
+                map { split /\s+=>\s+/ } split /\n/, $7,
             },
         };
     }
