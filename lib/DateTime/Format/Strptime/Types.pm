@@ -3,7 +3,7 @@ package DateTime::Format::Strptime::Types;
 use strict;
 use warnings;
 
-our $VERSION = '1.72';
+our $VERSION = '1.73';
 
 use parent 'Specio::Exporter';
 
