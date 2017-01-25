@@ -986,6 +986,9 @@ sub format_datetime {
     my $self = shift;
     my $dt   = shift;
 
+    croak 'format_datetime() expects parameter an object of type DateTime.'
+        unless (ref($dt) eq 'DateTime');
+
     my $pattern = $self->pattern;
     $pattern =~ s/%O/$dt->time_zone->name/eg;
     return $dt->clone->set_locale( $self->locale )->strftime($pattern);
