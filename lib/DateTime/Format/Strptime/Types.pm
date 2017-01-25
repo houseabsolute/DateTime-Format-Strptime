@@ -7,6 +7,7 @@ our $VERSION = '1.73';
 
 use parent 'Specio::Exporter';
 
+use DateTime;
 use DateTime::Locale::Base;
 use DateTime::Locale::FromData;
 use DateTime::TimeZone;
@@ -30,6 +31,7 @@ coerce(
 );
 
 object_isa_type( 'TimeZone', class => 'DateTime::TimeZone' );
+object_isa_type('DateTime');
 
 coerce(
     t('TimeZone'),

@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+- The format_datetime now checks that the object it is given isa DateTime
+  object. Implemented by Mohammad S Anwar. GitHub #17.
+
+
 1.72     2017-01-24
 
 - Require DateTime::Locale 1.05. This fixes some test failures seen on CPAN
