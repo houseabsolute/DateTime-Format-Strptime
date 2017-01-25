@@ -4,7 +4,7 @@ DateTime::Format::Strptime - Parse and format strp and strf time patterns
 
 # VERSION
 
-version 1.71
+version 1.72
 
 # SYNOPSIS
 

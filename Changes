@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.72     2017-01-24
+
 - Require DateTime::Locale 1.05. This fixes some test failures seen on CPAN
   Testers. Also require DateTime::TimeZone 2.09 because you should really
   update this on a regular basis.
