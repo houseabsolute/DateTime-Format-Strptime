@@ -4,6 +4,8 @@
   Testers. Also require DateTime::TimeZone 2.09 because you should really
   update this on a regular basis.
 
+- Require Specio 0.33 to fix other test failures seen on CPAN (I hope).
+
 
 1.71     2017-01-24
 

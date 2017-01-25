@@ -10,7 +10,7 @@ use parent 'Specio::Exporter';
 use DateTime::Locale::Base;
 use DateTime::Locale::FromData;
 use DateTime::TimeZone;
-use Specio 0.18;
+use Specio 0.33;
 use Specio::Declare;
 use Specio::Library::Builtins -reexport;
 use Specio::Library::String -reexport;
