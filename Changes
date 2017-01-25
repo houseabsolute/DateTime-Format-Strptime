@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+- Require DateTime::Locale 1.05. This fixes some test failures seen on CPAN
+  Testers. Also require DateTime::TimeZone 2.09 because you should really
+  update this on a regular basis.
+
+
 1.71     2017-01-24
 
 - By default, the word boundary checks added in 1.69 are now off. You can
