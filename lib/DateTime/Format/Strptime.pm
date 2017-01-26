@@ -971,13 +971,18 @@ sub parse_duration {
     croak q{DateTime::Format::Strptime doesn't do durations.};
 }
 
-sub format_datetime {
-    my $self = shift;
-    my $dt   = shift;
+{
+    my $validator = validation_for( params => [ { type => t('DateTime') } ] );
 
-    my $pattern = $self->pattern;
-    $pattern =~ s/%O/$dt->time_zone->name/eg;
-    return $dt->clone->set_locale( $self->locale )->strftime($pattern);
+    sub format_datetime {
+        my $self = shift;
+        my ($dt) = $validator->(@_);
+
+        my $pattern = $self->pattern;
+        $pattern =~ s/%O/$dt->time_zone->name/eg;
+        return $dt->clone->set_locale( $self->locale )->strftime($pattern);
+    }
+
 }
 
 sub format_duration {
