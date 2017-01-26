@@ -61,17 +61,6 @@ use constant PERL_58 => $] < 5.010;
         my $class = shift;
         my %args  = $validator->(@_);
 
-        if ( $args{locale} && !ref $args{locale} ) {
-            $args{locale} = DateTime::Locale->load( $args{locale} )
-                or croak "Could not create locale from $args{locale}";
-        }
-
-        if ( $args{time_zone} && !ref $args{time_zone} ) {
-            $args{time_zone}
-                = DateTime::TimeZone->new( name => $args{time_zone} )
-                or croak "Could not create time zone from $args{time_zone}";
-        }
-
         my $self = bless {
             %args,
             zone_map => $class->_build_zone_map( $args{zone_map} ),
