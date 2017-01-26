@@ -16,7 +16,7 @@ my $strptime = DateTime::Format::Strptime->new(
 like(
     exception { $strptime->format_datetime('somestring') },
     qr/Validation failed for type named DateTime declared in package DateTime::Format::Strptime::Types/,
-    'format_datetime() receives invalid type param'
+    'format_datetime() checks that it received a DateTime object'
 );
 
 done_testing();
