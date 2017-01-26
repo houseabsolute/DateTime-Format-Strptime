@@ -30,6 +30,7 @@ coerce(
 );
 
 object_isa_type( 'TimeZone', class => 'DateTime::TimeZone' );
+object_isa_type( 'DateTime', class => 'DateTime' );
 
 coerce(
     t('TimeZone'),

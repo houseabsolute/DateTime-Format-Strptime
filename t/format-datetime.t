@@ -13,8 +13,10 @@ my $strptime = DateTime::Format::Strptime->new(
     on_error => 'croak',
 );
 
-
-eval { $strptime->format_datetime('somestring') };
-like($@, qr/format_datetime\(\) expects parameter an object of type DateTime/);
+like(
+    exception { $strptime->format_datetime('somestring') },
+    qr/Validation failed for type named DateTime declared in package DateTime::Format::Strptime::Types/,
+    'format_datetime() receives invalid type param'
+);
 
 done_testing();
