@@ -4,7 +4,7 @@ DateTime::Format::Strptime - Parse and format strp and strf time patterns
 
 # VERSION
 
-version 1.72
+version 1.73
 
 # SYNOPSIS
 
@@ -384,6 +384,7 @@ button at [http://www.urth.org/~autarch/fs-donation.html](http://www.urth.org/~a
 - Christian Hansen <chansen@cpan.org>
 - D. Ilmari Mannsåker <ilmari.mannsaker@net-a-porter.com>
 - key-amb <yasutake.kiyoshi@gmail.com>
+- Mohammad S Anwar <mohammad.anwar@yahoo.com>
 
 # COPYRIGHT AND LICENSE
 

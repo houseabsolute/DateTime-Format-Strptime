@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.73     2017-01-31
+
 - The format_datetime now checks that the object it is given isa DateTime
   object. Implemented by Mohammad S Anwar. GitHub #17.
 
