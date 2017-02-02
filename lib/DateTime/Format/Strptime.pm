@@ -343,7 +343,7 @@ sub _build_parser {
             field => 'century',
         },
         d => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:[12][0-9]|3[01]|[0 ]?[1-9])/,
             field => 'day',
         },
         g => {
@@ -355,11 +355,11 @@ sub _build_parser {
             field => 'iso_week_year',
         },
         H => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:1[0-9]|2[0-4]|[0 ]?[0-9])/,
             field => 'hour',
         },
         I => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:1[0-2]|[0 ]?[0-9])/,
             field => 'hour_12',
         },
         j => {
@@ -367,11 +367,11 @@ sub _build_parser {
             field => 'day_of_year',
         },
         m => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:1[0-2]|[0 ]?[0-9])/,
             field => 'month',
         },
         M => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:[1-5][0-9]|[0 ]?[0-9])/,
             field => 'minute',
         },
         n => {
@@ -386,23 +386,23 @@ sub _build_parser {
             field => 'epoch',
         },
         S => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:[1-5][0-9]|6[01]|[0 ]?[0-9])/,
             field => 'second',
         },
         U => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:[1-4][0-9]|5[0-3]|[0 ]?[0-9])/,
             field => 'week_sun_0',
         },
         u => {
-            regex => $one_or_two_digits,
+            regex => qr/[0 ]?[1-7]/,
             field => 'day_of_week',
         },
         w => {
-            regex => $one_or_two_digits,
+            regex => qr/[0 ]?[0-6]/,
             field => 'day_of_week_sun_0',
         },
         W => {
-            regex => $one_or_two_digits,
+            regex => qr/(?:[1-4][0-9]|5[0-3]|[0 ]?[0-9])/,
             field => 'week_mon_1',
         },
         y => {

@@ -39,6 +39,12 @@
   match "30-11-2016" as November 30, 2020. Reported by Erik Huelsmann. GitHub
   #11.
 
+- Parsing is now a bit stricter, so that a pattern like "%d" only matches
+  "1-31" (with an optional leading space or 0 on single digit
+  days). Previously it would match "1-99" and then throw an error because the
+  DateTime constructor rejected invalid date values, so your pattern wouldn't
+  actually match, but this is arguably more correct.
+
 - Added docs for several formats which had long been supported but not
   documented. These are %P, %c, %x, and %X. Reported by Alexander
   Hartmaier. GH #10.
