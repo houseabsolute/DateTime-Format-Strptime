@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.74     2017-08-03
+
 - Fix text to not rely on a very specific exception message from Specio. This
   was broken in 0.39. Reported by Slaven Rezić. GH #18.
 
