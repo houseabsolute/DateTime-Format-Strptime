@@ -292,7 +292,7 @@ sub _build_parser {
             |
             ([^%]+)
                     /xg
-        ) {
+    ) {
         # Using \G in the regex match fails for some reason on Perl 5.8, so we
         # do this hack instead.
         substr( $pattern, 0, pos $pattern, q{} )
