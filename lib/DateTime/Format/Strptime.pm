@@ -278,7 +278,7 @@ sub _build_parser {
         warn "Pattern after replacement substitution: $pattern\n";
     }
 
-    my $regex;
+    my $regex = q{};
     my @fields;
 
     while (
