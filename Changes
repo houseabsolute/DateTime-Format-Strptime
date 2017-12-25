@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.75     2017-12-24
+
 - Fixed tests to pass with blead Perl. Reported by James Keenan. GH #19.
 
 
