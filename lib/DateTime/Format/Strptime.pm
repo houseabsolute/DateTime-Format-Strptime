@@ -1102,7 +1102,7 @@ This is a boolean which disables or enables strict matching mode.
 
 By default, this module turns your pattern into a regex that will match
 anywhere in a string. So given the pattern C<%Y%m%d%H%M%S> it will match a
-string like C<20161214233712Z>. However, this also means that a this pattern
+string like C<20161214233712>. However, this also means that a this pattern
 will match B<any> string that contains 14 or more numbers! This behavior can
 be very surprising.
 
