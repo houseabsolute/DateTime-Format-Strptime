@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.76     2019-02-07
+
 [BACKWARDS INCOMPATIBILITIES]
 
 * The ability to set the pattern, time_zone, and locale via accessor methods
