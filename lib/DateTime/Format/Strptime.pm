@@ -7,7 +7,7 @@ our $VERSION = '1.76';
 
 use Carp qw( carp croak );
 use DateTime 1.00;
-use DateTime::Locale 1.05;
+use DateTime::Locale 1.23;
 use DateTime::Format::Strptime::Types;
 use DateTime::TimeZone 2.09;
 use Params::ValidationCompiler qw( validation_for );
