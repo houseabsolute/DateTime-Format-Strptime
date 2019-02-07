@@ -885,7 +885,7 @@ sub pattern {
         }
         catch {
             $self->_our_carp($_);
-        }
+        };
 
         return unless $new;
 
@@ -911,7 +911,7 @@ sub locale {
         }
         catch {
             $self->_our_carp($_);
-        }
+        };
 
         return unless $new;
 
@@ -939,7 +939,7 @@ sub time_zone {
         }
         catch {
             $self->_our_carp($_);
-        }
+        };
 
         return unless $new;
 
