@@ -10,19 +10,33 @@ use DateTime 1.00;
 use DateTime::Locale 1.23;
 use DateTime::Format::Strptime::Types;
 use DateTime::TimeZone 2.09;
+use Exporter ();
 use Params::ValidationCompiler qw( validation_for );
 use Try::Tiny;
-
-use Exporter qw( import );
-
-use Package::DeprecationManager 0.15 -deprecations => {
-    'accessor writers' => '1.58',
-};
 
 our @EXPORT_OK = qw( strftime strptime );
 
 ## no critic (ValuesAndExpressions::ProhibitConstantPragma)
 use constant PERL_58 => $] < 5.010;
+
+# We previously used Package::DeprecationManager which allowed passing of
+# "-api_version => X" on import. We don't want any such imports to blow up but
+# we no longer have anything to deprecate.
+sub import {
+    my $class = shift;
+    my @args;
+    ## no critic (ControlStructures::ProhibitCStyleForLoops)
+    for ( my $i = 0; $i < @_; $i++ ) {
+        if ( $_[$i] eq '-api_version' ) {
+            $i++;
+        }
+        else {
+            push @args, $_[$i];
+        }
+    }
+    @_ = ( $class, @args );
+    goto &Exporter::import;
+}
 
 {
     my $en_locale = DateTime::Locale->load('en');
@@ -871,53 +885,11 @@ sub _check_dt {
 
 sub pattern {
     my $self = shift;
-
-    if (@_) {
-        my $pattern = shift;
-        deprecated(
-            feature => 'accessor writers',
-            message => 'Calling pattern() as a writer is deprecated.',
-        );
-
-        my $new;
-        try {
-            $new = $self->_clone_with( pattern => $pattern );
-        }
-        catch {
-            $self->_our_carp($_);
-        }
-
-        return unless $new;
-
-        %{$self} = %{$new};
-    }
-
     return $self->{pattern};
 }
 
 sub locale {
     my $self = shift;
-
-    if (@_) {
-        my $locale = shift;
-        deprecated(
-            feature => 'accessor writers',
-            message => 'Calling locale() as a writer is deprecated.',
-        );
-
-        my $new;
-        try {
-            $new = $self->_clone_with( locale => $locale );
-        }
-        catch {
-            $self->_our_carp($_);
-        }
-
-        return unless $new;
-
-        %{$self} = %{$new};
-    }
-
     return $self->{locale}->can('code')
         ? $self->{locale}->code
         : $self->{locale}->id;
@@ -925,46 +897,7 @@ sub locale {
 
 sub time_zone {
     my $self = shift;
-
-    if (@_) {
-        my $time_zone = shift;
-        deprecated(
-            feature => 'accessor writers',
-            message => 'Calling time_zone() as a writer is deprecated.',
-        );
-
-        my $new;
-        try {
-            $new = $self->_clone_with( time_zone => $time_zone );
-        }
-        catch {
-            $self->_our_carp($_);
-        }
-
-        return unless $new;
-
-        %{$self} = %{$new};
-    }
-
     return $self->{time_zone}->name;
-}
-
-# Only used for deprecated accessors-as-writers feature
-sub _clone_with {
-    my $self = shift;
-
-    return ( ref $self )->new(
-        pattern => $self->{pattern},
-        locale  => $self->{locale},
-        (
-            $self->{time_zone}
-            ? ( time_zone => $self->{time_zone} )
-            : ()
-        ),
-        on_error => $self->{on_error},
-        debug    => $self->{debug},
-        @_,
-    );
 }
 
 sub parse_duration {
@@ -995,16 +928,6 @@ sub _our_croak {
 
     return $self->{on_error}->( $self, $error ) if ref $self->{on_error};
     croak $error if $self->{on_error} eq 'croak';
-    $self->{errmsg} = $error;
-    return;
-}
-
-sub _our_carp {
-    my $self  = shift;
-    my $error = shift;
-
-    return $self->{on_error}->( $self, $error ) if ref $self->{on_error};
-    carp $error if $self->{on_error} eq 'croak';
     $self->{errmsg} = $error;
     return;
 }
