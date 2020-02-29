@@ -1,5 +1,10 @@
 {{$NEXT}}
 
+* When the parsed string contained an invalid time zone offset (parsed with
+  "%z") like "-9999", the error handling set in the parser's constructor was
+  ignored and an exception was always thrown. Reported by x-qq. GH #25.
+
+
 1.76     2019-02-07
 
 [BACKWARDS INCOMPATIBILITIES]

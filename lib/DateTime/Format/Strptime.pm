@@ -618,7 +618,15 @@ sub _token_re_for {
                 $offset .= '00';
             }
 
-            $args->{time_zone} = DateTime::TimeZone->new( name => $offset );
+            my $tz = try { DateTime::TimeZone->new( name => $offset ) };
+            unless ($tz) {
+                $self->_our_croak(
+                    qq{The time zone name offset that was parsed does not appear to be valid, "$args->{time_zone_offset}"}
+                );
+                return;
+            }
+
+            $args->{time_zone} = $tz;
         }
 
         if ( defined $args->{time_zone_abbreviation} ) {
