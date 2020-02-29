@@ -113,7 +113,8 @@ subtest(
             name    => 'invalid time zone offset',
             pattern => '%Y %z',
             input   => '2015 -9999',
-            error   => qr{\QThe time zone name offset that was parsed does not appear to be valid, "-9999"},
+            error =>
+                qr{\QThe time zone name offset that was parsed does not appear to be valid, "-9999"},
         },
         {
             name    => 'epoch vs year',

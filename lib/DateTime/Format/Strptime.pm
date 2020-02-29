@@ -482,7 +482,7 @@ sub _build_parser {
         $patterns{p} = $patterns{P} = {
             regex => do {
                 my $am_pm = join '|',
-                    map {quotemeta}
+                    map  {quotemeta}
                     sort { ( length $b <=> length $a ) or ( $a cmp $b ) }
                     @{ $self->{locale}->am_pm_abbreviated };
                 qr/$am_pm/i;
