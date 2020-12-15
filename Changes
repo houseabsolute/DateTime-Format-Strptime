@@ -1,5 +1,7 @@
 {{$NEXT}}
 
+1.78     2020-12-15
+
 * Fix tests for new failure caused by locale data changes in DateTime::Locale
   1.29. Reported by cthulhu8zombie. GH #28.
 
