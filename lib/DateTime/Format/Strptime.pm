@@ -7,7 +7,7 @@ our $VERSION = '1.78';
 
 use Carp qw( carp croak );
 use DateTime 1.00;
-use DateTime::Locale 1.29;
+use DateTime::Locale 1.30;
 use DateTime::Format::Strptime::Types;
 use DateTime::TimeZone 2.09;
 use Exporter ();
