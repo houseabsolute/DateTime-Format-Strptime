@@ -1,5 +1,9 @@
 {{$NEXT}}
 
+* Fix tests for new failure caused by locale data changes in DateTime::Locale
+  1.29. Reported by cthulhu8zombie. GH #28.
+
+
 1.77     2020-02-29
 
 * When the parsed string contained an invalid time zone offset (parsed with
