@@ -30,8 +30,25 @@ coerce(
     inline => sub {"DateTime::Locale->load( $_[1] )"},
 );
 
-object_isa_type( 'TimeZone', class => 'DateTime::TimeZone' );
 object_isa_type('DateTime');
+
+my $time_zone_object = object_can_type(
+    'TZObject',
+    methods => [
+        qw(
+            is_floating
+            is_utc
+            name
+            offset_for_datetime
+            short_name_for_datetime
+        )
+    ],
+);
+
+declare(
+    'TimeZone',
+    of => [ t('NonEmptySimpleStr'), $time_zone_object ],
+);
 
 coerce(
     t('TimeZone'),
