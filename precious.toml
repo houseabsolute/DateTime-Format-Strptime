@@ -4,9 +4,11 @@ exclude = [
     "blib/**/*",
     "t/00-*",
     "t/author-*",
+    "t/generated-*.t",
     "t/release-*",
     "t/zzz-*",
     "xt/**/*",
+    "xt/generated-*.t",
 ]
 
 [commands.omegasort-gitignore]
