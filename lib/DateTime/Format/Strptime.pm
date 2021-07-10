@@ -1337,8 +1337,6 @@ notified of progress on your bug as I make changes.
 
 C<datetime@perl.org> mailing list.
 
-http://datetime.perl.org/
-
 L<perl>, L<DateTime>, L<DateTime::TimeZone>, L<DateTime::Locale>
 
 =cut
