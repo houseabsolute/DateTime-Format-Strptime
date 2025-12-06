@@ -1105,7 +1105,8 @@ Given a string in the pattern specified in the constructor, this method will
 return a new C<DateTime> object.
 
 If given a string that doesn't match the pattern, the formatter will croak or
-return undef, depending on the setting of C<on_error> in the constructor.
+return an empty list or C<undef>, depending on the setting of C<on_error> in
+the constructor.
 
 =head2 $strptime->format_datetime($datetime)
 
